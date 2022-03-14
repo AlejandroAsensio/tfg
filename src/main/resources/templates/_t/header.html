@@ -1,0 +1,11 @@
+<header class="container">
+	<a th:if="${session.persona==null}" href="/login">
+		LOGIN
+	</a>
+	
+	<div th:unless="${session.persona==null}">
+		<span th:text="${session.persona.nombre}"/>
+		/
+		<a href="/logout">LOGOUT</a>
+	</div>
+</header>
