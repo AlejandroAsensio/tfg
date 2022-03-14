@@ -6,5 +6,8 @@ import javax.persistence.Entity;
 public class Proyecto {
 	
 	private String nombre;
+	
+	private String descripcion;
+	
  
 }
