@@ -5,6 +5,7 @@ import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.ManyToOne;
 
 @Entity
 public class Puesto {
@@ -16,6 +17,9 @@ public class Puesto {
 	private String nombre;
 	
 	private String descripcion;
+	
+	@ManyToOne
+	private Proyecto proyecto;
 	
 
 	//==================================================
@@ -61,6 +65,16 @@ public class Puesto {
 
 	public void setDescripcion(String descripcion) {
 		this.descripcion = descripcion;
+	}
+
+
+	public Proyecto getProyecto() {
+		return proyecto;
+	}
+
+
+	public void setProyecto(Proyecto proyecto) {
+		this.proyecto = proyecto;
 	}	
 	
 }

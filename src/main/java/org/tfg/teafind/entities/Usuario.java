@@ -1,10 +1,15 @@
 package org.tfg.teafind.entities;
 
+import java.util.ArrayList;
+import java.util.Collection;
+
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.ManyToMany;
+import javax.persistence.OneToMany;
 
 @Entity
 public class Usuario {
@@ -23,9 +28,16 @@ public class Usuario {
 	
 	private String password;
 	private boolean admin;
+	
+	@ManyToMany
+	private Collection<Habilidad> sabe;
+	
+	@OneToMany(mappedBy = "leader")
+	private Collection<Proyecto> creados;
+	
 	//======================================================
 	public Usuario() {
-		
+		this.sabe = new ArrayList<Habilidad>();
 	}
 	public Usuario(String nombre, String apellido1, String apellido2, String telefono, String email, String password,
 			boolean admin) {
@@ -36,6 +48,7 @@ public class Usuario {
 		this.email = email;
 		this.password = password;
 		this.admin = admin;
+		this.sabe = new ArrayList<Habilidad>();
 	}
 	//======================================================
 	public Long getId() {
@@ -86,6 +99,23 @@ public class Usuario {
 	public void setAdmin(boolean admin) {
 		this.admin = admin;
 	}
+	public Collection<Habilidad> getSabe() {
+		return sabe;
+	}
+	public void setSabe(Collection<Habilidad> sabe) {
+		this.sabe = sabe;
+	}
+	public Collection<Proyecto> getCreados() {
+		return creados;
+	}
+	public void setCreados(Collection<Proyecto> creados) {
+		this.creados = creados;
+	}
 	
+	
+	/*TODO
+	 * Falta añadir el addSabe para poder modificar el perfil
+	 * y añadir nuevas habilidades
+	*/
 	
 }

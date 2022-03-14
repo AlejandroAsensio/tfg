@@ -1,13 +1,16 @@
 package org.tfg.teafind.entities;
 
 import java.time.LocalDate;
+import java.util.ArrayList;
+import java.util.Collection;
 
-import javax.annotation.Generated;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.ManyToOne;
+import javax.persistence.OneToMany;
 
 @Entity
 public class Proyecto {
@@ -24,21 +27,31 @@ public class Proyecto {
 	private LocalDate inicio;
 	
 	private LocalDate fin;
+	
+	@ManyToOne
+	private Usuario leader;
+	
+	@OneToMany(mappedBy = "proyecto")
+	private Collection<Puesto> puestos;
+	
+	
 
 	//==================================================
 	public Proyecto() {
-		// TODO Auto-generated constructor stub
+		this.puestos = new ArrayList<Puesto>();
 	}
-	public Proyecto(String nombre, String descripcion, LocalDate inicio, LocalDate fin) {
-		super();
+	
+	public Proyecto(String nombre, String descripcion, LocalDate inicio, LocalDate fin, Usuario leader) {
+		
 		this.nombre = nombre;
 		this.descripcion = descripcion;
 		this.inicio = inicio;
 		this.fin = fin;
+		this.leader = leader;
+		this.puestos = new ArrayList<Puesto>();
 	}
-	
 	//==================================================
-	
+
 	public Long getId() {
 		return id;
 	}
@@ -68,6 +81,20 @@ public class Proyecto {
 	}
 	public void setFin(LocalDate fin) {
 		this.fin = fin;
+	}
+	public Usuario getLeader() {
+		return leader;
+	}
+	public void setLeader(Usuario leader) {
+		this.leader = leader;
+	}
+
+	public Collection<Puesto> getPuestos() {
+		return puestos;
+	}
+
+	public void setPuestos(Collection<Puesto> puestos) {
+		this.puestos = puestos;
 	}
 	
  
