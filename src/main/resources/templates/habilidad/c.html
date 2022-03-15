@@ -1,0 +1,31 @@
+<div class="container">
+	<div class="row m-3">
+		<h2 class="display-4">Habilidades</h2>
+	</div>
+</div>	
+
+<div class="container rounded p-4">
+	
+	<div class="row m-3">
+		<h3 class="display-5">Añadir nueva habilidad</h3>
+	</div>
+	
+	<form action="/habilidad/c" method="POST">
+		<div class="mb-3">
+			<label for="idNombre" class="form-label disabled">Nombre de la habilidad</label>
+			<input type="text" class="form-control" name="nombre" id="idNombre">
+		</div>
+		
+		<div class="mb-3">
+			<label for="idDescripcion" class="form-label disabled">Descripción</label>
+			<input type="text" class="form-control" name="descripcion" id="idDescripcion">
+		</div>
+		
+		<div class="m-3">
+			<input type="submit" class="btn btn-info m-2" value="Guardar"/>
+			<a href="/habilidad/r" class="btn btn-info m-2">Cancelar</a>
+		</div>
+		
+	</form>
+	
+</div>

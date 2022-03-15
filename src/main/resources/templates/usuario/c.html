@@ -1,0 +1,64 @@
+<div class="container">
+	<div class="row m-3">
+		<h2 class="display-4">Resgístrate</h2>
+	</div>
+</div>	
+
+<div class="container rounded p-4">
+	
+	<div class="row m-3">
+		<h3 class="display-5">Nuevo usuario</h3>
+	</div>
+	
+	<form action="/usuario/c" method="POST">
+		<div class="mb-3">
+			<label for="idNombre" class="form-label disabled">Nombre</label>
+			<input type="text" class="form-control" name="nombre" id="idNombre">
+		</div>
+		
+		<div class="mb-3">
+			<label for="idApe1" class="form-label disabled">Primer apellido</label>
+			<input type="text" class="form-control" name="apellido1" id="idApe1">
+		</div>
+		
+		<div class="mb-3">
+			<label for="idApe2" class="form-label disabled">Segundo apellido</label>
+			<input type="text" class="form-control" name="apellido2" id="idApe2">
+		</div>
+		
+		<div class="mb-3">
+			<label for="idTlf" class="form-label disabled">Teléfono</label>
+			<input type="text" class="form-control" name="telefono" id="idTlf">
+		</div>
+		
+		<div class="mb-3">
+			<label for="idEmail" class="form-label disabled">Email</label>
+			<input type="text" class="form-control" name="email" id="idEmail">
+		</div>
+		
+		<div class="mb-3">
+			<label for="idPass" class="form-label disabled">Contraseña</label>
+			<input type="text" class="form-control" name="password" id="idPass">
+		</div>
+		
+		<div class="mb-3">
+			<label class="form-label disabled">¿Admin?</label>
+			</br>
+		
+			<input type="radio" name="admin" id="adminTrue" value="true">
+			<label for="adminTrue" class="disabled">Si</label>
+			
+			</br>
+			
+			<input type="radio"  name="admin" id="adminFalse" value="false">
+			<label for="adminFalse" class="disabled">No</label>
+		</div>
+		
+		<div class="m-3">
+			<input type="submit" class="btn btn-info m-2" value="Continuar"/>
+			<a href="/usuario/r" class="btn btn-info m-2">Cancelar</a>
+		</div>
+		
+	</form>
+	
+</div>

@@ -18,6 +18,7 @@ public class Usuario {
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private Long id;
 	
+//	private String nick;
 	private String nombre;
 	private String apellido1;
 	private String apellido2;
@@ -41,6 +42,7 @@ public class Usuario {
 	}
 	public Usuario(String nombre, String apellido1, String apellido2, String telefono, String email, String password,
 			boolean admin) {
+//		this.nick = nick;
 		this.nombre = nombre;
 		this.apellido1 = apellido1;
 		this.apellido2 = apellido2;
@@ -57,6 +59,12 @@ public class Usuario {
 	public void setId(Long id) {
 		this.id = id;
 	}
+//	public String getNick() {
+//		return nick;
+//	}
+//	public void setNick(String nick) {
+//		this.nick = nick;
+//	}
 	public String getNombre() {
 		return nombre;
 	}
