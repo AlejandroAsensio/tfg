@@ -133,8 +133,8 @@ public class Usuario {
 	 }
 	
 	/*TODO
-	 * Falta añadir el addSabe para poder modificar el perfil
-	 * y añadir nuevas habilidades
+	 
+	 * y añadir o modificar mis habilidades
 	*/
 	
 }
