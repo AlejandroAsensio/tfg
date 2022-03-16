@@ -1,5 +1,10 @@
 package org.tfg.teafind.controller;
 
+import javax.servlet.http.HttpSession;
+
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
+
 //import javax.servlet.http.HttpSession;
 
 
@@ -8,13 +13,19 @@ package org.tfg.teafind.controller;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.ModelMap;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestParam;
+import org.tfg.teafind.entities.Usuario;
 //import org.springframework.web.bind.annotation.PostMapping;
 //import org.springframework.web.bind.annotation.RequestParam;
+import org.tfg.teafind.exception.DangerException;
+import org.tfg.teafind.helper.H;
+import org.tfg.teafind.repository.UsuarioRepository;
 
 @Controller
 public class HomeController {
-	
-
+	@Autowired
+	private UsuarioRepository usuarioRepository;
 //	@Autowired
 //	private PersonaRepository personaRepository;
 
@@ -40,7 +51,7 @@ public class HomeController {
 //		return "/_t/frame";
 //	}
 	
-/*	@GetMapping("/login")
+	@GetMapping("/login")
 	public String login(
 			ModelMap m,
 			HttpSession s) throws DangerException {
@@ -50,12 +61,12 @@ public class HomeController {
 	}
 
 	@PostMapping("/login")
-	public String loginPost(@RequestParam("nombre") String nombre, @RequestParam("pwd") String pwd, HttpSession s) {
+	public String loginPost(@RequestParam("email") String email, @RequestParam("pwd") String pwd, HttpSession s) {
 		String returnLocation = "redirect:/";
 		try {
-			Persona persona = personaRepository.getByNombre(nombre);
-			if (new BCryptPasswordEncoder().matches(pwd, persona.getPwd())) {
-				s.setAttribute("persona", persona);
+			Usuario usuario= usuarioRepository.getByEmail(email);
+			if (new BCryptPasswordEncoder().matches(pwd, usuario.getPassword())) {
+				s.setAttribute("usuario", usuario);
 			}
 			else {
 				returnLocation="redirect:/errorDisplay?msg=Password incorrecta";
@@ -72,7 +83,7 @@ public class HomeController {
 		s.invalidate();
 		return "redirect:/";
 	}
-*/
+
 	@GetMapping("/")
 	public String index(ModelMap m) {
 		m.put("view", "home/index");

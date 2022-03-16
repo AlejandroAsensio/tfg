@@ -9,6 +9,7 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.ModelMap;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.tfg.teafind.entities.Proyecto;
 import org.tfg.teafind.entities.Usuario;
@@ -19,12 +20,13 @@ import org.tfg.teafind.repository.ProyectoRepository;
 import org.tfg.teafind.repository.UsuarioRepository;
 
 @Controller
+@RequestMapping("/proyecto")
 public class ProyectoController {
 	
 	@Autowired
 	private ProyectoRepository proyectoRepository;
 	
-	@GetMapping("/proyecto/r")
+	@GetMapping("r")
 	public String r(
 			ModelMap m
 			) {
@@ -35,13 +37,13 @@ public class ProyectoController {
 		return "_t/frame";
 	}
 	
-	@GetMapping("/proyecto/c")
+	@GetMapping("c")
 	public String c(ModelMap m) {
 		m.put("view", "/proyecto/c");
 		return "_t/frame";
 	}
 
-	@PostMapping("/proyecto/c")
+	@PostMapping("c")
 	public String cPost(
 			@RequestParam("nombre") String nombre, 
 			@RequestParam("descripcion") String descripcion,
