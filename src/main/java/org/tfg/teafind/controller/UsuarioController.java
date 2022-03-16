@@ -7,6 +7,7 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.ModelMap;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.tfg.teafind.entities.Usuario;
 import org.tfg.teafind.exception.DangerException;
@@ -15,12 +16,13 @@ import org.tfg.teafind.exception.PRG;
 import org.tfg.teafind.repository.UsuarioRepository;
 
 @Controller
+@RequestMapping("/usuario")
 public class UsuarioController {
 
 	@Autowired
 	private UsuarioRepository usuarioRepository;
 	
-	@GetMapping("/usuario/r")
+	@GetMapping("r")
 	public String r(
 			ModelMap m
 			) {
@@ -31,7 +33,7 @@ public class UsuarioController {
 		return "_t/frame";
 	}
 	
-	@GetMapping("/usuario/c")
+	@GetMapping("c")
 	public String c(ModelMap m) {
 		m.put("view", "/usuario/c");
 		return "_t/frame";
@@ -41,8 +43,8 @@ public class UsuarioController {
 	 * Incorporado el atributo admin provisionalmente a cada usuario nuevo que se crea
 	 * Más adelante se habrá de tener en cuenta si ya hay un admin o no para crear o no con un nuevo usuario
 	 */
-	@PostMapping("/usuario/c")
-	public void cPost(
+	@PostMapping("c")
+	public String cPost(
 			@RequestParam("nombre") String nombre, 
 			@RequestParam("apellido1") String apellido1,
 			@RequestParam("apellido2") String apellido2,
@@ -56,6 +58,7 @@ public class UsuarioController {
 		} catch (Exception e) {
 			PRG.error("La habilidad " + nombre + " ya existe.", "/usuario/c");
 		}
-		PRG.info(nombre + " creado correctamente.", "/usuario/r");
+//		PRG.info(nombre + " creado correctamente.", "/usuario/r");
+		return "redirect:r";
 	}
 }
