@@ -127,7 +127,10 @@ public class Usuario {
 		return (new BCryptPasswordEncoder()).encode(password);
 		
 	}
-	
+	 public void addSabe(Habilidad habilidad) {
+		 this.sabe.add(habilidad);
+		 habilidad.getConocida().add(this);
+	 }
 	
 	/*TODO
 	 * Falta añadir el addSabe para poder modificar el perfil

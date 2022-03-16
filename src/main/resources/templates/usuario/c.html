@@ -41,6 +41,18 @@
 			<input type="password" class="form-control" name="password" id="idPass">
 		</div>
 		
+		
+		<fieldset>
+		<legend>Habilidades</legend>
+		<div class="mb-3 row">
+			<div class="mr-2" th:each="habilidad:${habilidades}">
+				<input type="checkbox" name="idsHabilidadesSabe[]" th:value="${habilidad.id}" th:id="|id-${habilidad.id}-habilidad|"/>
+				<label th:for="|id-${habilidad.id}-habilidad|" th:text="${habilidad.nombre}"/>
+			</div>
+		</div>
+		</fieldset>
+		
+		
 		<div class="mb-3">
 			<label class="form-label disabled">¿Admin?</label>
 			</br>

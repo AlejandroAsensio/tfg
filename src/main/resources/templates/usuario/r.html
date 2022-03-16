@@ -26,6 +26,9 @@
 				<th scope="col">
 					Teléfono
 				</th>
+				<th scope="col">
+					Habilidades
+				</th>
 		    </tr>
 	  </thead>
 	  <tbody>
@@ -37,6 +40,9 @@
 					<td th:text="|${usuario.apellido1} ${usuario.apellido2}|"/>
 					<td th:text="${usuario.email}"/>
 					<td th:text="${usuario.telefono}"/>
+					<td>
+						<th:block th:each="habilidadSabe:${usuario.sabe}" th:text="|${habilidadSabe.nombre} / |"/>
+					</td>
 				</tr>
 		    </tr>
 	    
