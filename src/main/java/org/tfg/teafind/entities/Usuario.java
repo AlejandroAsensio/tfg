@@ -11,6 +11,8 @@ import javax.persistence.Id;
 import javax.persistence.ManyToMany;
 import javax.persistence.OneToMany;
 
+import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
+
 @Entity
 public class Usuario {
 	
@@ -48,10 +50,11 @@ public class Usuario {
 		this.apellido2 = apellido2;
 		this.telefono = telefono;
 		this.email = email;
-		this.password = password;
+		this.password = encriptar(password);
 		this.admin = admin;
 		this.sabe = new ArrayList<Habilidad>();
 	}
+	
 	//======================================================
 	public Long getId() {
 		return id;
@@ -118,6 +121,11 @@ public class Usuario {
 	}
 	public void setCreados(Collection<Proyecto> creados) {
 		this.creados = creados;
+	}
+	
+	private String encriptar(String password) {
+		return (new BCryptPasswordEncoder()).encode(password);
+		
 	}
 	
 	

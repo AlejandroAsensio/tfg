@@ -54,6 +54,7 @@ public class UsuarioController {
 			@RequestParam("admin") boolean admin
 			) throws DangerException, InfoException {
 		try {
+			
 			usuarioRepository.save(new Usuario(nombre, apellido1, apellido2, telefono, email, password, admin));	
 		} catch (Exception e) {
 			PRG.error("La habilidad " + nombre + " ya existe.", "/usuario/c");
