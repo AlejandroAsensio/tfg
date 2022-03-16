@@ -7,6 +7,7 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.ModelMap;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.tfg.teafind.entities.Habilidad;
 import org.tfg.teafind.exception.DangerException;
@@ -15,12 +16,13 @@ import org.tfg.teafind.exception.PRG;
 import org.tfg.teafind.repository.HabilidadRepository;
 
 @Controller
+@RequestMapping("/habilidad")
 public class HabilidadController {
 	
 	@Autowired
 	private HabilidadRepository habilidadRepository;
 	
-	@GetMapping("/habilidad/r")
+	@GetMapping("r")
 	public String r(
 			ModelMap m
 			) {
@@ -31,15 +33,15 @@ public class HabilidadController {
 		return "_t/frame";
 	}
 	
-	@GetMapping("/habilidad/c")
+	@GetMapping("c")
 	public String c(ModelMap m) {
 		m.put("view", "/habilidad/c");
 		return "_t/frame";
 	}
 	
 	
-	@PostMapping("/habilidad/c")
-	public void cPost(
+	@PostMapping("c")
+	public String cPost(
 			@RequestParam("nombre") String nombre, 
 			@RequestParam("descripcion") String descripcion
 			) throws DangerException, InfoException {
@@ -48,7 +50,8 @@ public class HabilidadController {
 		} catch (Exception e) {
 			PRG.error("La habilidad " + nombre + " ya existe.", "/habilidad/c");
 		}
-		PRG.info(nombre + " creado correctamente.", "/habilidad/r");
+//		PRG.info(nombre + " creado correctamente.", "/habilidad/r");
+		return "redirect:r";
 	}
 	
 }
