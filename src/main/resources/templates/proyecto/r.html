@@ -1,0 +1,49 @@
+<div class="container">
+	<div class="row m-3">
+		<h2 class="display-4">Proyectos</h2>
+	</div>
+</div>
+
+<div class="container rounded p-4">
+	
+	<div class="row m-3">
+		<h3 class="display-5">Lista de Proyectos</h3>
+	</div>
+	
+	<table class="table table-hover">
+	<thead>
+	  
+		    <tr class="table-active">
+				<th scope="col">
+					Nombre Proyecto
+				</th>
+				<th scope="col">
+					Descripción
+				</th>
+				<th scope="col">
+					Fecha de Inicio
+				</th>
+				<th scope="col">
+					Fecha de Finalización
+				</th>
+		    </tr>
+	  </thead>
+	  <tbody>
+	  
+		    <tr>
+		    	<!-- scope="row" en un th indica el indice de la fila -->
+				<tr th:each="proyecto:${proyectos}">
+					<td th:text="${proyecto.nombre}"/>
+					<td th:text="${proyecto.descripcion}"/>
+					<td th:text="${proyecto.inicio}"/>
+					<td th:text="${proyecto.fin}"/>
+				</tr>
+		    </tr>
+	    
+		</tbody>
+	</table>
+	<br/>
+	<form action="/proyecto/c">
+		<input type="submit" class="btn btn-success btn-sm" value="Nuevo Proyecto"/>
+	</form>
+</div>

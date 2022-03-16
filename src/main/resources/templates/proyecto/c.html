@@ -1,0 +1,42 @@
+<div class="container">
+	<div class="row m-3">
+		<h2 class="display-4">Proyectos</h2>
+	</div>
+</div>	
+
+<div class="container rounded p-4">
+	
+	<div class="row m-3">
+		<h3 class="display-5">Nuevo Proyecto</h3>
+	</div>
+	
+	<form action="/proyecto/c" method="POST">
+		<div class="mb-3">
+			<label for="idNombre" class="form-label disabled">Nombre</label>
+			<input type="text" class="form-control" name="nombre" id="idNombre">
+		</div>
+		
+		<div class="mb-3">
+			<label for="idDescripcion" class="form-label disabled">Descripcion</label>
+			<input type="text"  class="form-control" name="descripcion" id="idDescripcion">
+		</div>
+		
+		<div class="mb-3">
+			<label for="id-fIni" class="form-label disabled">Fecha de Inicio</label>
+			<input type="date" name="fIni" id="id-fIni">
+		</div>
+		
+		<div class="mb-3">
+			<label for="id-fFin" class="form-label disabled">Fecha Fin</label>
+			<input type="date" name="fFin" id="id-fFin">
+		</div>
+		
+		
+		<div class="m-3">
+			<input type="submit" class="btn btn-info m-2" value="Continuar"/>
+			<a href="/proyecto/r" class="btn btn-info m-2">Cancelar</a>
+		</div>
+		
+	</form>
+	
+</div>
