@@ -41,7 +41,7 @@ public class HabilidadController {
 	
 	
 	@PostMapping("c")
-	public String cPost(
+	public void cPost(
 			@RequestParam("nombre") String nombre, 
 			@RequestParam("descripcion") String descripcion
 			) throws DangerException, InfoException {
@@ -50,8 +50,8 @@ public class HabilidadController {
 		} catch (Exception e) {
 			PRG.error("La habilidad " + nombre + " ya existe.", "/habilidad/c");
 		}
-//		PRG.info(nombre + " creado correctamente.", "/habilidad/r");
-		return "redirect:r";
+		PRG.info(nombre + " creado correctamente.", "/habilidad/r");
+//		return "redirect:r";
 	}
 	
 }
