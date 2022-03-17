@@ -38,6 +38,9 @@ public class Usuario {
 	@OneToMany(mappedBy = "leader")
 	private Collection<Proyecto> creados;
 	
+	@OneToMany(mappedBy = "ocupante")
+	private Collection<Puesto> ocupa;
+	
 	//======================================================
 	public Usuario() {
 		this.sabe = new ArrayList<Habilidad>();
@@ -122,6 +125,17 @@ public class Usuario {
 	public void setCreados(Collection<Proyecto> creados) {
 		this.creados = creados;
 	}
+	
+	public Collection<Puesto> getOcupa() {
+		return ocupa;
+	}
+	public void setOcupa(Collection<Puesto> ocupa) {
+		this.ocupa = ocupa;
+	}
+	
+	
+	//=======================================0
+	
 	
 	private String encriptar(String password) {
 		return (new BCryptPasswordEncoder()).encode(password);

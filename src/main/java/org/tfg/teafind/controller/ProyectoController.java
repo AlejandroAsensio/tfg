@@ -66,7 +66,7 @@ public class ProyectoController {
 			PRG.error("El proyecto " + nombre + " ya existe.", "/proyecto/c");
 		}
 		//PRG.info( "El proyecto "+ nombre + "se ha creado correctamente.", "/proyecto/r");
-		return "redirect:/proyecto/r";
+		return "redirect:/puesto/c?nombreProyecto="+nombre;
 	
 	}
 }

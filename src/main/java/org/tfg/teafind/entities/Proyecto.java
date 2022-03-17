@@ -87,6 +87,7 @@ public class Proyecto {
 	}
 	public void setLeader(Usuario leader) {
 		this.leader = leader;
+		this.leader.getCreados().add(this);
 	}
 
 	public Collection<Puesto> getPuestos() {

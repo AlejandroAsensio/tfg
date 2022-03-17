@@ -24,10 +24,14 @@ public class Habilidad {
 	@ManyToMany(mappedBy = "sabe")
 	private Collection<Usuario> conocida;
 	
+	@ManyToMany(mappedBy = "requiere")
+	private Collection<Puesto> requerida;
+	
 	//======================================================
 
 	public Habilidad() {
 	this.conocida = new ArrayList<Usuario>();
+	this.requerida = new ArrayList<Puesto>();
 	}
 
 	public Habilidad(String nombre, String descripcion) {
@@ -35,6 +39,7 @@ public class Habilidad {
 		this.nombre = nombre;
 		this.descripcion = descripcion;
 		this.conocida = new ArrayList<Usuario>();
+		this.requerida = new ArrayList<Puesto>();
 	}
 	//======================================================
 
@@ -68,6 +73,14 @@ public class Habilidad {
 
 	public void setConocida(Collection<Usuario> conocida) {
 		this.conocida = conocida;
+	}
+
+	public Collection<Puesto> getRequerida() {
+		return requerida;
+	}
+
+	public void setRequerida(Collection<Puesto> requerida) {
+		this.requerida = requerida;
 	}
 	
 	//======================================================
