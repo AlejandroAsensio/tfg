@@ -26,6 +26,9 @@ public class ProyectoController {
 	@Autowired
 	private ProyectoRepository proyectoRepository;
 	
+	@Autowired
+	private UsuarioRepository usuarioRepository;
+	
 	@GetMapping("r")
 	public String r(
 			ModelMap m
@@ -50,12 +53,15 @@ public class ProyectoController {
 			@DateTimeFormat(iso = DateTimeFormat.ISO.DATE)
 			@RequestParam("fIni") LocalDate fIni,
 			@DateTimeFormat(iso = DateTimeFormat.ISO.DATE)
-			@RequestParam("fFin") LocalDate fFin
+			@RequestParam("fFin") LocalDate fFin,
+			@RequestParam("idUsuario") Long idUsuario
 			//falta el tipo de dato usuario
 			
 			) throws DangerException, InfoException {
+		
 		try {
-			proyectoRepository.save(new Proyecto(nombre, descripcion, fIni, fFin, null));	
+			Usuario usuario = usuarioRepository.getById(idUsuario);
+			proyectoRepository.save(new Proyecto(nombre, descripcion, fIni, fFin, usuario));	
 		} catch (Exception e) {
 			PRG.error("El proyecto " + nombre + " ya existe.", "/proyecto/c");
 		}
