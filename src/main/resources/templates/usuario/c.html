@@ -13,12 +13,12 @@
 	<form action="/usuario/c" method="POST">
 		<div class="mb-3">
 			<label for="idNombre" class="form-label disabled">Nombre</label>
-			<input type="text" class="form-control" name="nombre" id="idNombre">
+			<input type="text" class="form-control" name="nombre" id="idNombre" required="required">
 		</div>
 		
 		<div class="mb-3">
 			<label for="idApe1" class="form-label disabled">Primer apellido</label>
-			<input type="text" class="form-control" name="apellido1" id="idApe1">
+			<input type="text" class="form-control" name="apellido1" id="idApe1" required="required">
 		</div>
 		
 		<div class="mb-3">
@@ -27,18 +27,25 @@
 		</div>
 		
 		<div class="mb-3">
+			
 			<label for="idTlf" class="form-label disabled">Teléfono</label>
-			<input type="text" class="form-control" name="telefono" id="idTlf">
+			<div style="color:red" id="divtlf"></div>
+			<input type="text" class="form-control" name="telefono" id="idTlf" required="required">
+			<input type="button" onclick="tlfValidation();" value="Validar TLF">
 		</div>
 		
 		<div class="mb-3">
 			<label for="idEmail" class="form-label disabled">Email</label>
+			<div style="color:red" id="divemail"></div>
 			<input type="text" class="form-control" name="email" id="idEmail">
+			<input type="button" onclick="emailValidation();" value="Validar email">
 		</div>
 		
 		<div class="mb-3">
 			<label for="idPass" class="form-label disabled">Contraseña</label>
+			<div style="color:red" id="divpass"></div>
 			<input type="password" class="form-control" name="password" id="idPass">
+			<input type="button" onclick="passValidation();" value="Validar Password">
 		</div>
 		
 		
@@ -74,3 +81,4 @@
 	</form>
 	
 </div>
+<script src="/js/userValidation.js"></script>
