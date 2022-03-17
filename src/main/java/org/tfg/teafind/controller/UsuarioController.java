@@ -2,6 +2,8 @@ package org.tfg.teafind.controller;
 
 import java.util.List;
 
+import javax.servlet.http.HttpSession;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.ModelMap;
@@ -82,5 +84,20 @@ public class UsuarioController {
 		}
 //		PRG.info(nombre + " creado correctamente.", "/usuario/r");
 		return "redirect:r";
+	}
+	
+	
+	/**
+	 * Vista para cada usuario de los proyectos de los que es líder y en los que ocupa un puesto
+	 */
+	@GetMapping("mis_proyectos")
+	public String rOP(ModelMap m, HttpSession s) {
+		Usuario usuario = (Usuario) s.getAttribute("usuario");
+		
+		m.put("proyectosCreados", usuario.getCreados());
+		m.put("proyectosPertenece", usuario.getOcupa());
+		
+		m.put("view", "/usuario/ownProjects");
+		return "_t/frame";
 	}
 }

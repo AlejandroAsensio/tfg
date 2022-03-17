@@ -1,0 +1,114 @@
+<div class="container">
+	<div class="row m-3">
+		<h2 class="display-4">Usuario</h2>
+	</div>
+</div>
+
+<div class="container rounded p-4">
+	
+	<div class="row m-3">
+		<h3 class="display-5">Proyectos que lideras:</h3>
+	</div>
+	
+	<table class="table table-hover">
+	<thead>
+	  
+		    <tr class="table-active">
+				<th scope="col" rowspan="2">
+					Nombre Proyecto
+				</th>
+				<th scope="col" rowspan="2">
+					Descripción
+				</th>
+				<th scope="col" rowspan="2">
+					Fecha de Inicio
+				</th>
+				<th scope="col" rowspan="2">
+					Fecha de Finalización
+				</th>
+				<th scope="col" colspan="2">
+					Puestos del proyecto
+				</th>
+		    </tr>
+		    <tr class="table-active">
+				<th>
+					Puestos del proyecto
+				</th>
+				<th>
+					Ocupante
+				</th>
+		    </tr>
+	  </thead>
+	  <tbody>
+	  
+		    <tr>
+		    	<!-- scope="row" en un th indica el indice de la fila -->
+				<tr th:each="proyectoCreado : ${proyectosCreados}">
+					<td th:text="${proyectoCreado.nombre}"/>
+					<td th:text="${proyectoCreado.descripcion}"/>
+					<td th:text="${proyectoCreado.inicio}"/>
+					<td th:text="${proyectoCreado.fin}"/>
+					
+					<!--Comprobar si la lista de puestos del proyecto no está vacía-->
+					<th:block th:if="${proyectoCreado.puestos.size != 0}">
+						<td th:each="puesto : ${proyectoCreado.puestos}">
+							<div>
+								<th:block th:text="${puesto.nombre}"/>
+							</div>
+						</td>
+						<td th:each="puesto : ${proyectoCreado.puestos}">
+							<div>
+								<th:block th:text="${puesto.ocupante.nombre}"/>
+							</div>
+						</td>
+					</th:block>
+					<td th:unless="${proyectoCreado.puestos.size == 0}" th:text="Sin puestos creados" rowspan="2"/>
+					
+				</tr>
+		    </tr>
+	    
+		</tbody>
+	</table>
+	<br/>
+	
+	<div class="row m-3">
+		<h3 class="display-5">Proyectos a los que perteneces:</h3>
+	</div>
+	
+	<table class="table table-hover">
+	<thead>
+	  
+		    <tr class="table-active">
+		    	<th scope="col">
+					Líder del proyecto
+				</th>
+				<th scope="col">
+					Nombre Proyecto
+				</th>
+				<th scope="col">
+					Fecha de Inicio
+				</th>
+				<th scope="col">
+					Fecha de Finalización
+				</th>
+				<th scope="col">
+					Tu puesto
+				</th>
+		    </tr>
+	  </thead>
+	  <tbody>
+	  
+		    <tr>
+		    	<!-- scope="row" en un th indica el indice de la fila -->
+				<tr th:each="proyectoPertenece : ${proyectosPertenece}">
+					<td th:text="${proyectoPertenece.leader.nombre}"/>
+					<td th:text="${proyectoPertenece.nombre}"/>
+					<td th:text="${proyectoPertenece.inicio}"/>
+					<td th:text="${proyectoPertenece.fin}"/>
+					<td th:text="Puesto que ocupa en el proyecto"/>
+				</tr>
+		    </tr>
+	    
+		</tbody>
+	</table>
+</div>
