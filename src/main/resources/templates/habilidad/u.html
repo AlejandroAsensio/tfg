@@ -1,0 +1,16 @@
+<div class="container">
+	<h1>Editar habilidad</h1>
+
+	<form action="/habilidad/u" method="POST">
+		<label for="idNombre" />
+		<input id="idNombre" type="text" name="nombre" th:value="${habilidad.nombre}" autofocus="autofocus" />
+		<br />
+		<label for="idDescripcion" />
+		<input id="idDescripcion" type="text" name="descripcion" th:value="${habilidad.descripcion}"/>
+		<br />
+		
+		<input type="hidden" name="idHabilidad" th:value="${habilidad.id}"/>
+		<input type="submit" value="Modificar habilidad" />
+	</form>
+	<br />
+</div>

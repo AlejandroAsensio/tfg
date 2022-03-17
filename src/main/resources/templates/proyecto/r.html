@@ -24,6 +24,9 @@
 					Descripción
 				</th>
 				<th scope="col">
+					Puestos disponibles
+				</th>
+				<th scope="col">
 					Fecha de Inicio
 				</th>
 				<th scope="col">
@@ -39,6 +42,7 @@
 					<td th:text="|${proyecto.leader.nombre} ${proyecto.leader.apellido1} ${proyecto.leader.apellido2}|"/>
 					<td th:text="${proyecto.nombre}"/>
 					<td th:text="${proyecto.descripcion}"/>
+					<td th:text="${proyecto.puestos.size()}"/>
 					<td th:text="${proyecto.inicio}"/>
 					<td th:text="${proyecto.fin}"/>
 				</tr>

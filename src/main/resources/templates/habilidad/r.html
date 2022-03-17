@@ -20,6 +20,9 @@
 				<th scope="col">
 					Descripción
 				</th>
+				<th scope="col">
+					Acciones
+				</th>
 		    </tr>
 	  </thead>
 	  <tbody>
@@ -29,6 +32,16 @@
 				<tr th:each="habilidad:${habilidades}">
 					<td th:text="${habilidad.nombre}"/>
 					<td th:text="${habilidad.descripcion}"/>
+					<td class="row">
+						<form action="/habilidad/u">
+							<input type="hidden" name="idHabilidad" th:value="${habilidad.id}"/>
+							<input type="submit" value="Modificar"/>
+						</form>
+						<form action="/habilidad/d" method="POST">
+							<input type="hidden" name="idHabilidad" th:value="${habilidad.id}"/>
+							<input type="submit" value="Eliminar"/>
+						</form>
+					</td>
 				</tr>
 		    </tr>
 	    

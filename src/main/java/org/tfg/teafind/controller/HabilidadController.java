@@ -53,5 +53,38 @@ public class HabilidadController {
 		PRG.info(nombre + " creado correctamente.", "/habilidad/r");
 //		return "redirect:r";
 	}
+	@GetMapping("u")
+	public String u(
+			@RequestParam("idHabilidad") Long idHabilidad,
+			ModelMap m
+			) {
+		m.put("habilidad", habilidadRepository.getById(idHabilidad));
+		m.put("view", "habilidad/u");
+		return "_t/frame";
+	}
+
+	@PostMapping("u")
+	public String uPost(
+			@RequestParam("idHabilidad") Long idHabilidad,
+			@RequestParam("nombre") String nombre,
+			@RequestParam("descripcion") String descripcion
+			) throws DangerException {
+		try {
+			Habilidad habilidad= habilidadRepository.getById(idHabilidad);
+			habilidad.setNombre(nombre);
+			habilidad.setDescripcion(descripcion);
+			habilidadRepository.save(habilidad);
+		} catch (Exception e) {
+			PRG.error("La habilidad "+nombre+" ya existe", "/habilidad/r");
+		}
+		return "redirect:/habilidad/r";
+	}
+	@PostMapping("d")
+	public String dPost(
+			@RequestParam("idHabilidad") Long idHabilidad
+			) {
+		habilidadRepository.deleteById(idHabilidad);
+		return "redirect:/habilidad/r";
+	}
 	
 }
