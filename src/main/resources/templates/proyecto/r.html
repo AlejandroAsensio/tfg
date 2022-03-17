@@ -14,6 +14,9 @@
 	<thead>
 	  
 		    <tr class="table-active">
+		    	<th scope="col">
+					Líder Proyecto
+				</th>
 				<th scope="col">
 					Nombre Proyecto
 				</th>
@@ -33,6 +36,7 @@
 		    <tr>
 		    	<!-- scope="row" en un th indica el indice de la fila -->
 				<tr th:each="proyecto:${proyectos}">
+					<td th:text="|${proyecto.leader.nombre} ${proyecto.leader.apellido1} ${proyecto.leader.apellido2}|"/>
 					<td th:text="${proyecto.nombre}"/>
 					<td th:text="${proyecto.descripcion}"/>
 					<td th:text="${proyecto.inicio}"/>
