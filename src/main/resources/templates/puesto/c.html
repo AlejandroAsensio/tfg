@@ -1,0 +1,44 @@
+<div class="container">
+	<div class="row m-3">
+		<h2 class="display-4">Crear puesto para el proyecto</h2>
+	</div>
+</div>	
+
+<div class="container rounded p-4">
+	
+	<div class="row m-3">
+		<h3 class="display-5" th:text="${proyecto.nombre}"/>
+	</div>
+	
+	<form action="/puesto/c" method="POST">
+		<div class="mb-3">
+			<label for="idNombre" class="form-label disabled">Nombre</label>
+			<input type="text" class="form-control" name="nombre" id="idNombre">
+		</div>
+		
+		<div class="mb-3">
+			<label for="idDescripcion" class="form-label disabled">Descripcion</label>
+			<input type="text"  class="form-control" name="descripcion" id="idDescripcion">
+		</div>
+		
+		<fieldset>
+		<legend>Habilidades requeridas para el puesto</legend>
+		<div class="mb-3 row">
+			<div class="mr-2" th:each="habilidad:${habilidades}">
+				<input type="checkbox" name="idsHabilidadesRequire[]" th:value="${habilidad.id}" th:id="|id-${habilidad.id}-habilidad|"/>
+				<label th:for="|id-${habilidad.id}-habilidad|" th:text="${habilidad.nombre}"/>
+			</div>
+		</div>
+		</fieldset>
+		
+		
+		<div class="m-3">
+			<input type="submit" class="btn btn-info m-2" value="Continuar"/>
+			<a href="/proyecto/r" class="btn btn-info m-2">Cancelar</a>
+		</div>
+		
+		<input type="hidden" name="idProyecto" th:value="${proyecto.id}"/>
+		
+	</form>
+	
+</div>
