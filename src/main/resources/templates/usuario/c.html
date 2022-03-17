@@ -8,6 +8,7 @@
 	
 	<div class="row m-3">
 		<h3 class="display-5">Nuevo usuario</h3>
+		<input type="button" value="Plantilla nuevo usuario" id="plantilla">
 	</div>
 	
 	<form action="/usuario/c" method="POST">
@@ -31,21 +32,28 @@
 			<label for="idTlf" class="form-label disabled">Teléfono</label>
 			<div style="color:red" id="divtlf"></div>
 			<input type="text" class="form-control" name="telefono" id="idTlf" required="required">
-			<input type="button" onclick="tlfValidation();" value="Validar TLF">
+			<input type="button" id="checktlf" value="Validar TLF">
 		</div>
 		
 		<div class="mb-3">
 			<label for="idEmail" class="form-label disabled">Email</label>
 			<div style="color:red" id="divemail"></div>
 			<input type="text" class="form-control" name="email" id="idEmail">
-			<input type="button" onclick="emailValidation();" value="Validar email">
+			<input type="button" value="Validar email" id="checkemail">
 		</div>
 		
 		<div class="mb-3">
 			<label for="idPass" class="form-label disabled">Contraseña</label>
 			<div style="color:red" id="divpass"></div>
 			<input type="password" class="form-control" name="password" id="idPass">
-			<input type="button" onclick="passValidation();" value="Validar Password">
+			
+		</div>
+		<div class="mb-3">
+			<label for="idPassConfirm" class="form-label disabled">Confirmar Contraseña</label>
+			<div style="color:red" id="divpassConfirm"></div>
+			<input type="password" class="form-control" name="password" id="idPassConfirm">
+			<input type="button" id="checkpass" value="Validar Password">
+			
 		</div>
 		
 		
@@ -69,7 +77,7 @@
 			
 			</br>
 			
-			<input type="radio"  name="admin" id="adminFalse" value="false">
+			<input type="radio"  name="admin" id="adminFalse" value="false" checked="checked">
 			<label for="adminFalse" class="disabled">No</label>
 		</div>
 		
