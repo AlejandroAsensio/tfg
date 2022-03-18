@@ -1,0 +1,77 @@
+<div class="container">
+	<div class="row m-3">
+		<h2 class="display-4">Proyectos</h2>
+	</div>
+</div>
+
+<div class="container rounded p-4">
+	
+	<div class="row m-3">
+		<h3 class="display-5" th:text="${proyecto.nombre}">
+		<h5 class="display-6" th:text="|${proyecto.leader.nombre} ${proyecto.leader.apellido1} ${proyecto.leader.apellido2}|">
+	</div>
+				<h5 class="display-6">Puestos disponibles</h5>
+	<table class="table table-hover">
+	<thead>
+	  
+		    <tr class="table-active">
+		    	<th scope="col">
+					Nombre del puesto
+				</th>
+				<th scope="col">
+					Descripcion
+				</th>
+				<th scope="col">
+					Ocupante
+				</th>
+				<th scope="col">
+					Habilidades Requeridas
+				</th>
+				
+		    </tr>
+	  </thead>
+	  <tbody>
+	  
+		    <tr>
+		    	<!-- scope="row" en un th indica el indice de la fila -->
+				<tr th:each="puesto:${proyecto.puestos}">
+					<td th:text="${puesto.nombre}"/>
+					<td th:text="${puesto.descripcion}"/>
+					<td th:text="${puesto.ocupante?.nombre}"/>
+					<td>
+						<th:block th:each="habilidad:${puesto.requiere}" th:text="|${habilidad.nombre} / |"/>
+					</td>
+					<td>
+						<form th:name="|unir${puesto.id}|" action="/usuario/unir" method="POST">
+							<input type="hidden" name="idPuesto" th:value="${puesto.id}"/>
+							<!--<input type="button" class="btn btn-success btn-sm" value="Unirse" onclick="confirmar(this.form.name)"/>-->
+							<input type="submit" class="btn btn-success btn-sm" value="Unirse"/>-->
+						</form>
+					</td>
+					<!--<td>
+						<form action="/proyecto/verProyecto">
+						<input type="hidden" name="idProyecto" th:value="${proyecto.id}"/>
+						<input type="submit" value="Más info"/>
+						</form>
+					</td>-->
+				</tr>
+		    </tr>
+	    
+		</tbody>
+	</table>
+	<br/>
+	<form action="/proyecto/c">
+		<input type="button" class="btn btn-success btn-sm" value="Nuevo Proyecto" onclick="this.form.submit()"/>
+		<!--<input type="hidden" name="idProyecto" th:value="${proyecto.id}"/>-->
+	</form>
+</div>
+<script>
+	/*function confirmar(nombre){
+		
+		var res = confirm("Estas seguro de que quieres unirte?");
+		console.log(nombre);
+		if(res){
+			nombre.submit();
+		}
+	}*/
+</script>

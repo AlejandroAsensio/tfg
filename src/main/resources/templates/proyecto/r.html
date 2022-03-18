@@ -45,6 +45,12 @@
 					<td th:text="${proyecto.puestos.size()}"/>
 					<td th:text="${proyecto.inicio}"/>
 					<td th:text="${proyecto.fin}"/>
+					<td>
+						<form action="/proyecto/verProyecto">
+						<input type="hidden" name="idProyecto" th:value="${proyecto.id}"/>
+						<input type="submit" value="Más info"/>
+						</form>
+					</td>
 				</tr>
 		    </tr>
 	    

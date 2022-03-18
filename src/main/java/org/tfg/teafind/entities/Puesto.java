@@ -98,7 +98,7 @@ public class Puesto {
 
 	public void setOcupante(Usuario ocupante) {
 		this.ocupante = ocupante;
-		this.ocupante.getOcupa().add(this);
+//		this.ocupante.getOcupa().add(this);
 	}
 
 

@@ -113,4 +113,14 @@ public class UsuarioController {
 		m.put("view", "/usuario/ownProjects");
 		return "_t/frame";
 	}
+	@PostMapping("unir")
+	public String unir(ModelMap m,HttpSession s,
+			@RequestParam("idPuesto") Long idPuesto
+			) {
+		Puesto puesto = puestoRepository.getById(idPuesto);
+		Usuario usuario = (Usuario) s.getAttribute("usuario");
+		puesto.setOcupante(usuario);
+		puestoRepository.save(puesto);
+		return "redirect:/proyecto/verProyecto?idProyecto="+puesto.getProyecto().getId();
+	}
 }

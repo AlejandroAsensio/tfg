@@ -44,6 +44,7 @@ public class Usuario {
 	//======================================================
 	public Usuario() {
 		this.sabe = new ArrayList<Habilidad>();
+//		this.ocupa = new ArrayList<Puesto>();
 	}
 	public Usuario(String nombre, String apellido1, String apellido2, String telefono, String email, String password,
 			boolean admin) {
@@ -56,6 +57,7 @@ public class Usuario {
 		this.password = encriptar(password);
 		this.admin = admin;
 		this.sabe = new ArrayList<Habilidad>();
+//		this.ocupa = new ArrayList<Puesto>();
 	}
 	
 	//======================================================

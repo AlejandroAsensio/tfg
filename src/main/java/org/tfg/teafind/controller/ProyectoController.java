@@ -69,4 +69,16 @@ public class ProyectoController {
 		return "redirect:/puesto/c?nombreProyecto="+nombre;
 	
 	}
+	@GetMapping("verProyecto")
+	public String verProyecto(
+			ModelMap m,
+			@RequestParam("idProyecto") Long idProyecto
+			) {
+		
+		Proyecto proyecto = proyectoRepository.getById(idProyecto);
+		m.put("proyecto", proyecto);
+		m.put("view", "/proyecto/verProyecto");
+		return "_t/frame";
+	}
+	
 }
