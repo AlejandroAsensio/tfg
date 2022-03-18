@@ -58,7 +58,8 @@
 						</td>
 						<td th:each="puesto : ${proyectoCreado.puestos}">
 							<div>
-								<th:block th:text="${puesto.ocupante.nombre}"/>
+								<th:block th:if="${puesto.ocupante?.nombre != null}" th:text="${puesto.ocupante.nombre}"/>
+								<th:block th:unless="${puesto.ocupante?.nombre != null}">Libre</th:block>
 							</div>
 						</td>
 					</th:block>

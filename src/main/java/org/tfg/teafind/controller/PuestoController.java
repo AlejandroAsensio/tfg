@@ -72,6 +72,7 @@ public class PuestoController {
 		for(Long id: idsHabilidadesRequire) {
 			habilidadesRequeridas.add(habilidadRepository.getById(id));
 		}
+		
 		Proyecto proyecto = proyectoRepository.getById(idProyecto);
 		try {
 			
