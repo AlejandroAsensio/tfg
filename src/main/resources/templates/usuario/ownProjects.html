@@ -1,6 +1,6 @@
 <div class="container">
 	<div class="row m-3">
-		<h2 class="display-4">Usuario</h2>
+		<h2 class="display-4"><th:block th:text="${usuario.nombre}"/></h2>
 	</div>
 </div>
 
@@ -32,7 +32,7 @@
 		    </tr>
 		    <tr class="table-active">
 				<th>
-					Puestos del proyecto
+					Nombre del puesto
 				</th>
 				<th>
 					Ocupante
@@ -62,8 +62,8 @@
 							</div>
 						</td>
 					</th:block>
-					<td th:unless="${proyectoCreado.puestos.size == 0}" th:text="Sin puestos creados" rowspan="2"/>
-					
+					<td th:unless="${proyectoCreado.puestos.size != 0}" colspan="2">Sin puestos creados</th>
+				
 				</tr>
 		    </tr>
 	    
@@ -99,13 +99,12 @@
 	  <tbody>
 	  
 		    <tr>
-		    	<!-- scope="row" en un th indica el indice de la fila -->
 				<tr th:each="proyectoPertenece : ${proyectosPertenece}">
-					<td th:text="${proyectoPertenece.leader.nombre}"/>
-					<td th:text="${proyectoPertenece.nombre}"/>
-					<td th:text="${proyectoPertenece.inicio}"/>
-					<td th:text="${proyectoPertenece.fin}"/>
-					<td th:text="Puesto que ocupa en el proyecto"/>
+					<td th:text="${proyectoPertenece.proyecto.leader.nombre}"/>
+					<td th:text="${proyectoPertenece.proyecto.nombre}"/>
+					<td th:text="${proyectoPertenece.proyecto.inicio}"/>
+					<td th:text="${proyectoPertenece.proyecto.fin}"/>
+					<td>Puesto que ocupa en el proyecto</td>
 				</tr>
 		    </tr>
 	    

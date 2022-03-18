@@ -12,11 +12,15 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.tfg.teafind.entities.Habilidad;
+import org.tfg.teafind.entities.Proyecto;
+import org.tfg.teafind.entities.Puesto;
 import org.tfg.teafind.entities.Usuario;
 import org.tfg.teafind.exception.DangerException;
 import org.tfg.teafind.exception.InfoException;
 import org.tfg.teafind.exception.PRG;
 import org.tfg.teafind.repository.HabilidadRepository;
+import org.tfg.teafind.repository.ProyectoRepository;
+import org.tfg.teafind.repository.PuestoRepository;
 import org.tfg.teafind.repository.UsuarioRepository;
 
 @Controller
@@ -28,6 +32,12 @@ public class UsuarioController {
 	
 	@Autowired
 	private HabilidadRepository habilidadRepository;
+	
+	@Autowired
+	private ProyectoRepository proyectoRepository;
+	
+	@Autowired
+	private PuestoRepository puestoRepository;
 	
 	@GetMapping("r")
 	public String r(
@@ -93,9 +103,12 @@ public class UsuarioController {
 	@GetMapping("mis_proyectos")
 	public String rOP(ModelMap m, HttpSession s) {
 		Usuario usuario = (Usuario) s.getAttribute("usuario");
+		List<Proyecto> creados = proyectoRepository.findByLeaderId(usuario.getId());
+		List<Puesto> ocupa = puestoRepository.findByOcupanteId(usuario.getId());
 		
-		m.put("proyectosCreados", usuario.getCreados());
-		m.put("proyectosPertenece", usuario.getOcupa());
+		m.put("usuario", usuario);
+		m.put("proyectosCreados", creados);
+		m.put("proyectosPertenece", ocupa);
 		
 		m.put("view", "/usuario/ownProjects");
 		return "_t/frame";
