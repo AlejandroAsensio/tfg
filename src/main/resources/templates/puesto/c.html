@@ -10,7 +10,7 @@
 		<h3 class="display-5" th:text="${proyecto.nombre}"/>
 	</div>
 	
-	<form action="/puesto/c" method="POST">
+	<form name="puestoForm" action="/puesto/c" method="POST">
 		<div class="mb-3">
 			<label for="idNombre" class="form-label disabled">Nombre</label>
 			<input type="text" class="form-control" name="nombre" id="idNombre">
@@ -33,12 +33,25 @@
 		
 		
 		<div class="m-3">
-			<input type="submit" class="btn btn-info m-2" value="Continuar"/>
+			<input type="button" onclick="comprobarDestino(true)" class="btn btn-info m-2" value="Finalizar" />
+			<input type="button" onclick="comprobarDestino(false)" class="btn btn-info m-2" value="Añadir Mas" />
 			<a href="/proyecto/r" class="btn btn-info m-2">Cancelar</a>
 		</div>
-		
+		<input type="hidden" name="destino" value=""/>
 		<input type="hidden" name="idProyecto" th:value="${proyecto.id}"/>
+		<input type="hidden" name="nombreProyecto" th:value="${proyecto.nombre}"/>
 		
 	</form>
 	
 </div>
+<script>
+	function comprobarDestino(fin){
+		if(fin){
+			puestoForm.destino.value=fin;
+		}
+		else if(!fin){
+			puestoForm.destino.value=fin;
+		}
+		puestoForm.submit();
+	}
+</script>

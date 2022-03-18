@@ -65,9 +65,11 @@ public class PuestoController {
 			@RequestParam("nombre") String nombre,
 			@RequestParam("descripcion") String descripcion,
 			@RequestParam("idsHabilidadesRequire[]")List<Long> idsHabilidadesRequire,
-			@RequestParam("idProyecto") Long idProyecto
+			@RequestParam("idProyecto") Long idProyecto,
+			@RequestParam("destino") boolean fin,
+			@RequestParam("nombreProyecto") String nombreProyecto
 			) throws DangerException, InfoException {
-		
+		String ruta = "";
 		List<Habilidad> habilidadesRequeridas = new ArrayList<Habilidad>();
 		for(Long id: idsHabilidadesRequire) {
 			habilidadesRequeridas.add(habilidadRepository.getById(id));
@@ -81,7 +83,13 @@ public class PuestoController {
 		} catch (Exception e) {
 			PRG.error("La habilidad " + nombre + " ya existe ", "/usuario/c");
 		}
+		if(fin) {
+			ruta="redirect:r";
+		}
+		else if(!fin) {
+			ruta="redirect:c?nombreProyecto="+nombreProyecto;
+		}
 //		PRG.info(nombre + " creado correctamente.", "/usuario/r");
-		return "redirect:r";
+		return ruta;
 	}
 }
