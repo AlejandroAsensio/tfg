@@ -35,6 +35,7 @@ public class ProyectoController {
 			) {
 		List<Proyecto> proyectos = proyectoRepository.findAll();
 		
+		
 		m.put("proyectos", proyectos);
 		m.put("view", "/proyecto/r");
 		return "_t/frame";
