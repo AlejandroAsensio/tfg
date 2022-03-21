@@ -5,7 +5,7 @@
 	</a>
 
 	<div th:unless="${session.usuario==null}">
-		<span th:text="${session.usuario.nombre}"/>
+		<a href="/usuario/u"><span th:text="${session.usuario.nombre}"/></a>
 		/
 		<a href="/logout">LOGOUT</a>
 		/

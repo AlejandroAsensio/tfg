@@ -147,6 +147,7 @@ public class Usuario {
 		 this.sabe.add(habilidad);
 		 habilidad.getConocida().add(this);
 	 }
+	 
 	
 	/*TODO
 	 

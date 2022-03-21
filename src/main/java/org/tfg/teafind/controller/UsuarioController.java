@@ -123,4 +123,15 @@ public class UsuarioController {
 		puestoRepository.save(puesto);
 		return "redirect:/proyecto/verProyecto?idProyecto="+puesto.getProyecto().getId();
 	}
+	
+	@GetMapping("u")
+	public String perfil(ModelMap m, HttpSession s) {
+		Usuario usuario = (Usuario) s.getAttribute("usuario");
+		List<Habilidad> habilidades = habilidadRepository.findAll();
+		m.put("usuario", usuario);
+		m.put("habilidades", habilidades);
+		m.put("view", "/usuario/perfil");
+		
+		return "_t/frame";
+	}
 }
