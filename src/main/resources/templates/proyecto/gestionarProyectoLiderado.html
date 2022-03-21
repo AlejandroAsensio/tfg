@@ -1,0 +1,40 @@
+<div class="container">
+	<div class="row m-3">
+		<h2 class="display-4"><th:block th:text="|Gestionar ${proyecto.nombre}|"/></h2>
+	</div>
+</div>
+
+<div class="container rounded p-4">
+	
+	<div class="row m-3">
+		<h3 class="display-5">Información general:</h3>
+	</div>
+	
+	<div class="row">
+		<label for="nombreP">Nombre del proyecto: </label>
+		<input type="text" id="nombreP" th:value="${proyecto.nombre}">
+	</div>
+	
+	<div class="row">
+		<label for="descripcionP">Descripción del proyecto: </label>
+		<input type="text" id="descripcionP" th:value="${proyecto.descripcion}">
+	</div>
+	
+	<div class="row">
+		<label for="inicioP">Fecha de inicio: </label>
+		<input type="date" id="InicioP" th:value="${proyecto.inicio}">
+	</div>
+	
+	<div class="row">
+		<label for="finP">Fecha de fin: </label>
+		<input type="date" id="finP" th:value="${proyecto.fin}">
+	</div>
+	
+	<div class="row m-3">
+		<h3 class="display-5">Puestos libres de tu proyecto:</h3>
+	</div>
+	
+	<div class="row m-3">
+		<h3 class="display-5">Tu equipo actual:</h3>
+	</div>
+</div>
