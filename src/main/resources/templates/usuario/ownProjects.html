@@ -26,7 +26,7 @@
 				<th scope="col" rowspan="2">
 					Fecha de Finalización
 				</th>
-				<th scope="col" colspan="2">
+				<th scope="col" colspan="2" class="text-center">
 					Puestos del proyecto
 				</th>
 		    </tr>
@@ -41,32 +41,39 @@
 	  </thead>
 	  <tbody>
 	  
-		    <tr>
-		    	<!-- scope="row" en un th indica el indice de la fila -->
-				<tr th:each="proyectoCreado : ${proyectosCreados}">
-					<td th:text="${proyectoCreado.nombre}"/>
-					<td th:text="${proyectoCreado.descripcion}"/>
-					<td th:text="${proyectoCreado.inicio}"/>
-					<td th:text="${proyectoCreado.fin}"/>
-					
-					<!--Comprobar si la lista de puestos del proyecto no está vacía-->
-					<th:block th:if="${proyectoCreado.puestos.size != 0}">
-						<td th:each="puesto : ${proyectoCreado.puestos}">
-							<div>
-								<th:block th:text="${puesto.nombre}"/>
-							</div>
-						</td>
-						<td th:each="puesto : ${proyectoCreado.puestos}">
-							<div>
-								<th:block th:if="${puesto.ocupante?.nombre != null}" th:text="${puesto.ocupante.nombre}"/>
-								<th:block th:unless="${puesto.ocupante?.nombre != null}">Libre</th:block>
-							</div>
-						</td>
-					</th:block>
-					<td th:unless="${proyectoCreado.puestos.size != 0}" colspan="2">Sin puestos creados</th>
+	    	<!-- scope="row" en un th indica el indice de la fila -->
+			<tr th:each="proyectoCreado : ${proyectosCreados}">
+				<td>
+					<form action="/proyecto/tuProyecto">
+						<input type="submit" value="Gestionar" class="btn btn-sm bg-info" />
+						<input type="hidden" name="idProyecto" th:value="${proyectoCreado.id}"/>
+					</form>
+					<th:block th:text="${proyectoCreado.nombre}"/>
+				</td>
+				<td th:text="${proyectoCreado.descripcion}"/>
+				<td th:text="${proyectoCreado.inicio}"/>
+				<td th:text="${proyectoCreado.fin}"/>
 				
-				</tr>
-		    </tr>
+				<!--Falta meter salto de línea entre los nombres de puestos y los nombres de
+				los ocupantes (o aviso de libre)-->
+				<th:block th:if="${proyectoCreado.puestos.size != 0}">
+					<td>
+						<th:block th:each="puesto : ${proyectoCreado.puestos}" th:text="|· ${puesto.nombre}|"/>
+					</td>
+					<td>
+						<th:block th:each="puesto : ${proyectoCreado.puestos}">
+						 	<th:block
+								th:if="${puesto.ocupante?.nombre != null}" 
+								th:text="|· ${puesto.ocupante.nombre}|">
+							 </th:block>
+						<th:block th:unless="${puesto.ocupante?.nombre != null}">Libre</th:block>
+						</th:block>
+					</td>
+				</th:block>
+				<th:block th:unless="${proyectoCreado.puestos.size != 0}">
+					<td  colspan="2" class="text-center">Sin puestos creados</th>
+				</th:block>
+			</tr>
 	    
 		</tbody>
 	</table>
@@ -81,10 +88,10 @@
 	  
 		    <tr class="table-active">
 		    	<th scope="col">
-					Líder del proyecto
-				</th>
-				<th scope="col">
 					Nombre Proyecto
+				</th>
+		    	<th scope="col">
+					Líder del proyecto
 				</th>
 				<th scope="col">
 					Fecha de Inicio
@@ -99,16 +106,20 @@
 	  </thead>
 	  <tbody>
 	  
-		    <tr>
-				<tr th:each="proyectoPertenece : ${proyectosPertenece}">
-					<td th:text="${proyectoPertenece.proyecto.leader.nombre}"/>
-					<td th:text="${proyectoPertenece.proyecto.nombre}"/>
-					<td th:text="${proyectoPertenece.proyecto.inicio}"/>
-					<td th:text="${proyectoPertenece.proyecto.fin}"/>
-					<td>Puesto que ocupa en el proyecto</td>
-				</tr>
-		    </tr>
-	    
+			<tr th:each="proyectoPertenece : ${proyectosPertenece}">
+				<td>
+					<a 	class="btn btn-sm bg-info"
+						th:href="|/proyecto/verProyecto?idProyecto=${proyectoPertenece.id}|">
+						Ver
+					</a>
+					<th:block th:text="${proyectoPertenece.proyecto.nombre}"/>
+				</td>
+				<td th:text="${proyectoPertenece.proyecto.leader.nombre}"/>
+				<td th:text="${proyectoPertenece.proyecto.inicio}"/>
+				<td th:text="${proyectoPertenece.proyecto.fin}"/>
+				<td th:text="${proyectoPertenece.nombre}"/>
+			</tr>
+		   
 		</tbody>
 	</table>
 </div>

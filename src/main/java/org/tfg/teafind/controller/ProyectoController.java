@@ -3,6 +3,8 @@ package org.tfg.teafind.controller;
 import java.time.LocalDate;
 import java.util.List;
 
+import javax.servlet.http.HttpSession;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.format.annotation.DateTimeFormat;
 import org.springframework.stereotype.Controller;
@@ -79,6 +81,25 @@ public class ProyectoController {
 		Proyecto proyecto = proyectoRepository.getById(idProyecto);
 		m.put("proyecto", proyecto);
 		m.put("view", "/proyecto/verProyecto");
+		return "_t/frame";
+	}
+	
+	@GetMapping("tuProyecto")
+	public String uProyectoLiderado(
+			ModelMap m,
+			HttpSession s,
+			@RequestParam("idProyecto") Long idProyecto
+			) throws DangerException {
+		
+		Proyecto proyecto = proyectoRepository.getById(idProyecto);
+		Usuario leader = (Usuario) s.getAttribute("usuario");
+		
+		if ((leader == null) || (!leader.getId().equals(proyecto.getLeader().getId()))) {
+			PRG.error("No tienes permiso para gestionar este proyecto", "/");
+		}
+		
+		m.put("proyecto", proyecto);
+		m.put("view", "/proyecto/gestionarProyectoLiderado");
 		return "_t/frame";
 	}
 	
