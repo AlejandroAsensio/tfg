@@ -44,8 +44,8 @@
 					<td>
 						<form th:name="|unir${puesto.id}|" action="/usuario/unir" method="POST">
 							<input type="hidden" name="idPuesto" th:value="${puesto.id}"/>
-							<!--<input type="button" class="btn btn-success btn-sm" value="Unirse" onclick="confirmar(this.form.name)"/>-->
-							<input type="submit" class="btn btn-success btn-sm" value="Unirse"/>-->
+							<input type="button" class="btn btn-success btn-sm" value="Unirse" onclick="confirmar(this.form)"/>
+							<!--<input type="submit" class="btn btn-success btn-sm" value="Unirse"/>-->
 						</form>
 					</td>
 					<!--<td>
@@ -66,12 +66,12 @@
 	</form>
 </div>
 <script>
-	/*function confirmar(nombre){
+	function confirmar(formulario){
 		
 		var res = confirm("Estas seguro de que quieres unirte?");
-		console.log(nombre);
+		console.log(formulario);
 		if(res){
-			nombre.submit();
+			formulario.submit();
 		}
-	}*/
+	}
 </script>
