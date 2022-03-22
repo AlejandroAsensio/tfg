@@ -10,7 +10,7 @@
 		<h3 class="display-5">Nuevo Proyecto</h3>
 	</div>
 	
-	<form action="/proyecto/c" method="POST">
+	<form onsubmit="return validar();" action="/proyecto/c" method="POST">
 		<div class="mb-3">
 			<label for="idNombre" class="form-label disabled">Nombre</label>
 			<input type="text" class="form-control" name="nombre" id="idNombre">
@@ -25,10 +25,10 @@
 			<label for="id-fIni" class="form-label disabled">Fecha de Inicio</label>
 			<input type="date" name="fIni" id="id-fIni">
 		</div>
-		
+		<div id="divFecha" style="color : red"></div>
 		<div class="mb-3">
 			<label for="id-fFin" class="form-label disabled">Fecha Fin</label>
-			<input type="date" name="fFin" id="id-fFin">
+			<input type="date" name="fFin" oninput="fechaValidationFin();" id="id-fFin">
 		</div>
 		
 		
@@ -42,3 +42,4 @@
 	</form>
 	
 </div>
+<script src="/js/proyectoValidation.js"></script>
