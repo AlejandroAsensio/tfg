@@ -111,7 +111,7 @@
 			<tr th:each="proyectoPertenece : ${proyectosPertenece}">
 				<td>
 					<a 	class="btn btn-sm bg-info"
-						th:href="|/proyecto/verProyecto?idProyecto=${proyectoPertenece.id}|">
+						th:href="|/proyecto/verProyecto?idProyecto=${proyectoPertenece.proyecto.id}|">
 						Ver
 					</a>
 					<th:block th:text="${proyectoPertenece.proyecto.nombre}"/>
