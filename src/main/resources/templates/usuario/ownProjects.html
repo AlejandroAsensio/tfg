@@ -58,16 +58,18 @@
 				los ocupantes (o aviso de libre)-->
 				<th:block th:if="${proyectoCreado.puestos.size != 0}">
 					<td>
-						<th:block th:each="puesto : ${proyectoCreado.puestos}" th:text="|· ${puesto.nombre}|"/>
+						<ul th:each="puesto : ${proyectoCreado.puestos}">
+							<li th:text="${puesto.nombre}" />
+						</ul>
 					</td>
 					<td>
-						<th:block th:each="puesto : ${proyectoCreado.puestos}">
-						 	<th:block
+						<ul th:each="puesto : ${proyectoCreado.puestos}">
+						 	<li
 								th:if="${puesto.ocupante?.nombre != null}" 
-								th:text="|· ${puesto.ocupante.nombre}|">
-							 </th:block>
-						<th:block th:unless="${puesto.ocupante?.nombre != null}">Libre</th:block>
-						</th:block>
+								th:text="${puesto.ocupante.nombre}">
+							</li>
+							<li th:unless="${puesto.ocupante?.nombre != null}">Libre</li>
+						</ul>
 					</td>
 				</th:block>
 				<th:block th:unless="${proyectoCreado.puestos.size != 0}">
