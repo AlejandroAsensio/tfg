@@ -17,10 +17,12 @@
 
 		<form action="/proyecto/r">
 			<button>Ver Proyectos</button>
-		</form>
-		<form action="/proyecto/c">
+		</form>	
+		
+		<form th:if="${session.usuario!=null}" action="/proyecto/c">
 			<button>Crear Proyectos</button>
 		</form>
+		
 		<br />
 
 		<form action="/usuario/r">

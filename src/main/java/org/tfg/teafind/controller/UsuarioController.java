@@ -73,8 +73,8 @@ public class UsuarioController {
 			@RequestParam("telefono") String telefono,
 			@RequestParam("email") String email,
 			@RequestParam("password") String password,
-			@RequestParam("idsHabilidadesSabe[]") List<Long> idsHabilidadesSabe,
-			@RequestParam("admin") boolean admin
+			@RequestParam(value="idsHabilidadesSabe[]",required=false) List<Long> idsHabilidadesSabe
+
 			) throws DangerException, InfoException {
 		try {
 			Usuario usuario= new Usuario(
@@ -84,7 +84,7 @@ public class UsuarioController {
 					telefono, 
 					email, 
 					password, 
-					admin
+					false
 					);
 			if(idsHabilidadesSabe!=null) {
 				for(Long idHabilidadSabe: idsHabilidadesSabe) {
@@ -145,7 +145,7 @@ public class UsuarioController {
 			@RequestParam("apellido2") String apellido2,
 			@RequestParam("telefono") String telefono,
 			@RequestParam("email") String email,
-			@RequestParam("idsHabilidades[]") List<Long> idsHabilidades,
+			@RequestParam(value="idsHabilidades[]",required=false) List<Long> idsHabilidades,
 			@RequestParam(value="password",required=false) String password,
 			@RequestParam(value="newPassword",required=false) String newPassword,
 			@RequestParam(value="passwordConfirm",required=false) String passwordConfirm,
@@ -166,7 +166,13 @@ public class UsuarioController {
 			}
 		}
 		usuario.setSabe(nuevasHabilidades);
-		if(password != null || password!="") {
+//		if(password != null || password.compareTo("")!=0) {
+//			
+//		}
+		if(password == null || password.compareTo("")==0) {
+			
+		}
+		else {
 			if (new BCryptPasswordEncoder().matches(password, usuario.getPassword())) {
 				if(newPassword.equals(passwordConfirm)) {
 					usuario.setPassword(newPassword);

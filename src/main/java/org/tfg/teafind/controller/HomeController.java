@@ -19,6 +19,7 @@ import org.tfg.teafind.entities.Usuario;
 //import org.springframework.web.bind.annotation.PostMapping;
 //import org.springframework.web.bind.annotation.RequestParam;
 import org.tfg.teafind.exception.DangerException;
+import org.tfg.teafind.exception.PRG;
 import org.tfg.teafind.helper.H;
 import org.tfg.teafind.repository.UsuarioRepository;
 
@@ -59,20 +60,20 @@ public class HomeController {
 	}
 
 	@PostMapping("/login")
-	public String loginPost(@RequestParam("email") String email, @RequestParam("pwd") String pwd, HttpSession s) {
-		String returnLocation = "redirect:/";
+	public String loginPost(@RequestParam("email") String email, @RequestParam("pwd") String pwd, HttpSession s) throws DangerException {
+		
 		try {
 			Usuario usuario= usuarioRepository.getByEmail(email);
 			if (new BCryptPasswordEncoder().matches(pwd, usuario.getPassword())) {
 				s.setAttribute("usuario", usuario);
 			}
 			else {
-				returnLocation="redirect:/errorDisplay?msg=Password incorrecta";
+				PRG.error("Usuario/Contraseña incorrectos","/login");
 			}
 		} catch (Exception e) {
-			returnLocation="redirect:/errorDisplay?msg=Usuario incorrecto";
+			PRG.error("Usuario/Contraseña incorrectos","/login");
 		}
-		return returnLocation;
+		return "redirect:/";
 	}
 	
 	@GetMapping("/logout")
