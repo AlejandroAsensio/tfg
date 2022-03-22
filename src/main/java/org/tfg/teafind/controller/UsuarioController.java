@@ -1,10 +1,13 @@
 package org.tfg.teafind.controller;
 
+
+import java.util.ArrayList;
 import java.util.List;
 
 import javax.servlet.http.HttpSession;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.ModelMap;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -127,11 +130,59 @@ public class UsuarioController {
 	@GetMapping("u")
 	public String perfil(ModelMap m, HttpSession s) {
 		Usuario usuario = (Usuario) s.getAttribute("usuario");
+		Usuario u = usuarioRepository.getById(usuario.getId());
 		List<Habilidad> habilidades = habilidadRepository.findAll();
-		m.put("usuario", usuario);
+		m.put("usuario", u);
 		m.put("habilidades", habilidades);
 		m.put("view", "/usuario/perfil");
 		
 		return "_t/frame";
 	}
+	@PostMapping("u")
+	public String perfilPost(
+			@RequestParam("nombre") String nombre, 
+			@RequestParam("apellido1") String apellido1,
+			@RequestParam("apellido2") String apellido2,
+			@RequestParam("telefono") String telefono,
+			@RequestParam("email") String email,
+			@RequestParam("idsHabilidades[]") List<Long> idsHabilidades,
+			@RequestParam(value="password",required=false) String password,
+			@RequestParam(value="newPassword",required=false) String newPassword,
+			@RequestParam(value="passwordConfirm",required=false) String passwordConfirm,
+			HttpSession s
+			) throws DangerException {
+		Usuario u = (Usuario) s.getAttribute("usuario");
+		Usuario usuario = usuarioRepository.getById(u.getId());
+		ArrayList<Habilidad> nuevasHabilidades = new ArrayList<Habilidad>();
+		
+		usuario.setNombre(nombre);
+		usuario.setApellido1(apellido1);
+		usuario.setApellido2(apellido2);
+		usuario.setEmail(email);
+		usuario.setTelefono(telefono);
+		if (idsHabilidades!=null) {
+			for (Long idHabilidad:idsHabilidades) {
+				nuevasHabilidades.add(habilidadRepository.getById(idHabilidad));
+			}
+		}
+		usuario.setSabe(nuevasHabilidades);
+		if(password != null || password!="") {
+			if (new BCryptPasswordEncoder().matches(password, usuario.getPassword())) {
+				if(newPassword.equals(passwordConfirm)) {
+					usuario.setPassword(newPassword);
+				}
+				else {
+					PRG.error("Las contraseñas no coinciden","/usuario/u");	
+				}
+			}
+			else {
+				PRG.error("Contraseña incorrecta","/usuario/u");
+			}
+		}
+		
+		usuarioRepository.save(usuario);
+		
+		return "redirect:/usuario/u";
+	}
+
 }

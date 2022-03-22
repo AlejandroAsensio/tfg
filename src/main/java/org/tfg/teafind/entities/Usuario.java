@@ -107,7 +107,7 @@ public class Usuario {
 		return password;
 	}
 	public void setPassword(String password) {
-		this.password = password;
+		this.password = encriptar(password);
 	}
 	public boolean isAdmin() {
 		return admin;
