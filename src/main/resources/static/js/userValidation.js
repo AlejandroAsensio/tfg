@@ -98,6 +98,7 @@ function validar(){
         }
         else{
           document.getElementById("divValidate").innerHTML="Revisa los datos";
+          window.location.href="#01"
             return false;
             
         }
