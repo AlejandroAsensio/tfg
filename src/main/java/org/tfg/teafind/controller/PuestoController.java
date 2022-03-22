@@ -3,6 +3,8 @@ package org.tfg.teafind.controller;
 import java.util.ArrayList;
 import java.util.List;
 
+import javax.servlet.http.HttpSession;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.ModelMap;
@@ -47,10 +49,17 @@ public class PuestoController {
 	}
 	
 	@GetMapping("c")
-	public String c(ModelMap m,
+	public String c(
+			ModelMap m,
+			HttpSession s,
 			@RequestParam ("nombreProyecto") String nombreProyecto
-			) {
+			) throws DangerException {
 		Proyecto proyecto = proyectoRepository.getByNombre(nombreProyecto);
+		Usuario leader = (Usuario) s.getAttribute("usuario");
+		
+		if ((leader == null) || (!leader.getId().equals(proyecto.getLeader().getId()))) {
+			PRG.error("No tienes permiso para gestionar este proyecto", "/");
+		}
 		
 		List<Habilidad> habilidades = habilidadRepository.findAll();
 		m.put("habilidades", habilidades);
@@ -62,6 +71,7 @@ public class PuestoController {
 	
 	@PostMapping("c")
 	public String cPost(
+			HttpSession s,
 			@RequestParam("nombre") String nombre,
 			@RequestParam("descripcion") String descripcion,
 			@RequestParam("idsHabilidadesRequire[]")List<Long> idsHabilidadesRequire,
@@ -76,8 +86,11 @@ public class PuestoController {
 		}
 		
 		Proyecto proyecto = proyectoRepository.getById(idProyecto);
+		Usuario leader = (Usuario) s.getAttribute("usuario");
 		try {
-			
+			if ((leader == null) || (!leader.getId().equals(proyecto.getLeader().getId()))) {
+				PRG.error("No tienes permiso para gestionar este proyecto", "/");
+			}
 			puestoRepository.save(new Puesto(nombre,descripcion,proyecto,habilidadesRequeridas));
 			
 		} catch (Exception e) {
