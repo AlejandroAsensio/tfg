@@ -22,7 +22,7 @@ import org.tfg.teafind.exception.PRG;
 import org.tfg.teafind.repository.HabilidadRepository;
 import org.tfg.teafind.repository.ProyectoRepository;
 import org.tfg.teafind.repository.PuestoRepository;
-import org.tfg.teafind.repository.UsuarioRepository;
+
 
 @Controller
 @RequestMapping("/puesto")
@@ -97,7 +97,7 @@ public class PuestoController {
 			PRG.error("La habilidad " + nombre + " ya existe ", "/usuario/c");
 		}
 		if(fin) {
-			ruta="redirect:r";
+			ruta="redirect:/proyecto/tuProyecto?idProyecto="+idProyecto;
 		}
 		else if(!fin) {
 			ruta="redirect:c?nombreProyecto="+nombreProyecto;
