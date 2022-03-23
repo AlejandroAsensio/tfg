@@ -2,7 +2,7 @@
 <section name="Workbench">
 	<list key="installedFeatures">
 		<item value="com.ianbrandt.tools.m2e.mdp.feature:0.0.4.201409291703"/>
-		<item value="net.mihai-nita.ansicon:1.4.5.202111252246"/>
+		<item value="net.mihai-nita.ansicon:1.4.6.202112080311"/>
 		<item value="org.eclipse.buildship:3.1.5.v20210113-0929"/>
 		<item value="org.eclipse.egit.gitflow.feature:6.0.0.202111291000-r"/>
 		<item value="org.eclipse.egit:6.0.0.202111291000-r"/>
@@ -21,7 +21,7 @@
 		<item value="org.eclipse.m2e.feature:1.19.0.20211116-0804"/>
 		<item value="org.eclipse.m2e.logback.feature:1.17.2.20211002-1029"/>
 		<item value="org.eclipse.m2e.wtp.feature:1.4.4.20201128-1705"/>
-		<item value="org.eclipse.mylyn.wikitext.editors_feature:3.0.41.202111102318"/>
+		<item value="org.eclipse.mylyn.wikitext.editors_feature:3.0.42.202201072301"/>
 		<item value="org.eclipse.pde:3.14.1000.v20211124-1800"/>
 		<item value="org.eclipse.platform:4.22.0.v20211124-1800"/>
 		<item value="org.eclipse.rcp:4.22.0.v20211124-1800"/>
@@ -47,6 +47,14 @@
 		</list>
 		<list key="WizardProjectsImportPage.STORE_ARCHIVES">
 			<item value=""/>
+		</list>
+	</section>
+	<section name="ChooseWorkspaceDialogSettings">
+		<item key="DIALOG_X_ORIGIN" value="652"/>
+		<item key="DIALOG_Y_ORIGIN" value="341"/>
+	</section>
+	<section name="WORKBENCH_SETTINGS">
+		<list key="ENABLED_TRANSFERS">
 		</list>
 	</section>
 </section>
