@@ -1,20 +1,4 @@
 <header class="container">
 
-	<div th:if="${session.usuario==null}">
-		<a href="/login">
-			LOGIN
-		</a>
-		/
-		<a href="/usuario/c">
-			SIGN UP
-		</a>
-	</div>
-	<div th:unless="${session.usuario==null}">
-		<a href="/usuario/u"><span th:text="${session.usuario.nombre}"/></a>
-		/
-		<a href="/logout">LOGOUT</a>
-		/
-		<a href="/usuario/mis_proyectos">Mis Proyectos</a>
-	</div>
 
 </header>

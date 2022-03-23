@@ -1,25 +1,49 @@
-<nav class="container navbar navbar-expand-sm bg-dark navbar-dark rounded">
+<nav class="navbar navbar-expand-sm bg-light navbar-light border-bottom px-5">
 
 	<a class="navbar-brand" href="/">
 		INICIO
 	</a>
 
-	<div class="collapse navbar-collapse" id="navbarSupportedContent">
+	<div class="collapse navbar-collapse px-5" id="navbarSupportedContent">
     	<ul class="navbar-nav mr-auto">
     	
-    		<li class="nav-item dropdown">
+    		<li class="nav-item active">
+        		<a class="nav-link" href="/">Inicio <span class="sr-only">(current)</span></a>
+      		</li>
+     	 	
+     	 	<li class="nav-item" th:if="${session.usuario!=null && session.usuario?.admin}">
+        		<a class="nav-link" href="/usuario/r">Ver usuarios</a>
+     	 	</li>
+    		
+    		<li class="nav-item dropdown" th:if="${session.usuario!=null && session.usuario?.admin}">
     			<a class="nav-link dropdown-toggle" data-toggle="dropdown" href="#" aria-haspopup="true" aria-expanded="false" role="button">
-    				Acciones
+    				Habilidades
     			</a>
     
-    			<!--<div class="dropdown-menu" aria-labelledby="navbarDropdown">
-    				<a class="dropdown-item" href="/pais/r">País</a>
-    				<a class="dropdown-item" href="/aficion/r">Afición</a>
-    				<a class="dropdown-item" href="/persona/r">Persona</a>
-    			</div>-->
+    			<div class="dropdown-menu" aria-labelledby="navbarDropdown">
+    				<a class="dropdown-item" href="/habilidad/r">Ver todas</a>
+    				<a class="dropdown-item" href="/habilidad/c">Crear nueva</a>
+    			</div>
     		</li>
     		
        </ul>
    </div>
+   
+   <div th:if="${session.usuario==null}">
+		<a href="/login">
+			LOGIN
+		</a>
+		/
+		<a href="/usuario/c">
+			SIGN UP
+		</a>
+	</div>
+	<div th:unless="${session.usuario==null}">
+		<div onclick="location.href='/usuario/u'" class="profile-circle"><span th:text="|${session.usuario.nombre.charAt(0)}${session.usuario.apellido1.charAt(0)}|"/></div>
+		/
+		<a href="/logout">LOGOUT</a>
+		/
+		<a href="/usuario/mis_proyectos">Mis Proyectos</a>
+	</div>
 </nav>
 
