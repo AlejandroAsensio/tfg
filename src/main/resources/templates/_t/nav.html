@@ -39,7 +39,7 @@
 		</a>
 	</div>
 	<div th:unless="${session.usuario==null}">
-		<div onclick="location.href='/usuario/u'" class="profile-circle"><span th:text="|${session.usuario.nombre.charAt(0)}${session.usuario.apellido1.charAt(0)}|"/></div>
+		<div onclick="location.href='/usuario/u'" style="text-transform: uppercase;" class="profile-circle"><span th:text="|${session.usuario.nombre.charAt(0)}${session.usuario.apellido1.charAt(0)}|"/></div>
 		/
 		<a href="/logout">LOGOUT</a>
 		/

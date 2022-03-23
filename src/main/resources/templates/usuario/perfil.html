@@ -8,8 +8,10 @@
 	Nombre <input type="text" name="nombre" th:value="${usuario.nombre}"/><br/><br/>
 	Primer Apellido <input type="text" name="apellido1" th:value="${usuario.apellido1}"/><br/><br/>
 	Segundo Apellido<input type="text" name="apellido2" th:value="${usuario.apellido2}"/><br/><br/>
-	Email<input type="text" name="email" th:value="${usuario.email}"/><br/><br/>
-	Teléfono <input type="text" name="telefono" th:value="${usuario.telefono}"/><br/><br/>
+	<div id="divemail"></div>
+	Email<input type="text" id="idEmail" name="email" th:value="${usuario.email}"/><br/><br/>
+	<div id="divtlf"></div>
+	Teléfono <input type="text" id="idTlf" name="telefono" th:value="${usuario.telefono}"/><br/><br/>
 	Habilidades
 	<div th:each="habilidad:${habilidades}">
 				<input  
@@ -25,8 +27,10 @@
 	
 	Cambiar contraseña<br/><br/>
 	Contraseña antigua <input type="password" name="password"/><br/><br/>
-	Contraseña nuevo <input type="password" name="newPassword"/><br/><br/>
-	Confirmar contraseña <input type="password" name="passwordConfirm"/><br/><br/>
+	<div id="divpass"></div>
+	Contraseña nuevo <input type="password" id="idPass" name="newPassword"/><br/><br/>
+	<div id="divpassConfirm"></div>
+	Confirmar contraseña <input type="password" id="idPassConfirm" name="passwordConfirm"/><br/><br/>
 	
 	
 	<br/>
@@ -34,3 +38,4 @@
 		<input type="submit" class="btn btn-success btn-sm" value="Modificar"/>
 	</form>
 </div>
+<script src="/js/userValidation.js"></script>

@@ -26,6 +26,7 @@ $(document).ready(function(){
     if(exp.test(tlf)){
 		$("#divtlf").css("color","green");
         document.getElementById("divtlf").innerHTML="El teléfono es válido";
+       
         oktlf=true;
     }
     else{
@@ -57,20 +58,36 @@ $(document).ready(function(){
     
     $('#idPass').on("keyup",function(){
         var pass = $('#idPass').val();
+        var passConfirm=$("#idPassConfirm").val();
         var exp=/^[a-zA-Z0-9ñÑ]{6,}$/;
-        
+		
+		if(pass == passConfirm){
+			$("#divpassConfirm").css("color","green");
+                document.getElementById("divpassConfirm").innerHTML="Confirmar contraseña correcto";
+		}
+		else{
+			$("#divpassConfirm").css("color","red");
+                document.getElementById("divpassConfirm").innerHTML="Las contraseñas deben de ser iguales";
+		}
     
         if(exp.test(pass) && pass.match(/[A-ZÑ]/)){
             $("#divpass").css("color","green");
             document.getElementById("divpass").innerHTML="Contraseña válida";
             okpass=true;
            
+
+           
         }
         else{
             $("#divpass").css("color","red");
             document.getElementById("divpass").innerHTML="Requisitos incorrectos (Al menos 6 caracteres y una letra mayúscula)";
             okpass=false;
+            
         }
+        
+        
+        
+        
     })
     
     $('#idPassConfirm').on("keyup",function(){

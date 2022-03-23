@@ -93,7 +93,7 @@ public class UsuarioController {
 			}
 			usuarioRepository.save(usuario);	
 		} catch (Exception e) {
-			PRG.error("La habilidad " + nombre + " ya existe.", "/usuario/c");
+			PRG.error("El número de móvil/email ya están registrados ", "/usuario/c");
 		}
 //		PRG.info(nombre + " creado correctamente.", "/usuario/r");
 		return "redirect:r";
