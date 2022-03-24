@@ -41,7 +41,7 @@ $(document).ready(function(){
     
     $('#idEmail').on("keyup",function(){
         var email = document.getElementById("idEmail").value;
-        var exp=/^[A-Za-z0-9]{1,}[@]{1}[a-z]{1,}[\.]{1}[a-z]{2,}$/;
+        var exp=/^[A-Za-z0-9\.\-\_]{1,}[@]{1}[a-z]{1,}[\.]{1}[a-z]{2,}$/;
         
         if(exp.test(email)){
 			$("#divemail").css("color","green");
