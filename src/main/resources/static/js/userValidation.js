@@ -1,6 +1,7 @@
 var oktlf=false;
 var okemail=false;
 var okpass=false;
+var okpassConfirm=false;
 $(document).ready(function(){
 
 
@@ -61,7 +62,7 @@ $(document).ready(function(){
         var passConfirm=$("#idPassConfirm").val();
         var exp=/^[a-zA-Z0-9ñÑ]{6,}$/;
 		
-		if(pass == passConfirm){
+		if(pass == passConfirm && pass!=""){
 			$("#divpassConfirm").css("color","green");
                 document.getElementById("divpassConfirm").innerHTML="Confirmar contraseña correcto";
 		}
@@ -74,8 +75,6 @@ $(document).ready(function(){
             $("#divpass").css("color","green");
             document.getElementById("divpass").innerHTML="Contraseña válida";
             okpass=true;
-           
-
            
         }
         else{
@@ -92,14 +91,18 @@ $(document).ready(function(){
     
     $('#idPassConfirm').on("keyup",function(){
 	var pass = $('#idPass').val();
-	if($('#idPassConfirm').val()!=pass){
-                $("#divpassConfirm").css("color","red");
-                document.getElementById("divpassConfirm").innerHTML="Las contraseñas deben de ser iguales";
+	 var passConfirm=$("#idPassConfirm").val();
+	if(passConfirm==pass & passConfirm!=""){
+				$("#divpassConfirm").css("color","green");
+                document.getElementById("divpassConfirm").innerHTML="Confirmar contraseña correcto";
+                okpassConfirm=true;
+		
+               
             }
             else{
-                $("#divpassConfirm").css("color","green");
-                document.getElementById("divpassConfirm").innerHTML="Confirmar contraseña correcto";
-                ok=true;
+                $("#divpassConfirm").css("color","red");
+                document.getElementById("divpassConfirm").innerHTML="Las contraseñas deben de ser iguales";
+                okpassConfirm=false;
             }
 })
       
@@ -108,7 +111,7 @@ $(document).ready(function(){
 })
 function validar(){
    
-        if(oktlf && okemail && okpass){
+        if(oktlf && okemail && okpass && okpassConfirm){
         
             return true;
            
