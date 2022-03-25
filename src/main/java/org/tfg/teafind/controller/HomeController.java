@@ -68,10 +68,10 @@ public class HomeController {
 				s.setAttribute("usuario", usuario);
 			}
 			else {
-				PRG.error("Usuario/Contraseña incorrectos","/login");
+				PRG.error("Usuario/Contraseña incorrectos","/");
 			}
 		} catch (Exception e) {
-			PRG.error("Usuario/Contraseña incorrectos","/login");
+			PRG.error("Usuario/Contraseña incorrectos","/");
 		}
 		return "redirect:/";
 	}

@@ -1,11 +1,20 @@
 /*----------------------NAV----------------------
 ------------------------------------------------*/
+nav {
+	height: 65px;
+	width: 100%;
+}
 .profile-circle {
     height: 40px;
     width: 40px;
-    background-color: cadetblue;
+    background-color: rgb(67, 175, 179);
     border-radius: 50%;
-    line-height: 40px;
+    line-height: 100%;
     text-align: center;
-    color: azure;
+}
+.dropdown-menu {
+    width: 250px !important;
+}
+.oculto {
+    display: none;
 }
