@@ -41,12 +41,20 @@
 	</div>
     		
     <div>
+    
     	<ul class="navbar-nav mr-auto">
+    	
+    		<!-- **** 'Chip' de perfil por si se añaden fotos ****
+    		<div class="chip chip-md">
+            	<img src="https://mdbootstrap.com/img/Photos/Avatars/avatar-10.jpg" alt="Contact Person"> Chapa
+          	</div>
+    		-->
+    		
     		<!--************ Ventana login ****************
     		*********************************************-->
 			<li class="nav-item dropdown mr-auto" th:if="${session.usuario==null}">
-				<a class="nav-link dropdown-toggle" data-toggle="dropdown" href="#" aria-haspopup="true" aria-expanded="false" role="button">
-    				Iniciar sesión
+				<a class="nav-link" data-toggle="dropdown" href="#" aria-haspopup="true" aria-expanded="false" role="button">
+    				Iniciar sesión <i class="bi bi-box-arrow-in-right text-success"></i>
     			</a>
 				<div class="dropdown-menu dropdown-menu-right">
 					<form class="px-4 py-3 p-4" action="/login" method="POST">
@@ -58,11 +66,13 @@
 							<label for="exampleDropdownFormPassword1">Contraseña</label>
 							<input type="password" name="pwd" class="form-control" id="exampleDropdownFormPassword1" placeholder="Contraseña">
 						</div>
-						<button type="submit" class="btn btn-primary">Iniciar sesión</button>
+						<button type="submit" class="btn btn-sm btn-primary text-right">Iniciar sesión</button>
 					</form>
-					<div class="dropdown-divider"></div>
-					<span class="ml-3">¿Nuevo por aquí?</span>
-					<a href="/usuario/c">Regístrate</a>
+					<div class="dropdown-divider mb-2"></div>
+					<div class="mb-2">
+						<span class="ml-3">¿Nuevo por aquí?</span>
+						<a href="/usuario/c">Regístrate</a>
+					</div>
 				</div>
 			
 			</li>
@@ -70,25 +80,41 @@
     		<!--************ Ventana usuario **************
     		*********************************************-->
     		<li class="nav-item dropdown mr-auto" th:unless="${session.usuario==null}">
-    			<div class="nav-link dropdown-toggle profile-circle text-light" data-toggle="dropdown" href="#" aria-haspopup="true" aria-expanded="false" role="button">
-					<span th:text="|${session.usuario.nombre.toUpperCase().charAt(0)}${session.usuario.apellido1.toUpperCase().charAt(0)}|"/>
-				</div>
+    			<div class="btn btn-outline-info rounded-circle p-2" 
+    					id="profileCircle" data-toggle="dropdown" href="#" aria-haspopup="true" aria-expanded="false" role="button"
+    					th:text="|${session.usuario.nombre.toUpperCase().charAt(0)}${session.usuario.apellido1.toUpperCase().charAt(0)}|" />
 				<div class="dropdown-menu dropdown-menu-right">
-					<div class="dropdown-item d-block bg-info text-light no-gutters" onclick="location.href='/usuario/u'" style="cursor: pointer">
-						<div>
-							<span class="font-weight-bold" th:text="${session.usuario.nombre}"/>
-						</div>
-						<div>
-							<span class="font-weight-light" th:text="${session.usuario.email}" />
+					<div class="dropdown-item d-flex flex-row align-items-center bg-info text-light py-2 mb-3" onclick="location.href='/usuario/u'" style="cursor: pointer">
+						
+						<h1 class="align-self-center no-gutters pr-3 align-middle display-5"><i class="bi bi-person-circle align-middle"></i></h1>
+						
+						<div class="d-block">
+							<div>
+								<h5 class="font-weight-bold" th:text="${session.usuario.nombre}"/>
+							</div>
+							<div>
+								<h6 class="font-weight-light" th:text="${session.usuario.email}" />
+							</div>
 						</div>
 					</div>
-					<div class="dropdown-divider"></div>
-					<a class="dropdown-item" href="/usuario/mis_proyectos">Mis proyectos</a>
-					<a class="dropdown-item" href="/logout">Cerrar sesión</a>
+					
+					
+					<a class="dropdown-item d-flex justify-content-between" href="/usuario/mis_proyectos">
+						<span> Mis proyectos </span>
+						<i class="bi bi-paperclip text-info"></i>
+					</a>
+					<a class="dropdown-item d-flex justify-content-between" href="/logout">
+						<span>Cerrar sesión</span>
+						<i class="bi bi-box-arrow-right text-danger"></i> 
+					</a>
+					
 				</div>
     		</li>
     		
        	</ul>
    	</div>
+   	
 </nav>
+
+
 

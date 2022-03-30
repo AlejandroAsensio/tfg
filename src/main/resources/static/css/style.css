@@ -4,21 +4,36 @@ nav {
 	height: 65px;
 	width: 100%;
 }
-.profile-circle {
-    height: 40px;
-    width: 40px;
-    background-color: rgb(67, 175, 179);
-    border-radius: 50%;
-    line-height: 40px;
-    text-align: center;
-}
 .dropdown-menu {
     width: 250px !important;
 }
 .oculto {
     display: none;
 }
+#profileCircle :hover {
+    box-shadow: 4px 4px 0px rgb(32, 202, 224);
+    transition-duration: 400ms;
+}
+i.bi bi-person-circle {
+    height: 26px !important;
+    width:26px !important;
+}
 
+
+
+/*
+Para el chip de perfil, por si se añaden fotos
+
+.chip.chip-md {
+height: 42px;
+line-height: 42px;
+border-radius: 21px;
+}
+.chip.chip-md img {
+height: 42px;
+width: 42px;
+}
+*/
 
 /*-------------------Proyectos-------------------
 ------------------------------------------------*/
