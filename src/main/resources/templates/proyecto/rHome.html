@@ -1,0 +1,61 @@
+<div class="container">
+	<div class="row m-3">
+		<h2 class="display-4">Proyectos</h2>
+	</div>
+</div>
+
+<div class="container rounded p-4">
+	
+	<div class="row m-3 d-flex justify-content-between">
+		<h3 class="display-5">Lista de Proyectos</h3>
+		<div class="btn-group btn-group-sm" role="group" aria-label="Basic example">
+			<button type="button" class="btn btn-secondary" onclick="layoutProjectsGrid();">
+				<i class="bi bi-grid-3x2-gap text-light p-2"></i> Grid
+			</button>
+			<button type="button" class="btn btn-secondary" onclick="layoutProjectsList();">
+				<i class="bi bi-view-stacked text-light p-2"></i> Lista
+			</button>
+		</div>
+	</div>
+	
+	<hr class="mb-4" />
+	
+	
+	<div id="proyectos" class="m-3">
+		
+		<div class="card m-3" th:each="proyecto : ${proyectos}" id="cardsList">
+			<h6 class="card-header text-right text-muted" th:text="|${proyecto.leader.nombre} ${proyecto.leader.apellido1}|"/>
+			<div class="card-body">
+				<h5 class="card-title" th:text="${proyecto.nombre}" />
+				<p class="card-text" th:text="${proyecto.descripcion}"/>
+				<form action="/proyecto/verProyecto">
+					<input type="hidden" name="idProyecto" th:value="${proyecto.id}"/>
+					<input class="btn btn-info" type="submit" value="Más información"/>
+				</form>
+			</div>
+		</div>
+	
+			
+		<div class="hiddenCard" id="cardsGrid">
+			<div class="card m-3" style="width: 18rem;" th:each="proyecto : ${proyectos}">
+				<div class="card-body">
+					<p class="disabled text-right text-muted" th:text="${proyecto.leader.nombre}" />
+					<h5 class="card-title" th:text="${proyecto.nombre}"></h5>
+					<p class="card-text" th:text="${proyecto.descripcion}" />
+					<form action="/proyecto/verProyecto">
+						<input type="hidden" name="idProyecto" th:value="${proyecto.id}"/>
+						<input class="btn btn-info text-right" type="submit" value="Más información"/>
+					</form>
+				</div>	
+			</div>
+		</div>
+		
+		<h5 class="display-5 text-center m-5" th:if="${proyectos == null}">No hay ningún proyecto todavía. ¡Crea el tuyo!</h5>
+	</div>
+	
+	<form action="/proyecto/c">
+		<input type="submit" class="btn btn-success btn-sm" value="Nuevo Proyecto"/>
+	</form>
+</div>
+
+<script src="/js/projectCards.js"></script>

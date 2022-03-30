@@ -83,9 +83,12 @@ public class HomeController {
 		return "redirect:/";
 	}
 
-	@GetMapping("/")
-	public String index(ModelMap m) {
-		m.put("view", "home/index");
-		return "_t/frame";
-	}
+/*
+ * Comentado por redirección a / desde el controlador de proyecto
+ */
+//	@GetMapping("/")
+//	public String index(ModelMap m) {
+//		m.put("view", "home/index");
+//		return "_t/frame";
+//	}
 }

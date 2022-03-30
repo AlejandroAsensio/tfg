@@ -26,7 +26,7 @@ import org.tfg.teafind.repository.ProyectoRepository;
 import org.tfg.teafind.repository.UsuarioRepository;
 
 @Controller
-@RequestMapping("/proyecto")
+//@RequestMapping("/proyecto") Comentado para permitir redirección a '/'
 public class ProyectoController {
 
 	@Autowired
@@ -35,22 +35,26 @@ public class ProyectoController {
 	@Autowired
 	private UsuarioRepository usuarioRepository;
 
-	@GetMapping("r")
+	//Cambiada la redirección habitual a /proyecto/r para que la vista general
+	// de lectura de proyectos sea la página principal/index '/'
+	//cambiado para eso el requestMapping y los get y postmapping de todo el controlador
+	// la redirección se hace a rHome de la carpeta de proyectos
+	@GetMapping("/")
 	public String r(ModelMap m) {
 		List<Proyecto> proyectos = proyectoRepository.findAll();
 
 		m.put("proyectos", proyectos);
-		m.put("view", "/proyecto/r");
+		m.put("view", "/proyecto/rHome");
 		return "_t/frame";
 	}
 
-	@GetMapping("c")
+	@GetMapping("proyecto/c")
 	public String c(ModelMap m) {
 		m.put("view", "/proyecto/c");
 		return "_t/frame";
 	}
 
-	@PostMapping("c")
+	@PostMapping("proyecto/c")
 	public String cPost(@RequestParam("nombre") String nombre, @RequestParam("descripcion") String descripcion,
 			@DateTimeFormat(iso = DateTimeFormat.ISO.DATE) @RequestParam("fIni") LocalDate fIni,
 			@DateTimeFormat(iso = DateTimeFormat.ISO.DATE) @RequestParam("fFin") LocalDate fFin,
@@ -71,7 +75,7 @@ public class ProyectoController {
 
 	}
 
-	@GetMapping("verProyecto")
+	@GetMapping("proyecto/verProyecto")
 	public String verProyecto(ModelMap m, @RequestParam("idProyecto") Long idProyecto, HttpSession s) {
 		boolean pertenece = false;
 		Proyecto proyecto = proyectoRepository.getById(idProyecto);
@@ -93,7 +97,7 @@ public class ProyectoController {
 		return "_t/frame";
 	}
 
-	@GetMapping("tuProyecto")
+	@GetMapping("proyecto/tuProyecto")
 	public String uProyectoLiderado(ModelMap m, HttpSession s, @RequestParam("idProyecto") Long idProyecto)
 			throws DangerException {
 
@@ -109,7 +113,7 @@ public class ProyectoController {
 		return "_t/frame";
 	}
 
-	@PostMapping("tuProyecto")
+	@PostMapping("proyecto/tuProyecto")
 	public String uProyectoLideradoPost(@RequestParam("nombre") String nombre,
 			@RequestParam("descripcion") String descripcion,
 			@DateTimeFormat(iso = DateTimeFormat.ISO.DATE) @RequestParam("fIni") LocalDate fIni,
