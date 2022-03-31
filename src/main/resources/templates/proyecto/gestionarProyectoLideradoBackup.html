@@ -1,0 +1,124 @@
+<div class="container">
+	<div class="row m-3">
+		<h2 class="display-4"><th:block th:text="|Gestionar ${proyecto.nombre}|"/></h2>
+	</div>
+</div>
+
+<div class="container rounded p-4">
+
+	<div class="row">
+		<form action="/proyecto/tuProyecto" method="POST">
+			<div class="row m-3">
+				<h3 class="display-5">Información general:</h3>
+			</div>
+			
+			<div class="row">
+				<label for="nombreP">Nombre del proyecto: </label>
+				<input type="text" name="nombre" id="nombreP" th:value="${proyecto.nombre}">
+			</div>
+			
+			<div class="row">
+				<label for="descripcionP">Descripción del proyecto: </label>
+				<input type="text" name="descripcion" id="descripcionP" th:value="${proyecto.descripcion}">
+			</div>
+			
+			<div class="row">
+				<label for="inicioP">Fecha de inicio: </label>
+				<input type="date" name="fIni" id="InicioP" th:value="${proyecto.inicio}">
+			</div>
+			
+			<div class="row">
+				<label for="finP">Fecha de fin: </label>
+				<input type="date" name="fFin" id="finP" th:value="${proyecto.fin}">
+			</div>
+			
+			<input type="hidden" name="idProyecto" th:value="${proyecto.id}" />
+			<input type="submit" value="Guardar cambios" class="btn btn-sm bg-info">
+		</form>
+	</div>
+		
+	<div class="row m-3 d-flex justify-content-between">
+		<h3 class="display-5">Puestos libres de tu proyecto:</h3> 
+		<a type="button" th:href="|/puesto/c?nombreProyecto=${proyecto.nombre}|" class="btn btn-sm bg-info">+ Puesto</a>
+	</div>
+	
+	<table class="table table-hover">
+	<thead>
+	  
+		    <tr class="table-active">
+				<th scope="col" rowspan="2">
+					Nombre del puesto
+				</th>
+				<th scope="col" rowspan="2">
+					Descripción
+				</th>
+				<th scope="col" rowspan="2">
+					Requiere
+				</th>
+		    </tr>
+	  </thead>
+	  <tbody>
+	  
+	    	<!-- scope="row" en un th indica el indice de la fila -->
+			<tr th:each="puesto : ${proyecto.puestos}">
+				<th:block th:if="${puesto.ocupante == null}" >
+					<td th:text="${puesto.nombre} "/>
+					<td th:text="${puesto.descripcion} "/>
+					<td>
+						<ul th:each="habilidad : ${puesto.requiere}">
+							<li th:text="${habilidad.nombre}"/>
+						</ul>
+					</td>
+				</th:block>
+			</tr>
+	    
+		</tbody>
+	</table>
+	
+	
+	
+	<div class="row m-3">
+		<h3 class="display-5">Tu equipo actual:</h3>
+	</div>
+	
+	<table class="table table-hover">
+		<thead>
+	  
+		    <tr class="table-active">
+				<th scope="col" rowspan="2">
+					Nombre
+				</th>
+				<th scope="col" rowspan="2">
+					Su puesto
+				</th>
+				<th scope="col" rowspan="2">
+					Descripción
+				</th>
+				<th scope="col" rowspan="2">
+					Habilidades
+				</th>
+		    </tr>
+	  </thead>
+	  <tbody>
+	  
+	    	<!-- scope="row" en un th indica el indice de la fila -->
+			<tr th:each="puesto : ${proyecto.puestos}">
+				<th:block th:if="${puesto.ocupante != null}" >
+					<td th:text="${puesto.ocupante.nombre}" />
+					<td th:text="${puesto.nombre} "/>
+					<td th:text="${puesto.descripcion} "/>
+					<td>
+						<ul th:each="habilidad : ${puesto.requiere}">
+							<li th:text="${habilidad.nombre}"/>
+						</ul>
+					</td>
+				</th:block>
+			</tr>
+	    
+		</tbody>
+	</table>
+	
+	<form action="/usuario/mis_proyectos">
+		<button type="submit" class="btn btn-sm bg-info">Volver a Mis Proyectos</button>
+	</form>
+</div>

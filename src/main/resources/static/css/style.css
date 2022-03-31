@@ -1,3 +1,13 @@
+:root {
+    --bg-main: rgb(248, 248, 251);
+}
+
+/*----------------------BODY---------------------
+------------------------------------------------*/
+html, body {
+    font-family: 'Lato', sans-serif;
+}
+
 /*----------------------NAV----------------------
 ------------------------------------------------*/
 nav {
@@ -18,25 +28,23 @@ i.bi bi-person-circle {
     height: 26px !important;
     width:26px !important;
 }
-
-
-
-/*
-Para el chip de perfil, por si se añaden fotos
-
-.chip.chip-md {
-height: 42px;
-line-height: 42px;
-border-radius: 21px;
+div.userMenuHeader {
+    color: var(--bg-main);
+    background-color: teal;
+    transition-duration: 400ms;
 }
-.chip.chip-md img {
-height: 42px;
-width: 42px;
+div.userMenuHeader :hover {
+    transition-duration: 900ms;
 }
-*/
 
 /*-------------------Proyectos-------------------
 ------------------------------------------------*/
 .hiddenCard {
     display: none;
+}
+
+/*---------------Gestion Proyectos---------------
+------------------------------------------------*/
+.hiddenInputProyecto {
+	display: none;
 }
