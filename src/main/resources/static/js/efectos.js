@@ -7,4 +7,3 @@ function layoutProjectsList() {
     $("div#cardsGrid").hide();
     $("div#cardsList").fadeIn(650);
 }
-

@@ -54,7 +54,7 @@
 				<a class="nav-link" data-toggle="dropdown" href="#" aria-haspopup="true" aria-expanded="false" role="button">
     				Iniciar sesión <i class="bi bi-box-arrow-in-right text-success"></i>
     			</a>
-				<div class="dropdown-menu dropdown-menu-right">
+				<div class="dropdown-menu dropdown-menu-right menuLogin">
 					<form class="px-4 pt-3 pb-2" action="/login" method="POST">
 						<div class="form-group">
 							<label for="exampleDropdownFormEmail1">Email</label>
@@ -68,7 +68,6 @@
 							<button type="submit" class="btn btn-sm btn-info text-right">Iniciar sesión</button>
 						</div>
 					</form>
-					<div class="dropdown-divider mb-2"></div>
 					<div class="mb-2 mx-3">
 						<span class="d-block text-center">¿Todavía no tienes cuenta?</span>
 						<a class="d-block text-center text-info" href="/usuario/c">¡Regístrate!</a>
@@ -80,20 +79,20 @@
     		<!--************ Ventana usuario **************
     		*********************************************-->
     		<li class="nav-item dropdown mr-auto" th:unless="${session.usuario==null}">
-    			<div class="btn btn-outline-info rounded-circle p-2" 
+    			<div class="btn btn-outline-info rounded-circle p-2 profileCircle" 
     					id="profileCircle" data-toggle="dropdown" href="#" aria-haspopup="true" aria-expanded="false" role="button"
     					th:text="|${session.usuario.nombre.toUpperCase().charAt(0)}${session.usuario.apellido1.toUpperCase().charAt(0)}|" />
 				<div class="dropdown-menu dropdown-menu-right">
 					<div class="dropdown-item d-flex flex-row align-items-center py-2 mb-3 userMenuHeader" onclick="location.href='/usuario/u'" style="cursor: pointer">
 						
-						<h1 class="align-self-center no-gutters pr-3 align-middle display-5 userMenuHeader"><i class="bi bi-person-circle align-middle"></i></h1>
+						<h1 class="align-self-center no-gutters pr-3 align-middle display-5"><i class="bi bi-person-circle align-middle"></i></h1>
 						
 						<div class="d-block">
 							<div>
 								<h5 class="font-weight-normal" th:text="${session.usuario.nombre}"/>
 							</div>
 							<div>
-								<h6 class="font-weight-lighter" th:text="${session.usuario.email}" />
+								<h6 class="font-weight-light" th:text="${session.usuario.email}" />
 							</div>
 						</div>
 					</div>
@@ -103,17 +102,6 @@
 						<span> Mis proyectos </span>
 						<i class="bi bi-briefcase text-primary"></i>
 					</a>
-					
-					<!-- ********* Lista de accesos directos a la gestión de los proyectos del usuario
-								Deshabilitado por tener que contar en todos los sitios de la web con la lista de proyectos de ese usuario
-								
-					<div th:each="proyecto : ${proyectos}"  
-							class="dropdown-item" 
-							onclick="location.href='/usuario/mis_proyectos'">
-						<i class="bi bi-arrow-return-right px-3"></i>
-						<a th:text="${proyecto.nombre}" class="btn btn-sm text-muted" th:href="|/proyecto/tuProyecto?idProyecto=${proyecto.id}|" role="button" th></a>
-					</div>
-					-->
 					
 					<div class="dropdown-divider"></div>
 					
@@ -137,7 +125,7 @@
     		
        	</ul>
    	</div>
-   	
+   	<script src="/js/userMenu.js"></script>
 </nav>
 
 

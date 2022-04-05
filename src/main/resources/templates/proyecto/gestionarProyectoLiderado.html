@@ -131,11 +131,11 @@
 	
 	<div class="row d-flex justify-content-center">
 	<!--************** Cards puestos libres **************-->
-		<div class="card-columns" style="position: absolute;">
+		<div class="card-columns">
 		
 			<th:block th:each="puesto : ${proyecto.puestos}" class="col" id="bloquePuestosLibres">
 				<div class="rowCardPuestoLibre">
-					<div th:if="${puesto.ocupante == null}" class="card my-3 mx-3" style="width: 18rem;">
+					<div th:if="${puesto.ocupante == null}" class="card mt-2 mb-4 mx-3" style="width: 18rem;">
 						<div class="card-body">
 							<button type="button" class="btn btn-outline-info btn-sm float-right border-0" role="button">
 								<i class="bi bi-pencil-square"></i>

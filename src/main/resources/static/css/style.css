@@ -6,6 +6,39 @@
 ------------------------------------------------*/
 html, body {
     font-family: 'Lato', sans-serif;
+    background-color: var(--bg-main);
+}
+
+/*--------------------SCROLLBAR-------------------
+------------------------------------------------*/
+/* Para webkit */
+/* width */
+::-webkit-scrollbar {
+  width: 12px;
+}
+/* Track */
+::-webkit-scrollbar-track {
+  background: rgba(196, 224, 223, 0); 
+  border-radius: 12px;
+}
+/* Handle */
+::-webkit-scrollbar-thumb {
+  background: rgba(97, 140, 180, 0.979); 
+  border-radius: 12px;
+  border: 2px solid var(--bg-main);
+}
+/* Handle on hover */
+::-webkit-scrollbar-thumb:hover {
+  background: rgba(48, 101, 150, 0.979); 
+}
+/* Handle on active */
+::-webkit-scrollbar-thumb:active {
+  border: 1px solid var(--bg-main);
+}
+/* Para firefox */
+* {
+  scrollbar-width: thin;
+  scrollbar-color: SteelBlue LightBlue;
 }
 
 /*----------------------NAV----------------------
@@ -20,22 +53,52 @@ nav {
 .oculto {
     display: none;
 }
-#profileCircle :hover {
+
+/*-------------------User Menu-------------------
+------------------------------------------------*/
+.profileCircle :hover {
     box-shadow: 4px 4px 0px rgb(32, 202, 224);
     transition-duration: 400ms;
 }
 i.bi bi-person-circle {
     height: 26px !important;
-    width:26px !important;
+    width: 26px !important;
 }
 div.userMenuHeader {
     color: var(--bg-main);
-    background-color: teal;
-    transition-duration: 400ms;
-}
-div.userMenuHeader :hover {
+    background-color: #20c997;
     transition-duration: 900ms;
 }
+div.userMenuHeader :hover {
+    transition-duration: 400ms;
+}
+.textoUserMenuHover {
+    color: #20c997;
+    background-color: #343a40;
+}
+
+/*---------------------LOGIN---------------------
+------------------------------------------------*/
+.menuLogin {
+    /*
+    background: linear-gradient(-45deg, #ee7752, #e73c7e, #23a6d5, #23d5ab);
+    */
+    background: linear-gradient(-45deg, #fff, #c0fdf3, #aed7f3, #ddacf0);
+	background-size: 400% 400%;
+	animation: gradient 25s ease infinite;
+}
+@keyframes gradient {
+	0% {
+		background-position: 0% 50%;
+	}
+	50% {
+		background-position: 100% 50%;
+	}
+	100% {
+		background-position: 0% 50%;
+	}
+}
+
 
 /*-------------------Proyectos-------------------
 ------------------------------------------------*/
@@ -55,4 +118,21 @@ div.userMenuHeader :hover {
   @include media-breakpoint-only(xl) {
     column-count: 5;
   }
+}
+
+/*------------Sobrescritura Bootstrap------------
+------------------------------------------------*/
+.btn {
+    border-radius: .65rem;
+}
+.btn-group-lg>.btn,
+.btn-lg {
+    border-radius: .7rem;
+}
+.btn-group-sm>.btn,
+.btn-sm {
+    border-radius: .6rem;
+}
+.dropdown-menu {
+    border-radius: .6rem;
 }
