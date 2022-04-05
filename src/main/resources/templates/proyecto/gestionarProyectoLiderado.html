@@ -5,7 +5,14 @@
 			<h2 class="display-4"><th:block th:text="|Gestionar ${proyecto.nombre}|"/></h2>
 		</div>
 		
-		<div class="align-self-center">
+		<div class="d-flex justify-content-end align-self-center">
+			<form action="/proyecto/verProyecto">
+				<input type="hidden" name="idProyecto" th:value="${proyecto.id}"/>
+				<button type="submit" class="btn btn-outline-success btn-sm border-0 mr-2">
+					<i class="bi bi-eye"></i>
+					 Ver proyecto
+				</button>
+			</form>
 			<form action="/usuario/mis_proyectos">
 				<button type="submit" class="btn btn-outline-warning btn-sm border-0">
 					<i class="bi bi-arrow-left"></i>
@@ -29,7 +36,7 @@
 					</div>
 					
 					<div class="align-self-center">
-						<button type="button" class="btn btn-outline-info btn-sm border-0" role="button">
+						<button type="button" class="btn btn-outline-info btn-sm border-0 visibleInputProyecto" role="button" onclick="mostrarEdicionCamposGestionProyecto();">
 							<i class="bi bi-pencil-square"></i>
 						</button>
 					</div>
@@ -39,33 +46,35 @@
 				<div id="jumboGeneralInfo" class="mx-3">
 					<div class="form-group">
 						<label for="nombreP" class="font-weight-bold">Nombre del proyecto: </label>
-						<span th:text="${proyecto.nombre}" class="form-control border-0"></span>
-						<input type="text" name="nombre" id="nombreP" class="hiddenInputProyecto" th:value="${proyecto.nombre}">
+						<span th:text="${proyecto.nombre}" class="form-control border-0 visibleInputProyecto"></span>
+						<input type="text" name="nombre" id="nombreP" class="form-control hiddenInputProyecto" th:value="${proyecto.nombre}">
 					</div>
 					
 					<div class="form-group">
 						<label for="descripcionP" class="font-weight-bold">Descripción del proyecto: </label>
-						<textarea th:text="${proyecto.descripcion}" class="form-control border-0 bg-light" disabled="disabled" rows="3"></textarea>
-						<input type="text" name="descripcion" id="descripcionP" class="hiddenInputProyecto" th:value="${proyecto.descripcion}">
+						<textarea th:text="${proyecto.descripcion}" class="form-control border-0 bg-light visibleInputProyecto" disabled="disabled" rows="3"></textarea>
+						<textarea th:text="${proyecto.descripcion}" class="form-control hiddenInputProyecto" rows="3"></textarea>
+						<!--<input type="text" name="descripcion" id="descripcionP" class="form-control hiddenInputProyecto" th:value="${proyecto.descripcion}">-->
 					</div>
 					
 					<div class="form-group row">
 						<div class="col">
 							<label for="inicioP" class="font-weight-bold">Fecha de inicio: </label>
-							<span th:text="${proyecto.inicio}" class="form-control border-0"></span>
-							<input type="date" name="fIni" id="InicioP" class="hiddenInputProyecto" th:value="${proyecto.inicio}">
+							<span th:text="${proyecto.inicio}" class="form-control border-0 visibleInputProyecto"></span>
+							<input type="date" name="fIni" id="InicioP" class="form-control hiddenInputProyecto" th:value="${proyecto.inicio}">
 						</div>
 						<div class="col">
 							<label for="finP" class="font-weight-bold">Fecha de fin: </label>
-							<span th:text="${proyecto.fin}" class="form-control border-0"></span>
-							<input type="date" name="fFin" id="finP" class="hiddenInputProyecto" th:value="${proyecto.fin}">
+							<span th:text="${proyecto.fin}" class="form-control border-0 visibleInputProyecto"></span>
+							<input type="date" name="fFin" id="finP" class="form-control hiddenInputProyecto" th:value="${proyecto.fin}">
 						</div>
 					</div>
 					
-					<input type="hidden" name="idProyecto" th:value="${proyecto.id}" />
-					<input type="submit" value="Guardar cambios" class="btn btn-sm bg-info hiddenInputProyecto" />
-					<input type="submit" value="Cancelar" class="btn btn-sm bg-danger hiddenInputProyecto" />
-					
+					<div class="d-flex justify-content-end"> 
+						<input type="hidden" name="idProyecto" th:value="${proyecto.id}" />
+						<input type="submit" value="Guardar cambios" class="btn btn-sm bg-info hiddenInputProyecto mr-1" />
+						<input type="button" value="Cancelar" class="btn btn-sm bg-danger hiddenInputProyecto" onclick="cancelarEdicionCamposGestionProyecto();"/>
+					</div>
 				</div>
 			</form>
 		</div>
@@ -173,5 +182,5 @@
 	
 </div>
 
-
+<script src="/js/edicionGestionProyectos.js"></script>
 

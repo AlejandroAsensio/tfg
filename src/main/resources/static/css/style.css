@@ -74,7 +74,7 @@ div.userMenuHeader :hover {
 }
 .textoUserMenuHover {
     color: #20c997;
-    background-color: #343a40;
+    background-color: #40343b;
 }
 
 /*---------------------LOGIN---------------------
@@ -118,6 +118,9 @@ div.userMenuHeader :hover {
   @include media-breakpoint-only(xl) {
     column-count: 5;
   }
+}
+.warningEdicionProyecto {
+  background-color: #e7c6c7;
 }
 
 /*------------Sobrescritura Bootstrap------------
