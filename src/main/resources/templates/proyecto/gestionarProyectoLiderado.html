@@ -13,6 +13,16 @@
 					 Ver proyecto
 				</button>
 			</form>
+			<div>
+				<button type="submit" class="btn btn-outline-info btn-sm border-0 mr-2 botonEdicionProyecto" onclick="edicionGestionProyecto();">
+					<i class="bi bi-pencil"></i>
+					 Editar proyecto
+				</button>
+				<button type="submit" class="btn btn-outline-danger btn-sm border-0 mr-2 botonEdicionProyecto hiddenInputProyecto" onclick="edicionGestionProyecto();">
+					<i class="bi bi-x-circle"></i>
+					 Salir del modo edición
+				</button>
+			</div>
 			<form action="/usuario/mis_proyectos">
 				<button type="submit" class="btn btn-outline-warning btn-sm border-0">
 					<i class="bi bi-arrow-left"></i>
@@ -36,9 +46,13 @@
 					</div>
 					
 					<div class="align-self-center">
-						<button type="button" class="btn btn-outline-info btn-sm border-0 visibleInputProyecto" role="button" onclick="mostrarEdicionCamposGestionProyecto();">
+						<button type="button" class="btn btn-outline-info btn-sm border-0 visibleInputProyecto botonEdicionProyecto hiddenInputProyecto" role="button" onclick="mostrarEdicionCamposGestionProyecto();">
 							<i class="bi bi-pencil-square"></i>
 						</button>
+						<span class="align-self-center text-danger hiddenInputProyecto">
+							<i class="bi bi-exclamation-circle"></i>
+							 Modo edición
+						</span>
 					</div>
 				</div>
 				<hr class="mb-4">
@@ -72,8 +86,8 @@
 					
 					<div class="d-flex justify-content-end"> 
 						<input type="hidden" name="idProyecto" th:value="${proyecto.id}" />
-						<input type="submit" value="Guardar cambios" class="btn btn-sm bg-info hiddenInputProyecto mr-1" />
-						<input type="button" value="Cancelar" class="btn btn-sm bg-danger hiddenInputProyecto" onclick="cancelarEdicionCamposGestionProyecto();"/>
+						<input type="submit" value="Guardar cambios" class="btn btn-sm btn-outline-success hiddenInputProyecto mr-1" />
+						<input type="button" value="Cancelar" class="btn btn-sm btn-outline-danger hiddenInputProyecto" onclick="cancelarEdicionCamposGestionProyecto();"/>
 					</div>
 				</div>
 			</form>
@@ -86,9 +100,9 @@
 					<h3 class="display-5">Tu equipo:</h3> 
 				</div>
 				<div class="align-self-center">
-					<a type="button" th:href="|/puesto/c?nombreProyecto=${proyecto.nombre}|" class="btn btn-outline-info btn-sm border-0" role="button" title="Crear nuevo puesto">
-						<i class="bi bi-plus-square"></i>
-					</a>
+					<button type="button" class="btn btn-outline-info btn-sm border-0 botonEdicionProyecto hiddenInputProyecto" role="button" onclick="mostrarEdicionEquipoGestionProyecto();">
+						<i class="bi bi-pencil-square"></i>
+					</button>
 				</div>
 			</div>
 			<hr class="mb-4">
@@ -128,9 +142,9 @@
 			</div>
 			
 			<div class="align-self-center">
-				<button type="button" class="btn btn-outline-info btn-sm border-0" role="button">
-					<i class="bi bi-pencil-square"></i>
-				</button>
+				<a type="button" th:href="|/puesto/c?nombreProyecto=${proyecto.nombre}|" class="btn btn-outline-info btn-sm border-0 botonEdicionProyecto" role="button" title="Crear nuevo puesto">
+					<i class="bi bi-plus-square"></i>
+				</a>
 			</div>
 		</div>
 		
@@ -183,4 +197,3 @@
 </div>
 
 <script src="/js/edicionGestionProyectos.js"></script>
-
