@@ -39,7 +39,7 @@
 				<td>
 					<form th:name="|unir${puesto.id}|" action="/usuario/unir" method="POST">
 						<input type="hidden" name="idPuesto" th:value="${puesto.id}"/>
-						<input th:if="${puesto.ocupante==null && !pertenece && session.usuario!=null}" type="button" class="btn btn-success btn-sm" value="Unirse" onclick="confirmar(this.form)"/>
+						<input th:if="${puesto.ocupante==null && !pertenece && session.usuario!=null && proyecto.leader.id != session.usuario.id}" type="button" class="btn btn-success btn-sm" value="Unirse" onclick="confirmar(this.form)"/>
 						<!--<input type="submit" class="btn btn-success btn-sm" value="Unirse"/>-->
 					</form>
 				</td>
