@@ -164,6 +164,12 @@
 						    <div class="d-inline pb-1 px-1 text-right">
 						    	<span th:each="habilidad : ${puesto.requiere}" th:text="${habilidad.nombre}" class="badge badge-pill badge-primary m-1"></span>
 						    </div>
+						    <div th:if="${puesto.ocupante==null && !pertenece && session.usuario!=null && proyecto.leader.id != session.usuario.id}" class="d-flex justify-content-end">
+						    	<form th:name="|unir${puesto.id}|" action="/usuario/unir" method="POST">
+									<input type="hidden" name="idPuesto" th:value="${puesto.id}"/>
+									<button type="submit" class="btn btn-outline-primary btn-sm border-0" onclick="confirmar(this.form)">Unirme</button>
+								</form>
+						    </div>
 						</div>
 					</div>
 				</div>
@@ -173,5 +179,14 @@
 	</div>
 	
 </div>
-
+<script>
+	function confirmar(formulario){
+		
+		var res = confirm("¿Estás seguro de que quieres unirte?");
+		console.log(formulario);
+		if(res){
+			formulario.submit();
+		}
+	}
+</script>
 <script src="/js/edicionGestionProyectos.js"></script>
