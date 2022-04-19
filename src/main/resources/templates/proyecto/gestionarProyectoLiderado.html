@@ -6,13 +6,6 @@
 		</div>
 		
 		<div class="d-flex justify-content-end align-self-center">
-			<form action="/proyecto/verProyecto">
-				<input type="hidden" name="idProyecto" th:value="${proyecto.id}"/>
-				<button type="submit" class="btn btn-outline-success btn-sm border-0 mr-2">
-					<i class="bi bi-eye"></i>
-					 Ver proyecto
-				</button>
-			</form>
 			<div>
 				<button type="submit" class="btn btn-outline-warning btn-sm border-0 mr-2 botonModoEdicion" onclick="edicionGestionProyecto();">
 					<i class="bi bi-pencil"></i>
@@ -23,6 +16,13 @@
 					 Salir del modo edición
 				</button>
 			</div>
+			<form action="/proyecto/verProyecto">
+				<input type="hidden" name="idProyecto" th:value="${proyecto.id}"/>
+				<button type="submit" class="btn btn-outline-success btn-sm border-0 mr-2">
+					<i class="bi bi-eye"></i>
+					 Ver proyecto
+				</button>
+			</form>
 			<form action="/usuario/mis_proyectos">
 				<button type="submit" class="btn btn-outline-info btn-sm border-0">
 					<i class="bi bi-arrow-left"></i>
@@ -70,10 +70,13 @@
 						</div>
 					</div>
 					
-					<div class="d-flex justify-content-end"> 
-						<input type="hidden" name="idProyecto" th:value="${proyecto.id}" />
-						<input type="submit" value="Guardar cambios" class="btn btn-sm btn-outline-success mr-1 botonEdicion" hidden="hidden" />
-						<input type="button" value="Cancelar" class="btn btn-sm btn-outline-danger botonEdicion" onclick="edicionGestionProyecto();" hidden="hidden"/>
+					<div class="d-flex justify-content-between">
+						<span class="disabled font-weight-light font-italic botonModoEdicion" hidden="hidden" th:text="|ID #${proyecto.id}|"/> 
+						<div>
+							<input type="hidden" name="idProyecto" th:value="${proyecto.id}" />
+							<input type="submit" value="Guardar cambios" class="btn btn-sm btn-outline-success border-0 mr-1 botonEdicion" hidden="hidden" />
+							<input type="button" value="Cancelar" class="btn btn-sm btn-outline-danger border-0 botonEdicion" onclick="edicionGestionProyecto();" hidden="hidden"/>
+						</div>
 					</div>
 				</div>
 			</form>
@@ -124,10 +127,10 @@
 							        		</form>
 							      		</div>
 							      		<div class="modal-footer d-flex justify-content-between">
-							      			<button type="button" class="btn btn-sm btn-danger" data-dismiss="modal" th:text="|Despedir a ${puesto.ocupante.nombre}|"></button>
+							      			<button type="button" class="btn btn-sm btn-outline-danger border-0" data-dismiss="modal" th:text="|Despedir a ${puesto.ocupante.nombre}|"></button>
 									      	<div>
-									      		<button type="button" class="btn btn-sm btn-secondary" data-dismiss="modal">Cancelar</button>
-									        	<button type="button" class="btn btn-sm btn-info">Guardar cambios</button>
+									      		<button type="button" class="btn btn-sm btn-outline-secondary border-0" data-dismiss="modal">Cancelar</button>
+									        	<button type="button" class="btn btn-sm btn-outline-info border-0">Guardar cambios</button>
 									      	</div>
 							        
 							      		</div>
@@ -212,8 +215,8 @@
 							      		</div>
 							      		<div class="modal-footer">
 									      	<div>
-									      		<button type="button" class="btn btn-sm btn-secondary" data-dismiss="modal">Cancelar</button>
-									        	<button type="button" class="btn btn-sm btn-info">Guardar cambios</button>
+									      		<button type="button" class="btn btn-sm btn-outline-secondary border-0" data-dismiss="modal">Cancelar</button>
+									        	<button type="button" class="btn btn-sm btn-outline-info border-0">Guardar cambios</button>
 									      	</div>
 							        
 							      		</div>

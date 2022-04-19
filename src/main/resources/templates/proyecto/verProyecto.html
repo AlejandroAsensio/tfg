@@ -1,125 +1,177 @@
-<div class="container rounded p-4">
+<div class="container">
 	
-	<div class="row m-3">
-		<h3 class="display-5" th:text="${proyecto.nombre}"/>
-		<h3 class="display-5" th:text="| (${proyecto.leader.nombre} ${proyecto.leader.apellido1} ${proyecto.leader.apellido2})|"/>
-	</div>
-	
-	<!-- +++++++++++++++++++++++++++++++++++PUESTOS LIBRES (para unirse) Y SU INFORMACIÓN+++++++++++++++++++++++++++++++++++++++++++++++ -->
-	<h5 class="display-6">Puestos disponibles</h5>
-	<table class="table table-hover">
-		<thead>
-		  
-		    <tr class="table-active">
-		    	<th scope="col">
-					Nombre del puesto
-				</th>
-				<th scope="col">
-					Descripcion
-				</th>
-				<th scope="col">
-					Ocupante
-				</th>
-				<th scope="col">
-					Habilidades Requeridas
-				</th>
-				
-			</tr>
-		</thead>
-		<tbody>
-		  
-			<!-- scope="row" en un th indica el indice de la fila -->
-			<tr th:each="puesto:${proyecto.puestos}">
-				<td th:text="${puesto.nombre}"/>
-				<td th:text="${puesto.descripcion}"/>
-				<td th:text="${puesto.ocupante?.nombre}"/>
-				<td>
-					<th:block th:each="habilidad:${puesto.requiere}" th:text="|${habilidad.nombre} / |"/>
-				</td>
-				<td>
-					<form th:name="|unir${puesto.id}|" action="/usuario/unir" method="POST">
-						<input type="hidden" name="idPuesto" th:value="${puesto.id}"/>
-						<input th:if="${puesto.ocupante==null && !pertenece && session.usuario!=null && proyecto.leader.id != session.usuario.id}" type="button" class="btn btn-success btn-sm" value="Unirse" onclick="confirmar(this.form)"/>
-						<!--<input type="submit" class="btn btn-success btn-sm" value="Unirse"/>-->
-					</form>
-				</td>
-				<!--<td>
-					<form action="/proyecto/verProyecto">
-					<input type="hidden" name="idProyecto" th:value="${proyecto.id}"/>
-					<input type="submit" value="Más info"/>
-					</form>
-				</td>-->
-			</tr>
-		    
-			</tbody>
-		</table>
-		<!-- ++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++ -->
+	<div class="row d-flex justify-content-between my-5">
+		<div class="">
+			<h2 class="display-4"><th:block th:text="${proyecto.nombre}"/></h2>
+		</div>
 		
-		
-	<!-- +++++++++++++++++++++++++++++++++++PUESTOS OCUPADOS Y SU INFORMACIÓN+++++++++++++++++++++++++++++++++++++++++++++++ -->
-	
-	<div class="row">
-		<div class="mx-3 mt-3">
-			<div>
-				<h3 class="display-5" th:text="|Equipo de ${proyecto.nombre}|"></h3> 
-			</div>
+		<div class="d-flex justify-content-end align-self-center">
+			<form action="/proyecto/tuProyecto" th:if="${proyecto.leader.id == session.usuario?.id}">
+				<input type="hidden" name="idProyecto" th:value="${proyecto.id}"/>
+				<button type="submit" class="btn btn-outline-warning btn-sm border-0 mr-2">
+					<i class="bi bi-gear"></i>
+					 Gestionar proyecto
+				</button>
+			</form>
+			<form action="/usuario/mis_proyectos">
+				<button type="submit" class="btn btn-outline-info btn-sm border-0">
+					<i class="bi bi-arrow-left"></i>
+					 Volver a Mis Proyectos
+				</button>
+			</form>
 		</div>
 	</div>
-	<hr class="mb-4">
+	
+</div>
+
+<div class="container p-4">
+	<!--************** Información general del proyecto **************-->
+	<div class="row">
+		<div class="col-xl-5 col-lg-5 col-md-5 col-sm-12 col-12">
+			<form action="/proyecto/tuProyecto" method="POST" >
+				
+				<div class="mt-3">
+					<div>
+						<h3 class="display-5">Información general:</h3> 
+					</div>
+				</div>
+				<hr class="mb-4">
+				
+				<div id="jumboGeneralInfo" class="mx-3">
+					<div class="form-group">
+						<label for="nombreP" class="font-weight-bold">Nombre del proyecto: </label>
+						<input type="text" name="nombre" id="nombreP" class="form-control disabled bg-light border-0" th:value="${proyecto.nombre}" disabled="disabled">
+					</div>
+					
+					<div class="form-group" th:unless="${proyecto.leader.id == session.usuario?.id}">
+						<label for="nombreP" class="font-weight-bold">Líder del proyecto: </label>
+						<input type="text" name="nombre" id="nombreP" class="form-control disabled bg-light border-0" th:value="${proyecto.leader.nombre}" disabled="disabled">
+					</div>
+					
+					<div class="form-group" th:if="${proyecto.leader.id == session.usuario?.id}">
+						<label for="nombreP" class="font-weight-bold" th:text="|Eres el líder de ${proyecto.nombre}|"></label>
+						
+					</div>
+					
+					<div class="form-group">
+						<label for="descripcionP" class="font-weight-bold">Descripción del proyecto: </label>
+						<textarea th:text="${proyecto.descripcion}" name="descripcion" class="form-control disabled bg-light border-0" rows="3" disabled="disabled"></textarea>
+						<!--<input type="text" name="descripcion" id="descripcionP" class="form-control hiddenInputProyecto" th:value="${proyecto.descripcion}">-->
+					</div>
+					
+					<div class="form-group row">
+						<div class="col">
+							<label for="inicioP" class="font-weight-bold">Fecha de inicio: </label>
+							<input type="date" name="fIni" id="InicioP" class="form-control disabled bg-light border-0" th:value="${proyecto.inicio}" disabled="disabled">
+						</div>
+						<div class="col">
+							<label for="finP" class="font-weight-bold">Fecha de fin: </label>
+							<input type="date" name="fFin" id="finP" class="form-control disabled bg-light border-0" th:value="${proyecto.fin}" disabled="disabled">
+						</div>
+					</div>
+				</div>
+			</form>
+		</div>
 		
-	<div class="row mx-3 mb-3">
-		<table class="table table-hover">
-			<thead>
-		  
-			    <tr class="table-active">
-					<th scope="col" rowspan="2">
-						Nombre
-					</th>
-					<th scope="col" rowspan="2">
-						Su puesto
-					</th>
-					<th scope="col" rowspan="2">
-						Descripción
-					</th>
-					<th scope="col" rowspan="2">
-						Habilidades
-					</th>
-			    </tr>
-		  </thead>
-		  <tbody>
-		  
-		    	<!-- scope="row" en un th indica el indice de la fila -->
-				<tr th:each="puesto : ${proyecto.puestos}">
-					<th:block th:if="${puesto.ocupante != null}" >
-						<td th:text="${puesto.ocupante.nombre}" />
-						<td th:text="${puesto.nombre} "/>
-						<td th:text="${puesto.descripcion} "/>
-						<td>
-							<ul th:each="habilidad : ${puesto.requiere}">
-								<li th:text="${habilidad.nombre}"></li>
-							</ul>
-						</td>
-					</th:block>
-				</tr>
-			</tbody>
-		</table>
+		<!--************** Cards puestos ocupados **************-->
+		<div class="col-xl-7 col-lg-7 col-md-7 col-sm-12 col-12">
+			<div class="mt-3">
+				<div>
+					<h3 class="display-5">Puestos ocupados:</h3> 
+				</div>
+			</div>
+			<hr class="mb-4">
+		
+			<div class="mx-3 mb-3">
+				
+				
+				<th:block th:each="puesto : ${proyecto.puestos}" class="mx-3">
+					<div th:if="${puesto.ocupante != null && puesto.ocupante.id != session.usuario?.id}" class="card text-center my-3 mx-3">
+		  				<div class="card-body">
+							
+							<h5 class="card-title text-left font-weight-bold" th:text="${puesto.nombre}"></h5>
+							<p class="card-text text-left" th:if="${session.usuario!=null && (pertenece || proyecto.leader.id == session.usuario?.id)}" th:text="${puesto.ocupante.nombre}"></p>
+						    <p class="card-text" th:text="${puesto.descripcion}"></p>
+		  				</div>
+						<div class="d-inline text-right pb-2 px-2">
+						    <span th:each="habilidad : ${puesto.requiere}" th:text="${habilidad.nombre}" class="badge badge-pill badge-primary mx-1"></span>
+						</div>
+					</div>
+				</th:block>
+				
+			</div>
+			
+		</div>
+		
+	</div>
+		
+	<div class="row mt-5 pl-3" th:if="${session.usuario!=null && pertenece}">
+		<div class="col">
+			<div class="mt-3">
+				<div>
+					<h3 class="display-5" th:text="|Tu puesto en ${proyecto.nombre}|"></h3> 
+				</div>
+			</div>
+			<hr class="mb-4">
+		
+			<div class="mx-3 mb-3">
+				
+				
+				<th:block th:each="puesto : ${proyecto.puestos}" class="mx-3">
+					<div th:if="${puesto.ocupante != null && puesto.ocupante.id == session.usuario?.id}" class="card text-center my-3 mx-3">
+		  				<div class="card-body">
+							
+							<h5 class="card-title text-left font-weight-bold" th:text="${puesto.nombre}"></h5>
+						    <p class="card-text" th:text="${puesto.descripcion}"></p>
+		  				</div>
+						<div class="d-inline text-right pb-2 px-2">
+						    <span th:each="habilidad : ${puesto.requiere}" th:text="${habilidad.nombre}" class="badge badge-pill badge-primary mx-1"></span>
+						</div>
+					</div>
+				</th:block>
+				
+			</div>
+			
+			<div class="mx-3 mb-3 d-flex justify-content-end">
+				<button class="btn btn-outline-danger btn-sm border-0" th:text="|Abandonar ${proyecto.nombre}|"></button>
+			</div>
+			
+		</div>
+	</div>
+	
+	
+	<div class="row mt-5 pl-3">
+	
+		<div class="mt-3">
+			<h3 class="display-5" th:text="|Puestos libres de ${proyecto.nombre}|"></h3> 
+		</div>
 		
 	</div>
 	
-	<!-- ++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++ -->
+	<hr class="mb-4">
 	
-	<form action="/proyecto/c">
-		<input type="button" class="btn btn-success btn-sm" value="Nuevo Proyecto" onclick="this.form.submit()"/>
-		<!--<input type="hidden" name="idProyecto" th:value="${proyecto.id}"/>-->
-	</form>
-</div>
-<script>
-	function confirmar(formulario){
+	<div class="row d-flex justify-content-center">
+	<!--************** Cards puestos libres **************-->
+		<div class="card-columns">
 		
-		var res = confirm("Estas seguro de que quieres unirte?");
-		console.log(formulario);
-		if(res){
-			formulario.submit();
-		}
-	}
-</script>
+			<th:block th:each="puesto : ${proyecto.puestos}" class="col" id="bloquePuestosLibres">
+				<div class="rowCardPuestoLibre">
+					<div th:if="${puesto.ocupante == null}" class="card mt-2 mb-4 mx-3" style="width: 18rem;">
+						<div class="card-body">
+						    <h5 th:text="${puesto.nombre}" class="card-title text-left font-weight-bold"></h5>
+						    <!--<h6 class="card-subtitle mb-2 text-muted"></h6>-->
+						    <p th:text="${puesto.descripcion}" class="card-text"></p>
+						    <div class="d-inline pb-1 px-1 text-right">
+						    	<span th:each="habilidad : ${puesto.requiere}" th:text="${habilidad.nombre}" class="badge badge-pill badge-primary m-1"></span>
+						    </div>
+						</div>
+					</div>
+				</div>
+			</th:block>
+		</div>
+		
+	</div>
+	
+</div>
+
+<script src="/js/edicionGestionProyectos.js"></script>
