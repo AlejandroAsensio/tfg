@@ -101,6 +101,7 @@ public class UsuarioController {
 	
 	
 	/**
+	 * ReadOwnProjects
 	 * Vista para cada usuario de los proyectos de los que es líder y en los que ocupa un puesto
 	 */
 	@GetMapping("mis_proyectos")

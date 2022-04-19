@@ -108,9 +108,11 @@ div.userMenuHeader :hover {
 
 /*---------------Gestion Proyectos---------------
 ------------------------------------------------*/
-.hiddenInputProyecto {
+.hiddenElementProyecto {
 	display: none;
 }
+
+
 .card-columns {
   @include media-breakpoint-only(lg) {
     column-count: 4;
