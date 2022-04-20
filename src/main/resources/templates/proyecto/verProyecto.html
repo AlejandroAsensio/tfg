@@ -1,11 +1,11 @@
 <div class="container">
 	
 	<div class="row d-flex justify-content-between my-5">
-		<div class="">
+		<div class="col-xl-7 col-lg-6 col-md-12 col-sm-12 col-12">
 			<h2 class="display-4"><th:block th:text="${proyecto.nombre}"/></h2>
 		</div>
 		
-		<div class="d-flex justify-content-end align-self-center">
+		<div class="d-flex justify-content-end align-self-center col-xl-5 col-lg-6 col-md-12 col-sm-12 col-12">
 			<form action="/proyecto/tuProyecto" th:if="${proyecto.leader.id == session.usuario?.id}">
 				<input type="hidden" name="idProyecto" th:value="${proyecto.id}"/>
 				<button type="submit" class="btn btn-outline-warning btn-sm border-0 mr-2">
@@ -90,7 +90,7 @@
 		  				<div class="card-body">
 							
 							<h5 class="card-title text-left font-weight-bold" th:text="${puesto.nombre}"></h5>
-							<p class="card-text text-left" th:if="${session.usuario!=null && (pertenece || proyecto.leader.id == session.usuario?.id)}" th:text="${puesto.ocupante.nombre}"></p>
+							<p class="card-text text-left" th:if="${session.usuario!=null && (pertenece || proyecto.leader.id == session.usuario?.id)}" th:text="|${puesto.ocupante.nombre} ${puesto.ocupante.apellido1} ${puesto.ocupante.apellido2}|"></p>
 						    <p class="card-text" th:text="${puesto.descripcion}"></p>
 		  				</div>
 						<div class="d-inline text-right pb-2 px-2">

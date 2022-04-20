@@ -1,5 +1,6 @@
 :root {
     --bg-main: rgb(248, 248, 251);
+    --jumbotron: #e9ecef;
 }
 
 /*----------------------BODY---------------------
@@ -111,16 +112,27 @@ div.userMenuHeader :hover {
 .hiddenElementProyecto {
 	display: none;
 }
-
-
 .card-columns {
-  @include media-breakpoint-only(lg) {
-    column-count: 4;
-  }
-  @include media-breakpoint-only(xl) {
-    column-count: 5;
-  }
+	@include media-breakpoint-only(sm) {
+    	column-count: 1;
+  	}
+	@include media-breakpoint-only(md) {
+    	column-count: 2;
+  	}
+  	@include media-breakpoint-only(lg) {
+    	column-count: 3;
+  	}
+  	@include media-breakpoint-only(xl) {
+    	column-count: 4;
+  	}
 }
+
+/*--------------Cards Mis proyectos--------------
+------------------------------------------------*/
+.cartaJumbo {
+	background-color: var(--jumbotron);
+}
+
 
 /*------------Sobrescritura Bootstrap------------
 ------------------------------------------------*/

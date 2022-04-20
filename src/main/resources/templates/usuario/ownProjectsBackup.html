@@ -1,0 +1,127 @@
+<div class="container">
+	<div class="row m-3">
+		<h2 class="display-4"><th:block th:text="${usuario.nombre}"/></h2>
+	</div>
+</div>
+
+<div class="container rounded p-4">
+	
+	<div class="row m-3">
+		<h3 class="display-5">Proyectos que lideras:</h3>
+	</div>
+	
+	<table class="table table-hover">
+	<thead>
+	  
+		    <tr class="table-active">
+				<th scope="col" rowspan="2">
+					Nombre Proyecto
+				</th>
+				<th scope="col" rowspan="2">
+					Descripción
+				</th>
+				<th scope="col" rowspan="2">
+					Fecha de Inicio
+				</th>
+				<th scope="col" rowspan="2">
+					Fecha de Finalización
+				</th>
+				<th scope="col" colspan="2" class="text-center">
+					Puestos del proyecto
+				</th>
+		    </tr>
+		    <tr class="table-active">
+				<th>
+					Nombre del puesto
+				</th>
+				<th>
+					Ocupante
+				</th>
+		    </tr>
+	  </thead>
+	  <tbody>
+	  
+	    	<!-- scope="row" en un th indica el indice de la fila -->
+			<tr th:each="proyectoCreado : ${proyectosCreados}">
+				<td>
+					<form action="/proyecto/tuProyecto">
+						<input type="submit" value="Gestionar" class="btn btn-sm bg-info" />
+						<input type="hidden" name="idProyecto" th:value="${proyectoCreado.id}"/>
+					</form>
+					<th:block th:text="${proyectoCreado.nombre}"/>
+				</td>
+				<td th:text="${proyectoCreado.descripcion}"/>
+				<td th:text="${proyectoCreado.inicio}"/>
+				<td th:text="${proyectoCreado.fin}"/>
+				
+				<!--Falta meter salto de línea entre los nombres de puestos y los nombres de
+				los ocupantes (o aviso de libre)-->
+				<th:block th:if="${proyectoCreado.puestos.size != 0}">
+					<td>
+						<ul th:each="puesto : ${proyectoCreado.puestos}">
+							<li th:text="${puesto.nombre}" />
+						</ul>
+					</td>
+					<td>
+						<ul th:each="puesto : ${proyectoCreado.puestos}">
+						 	<li
+								th:if="${puesto.ocupante?.nombre != null}" 
+								th:text="${puesto.ocupante.nombre}">
+							</li>
+							<li th:unless="${puesto.ocupante?.nombre != null}">Libre</li>
+						</ul>
+					</td>
+				</th:block>
+				<th:block th:unless="${proyectoCreado.puestos.size != 0}">
+					<td  colspan="2" class="text-center">Sin puestos creados</th>
+				</th:block>
+			</tr>
+	    
+		</tbody>
+	</table>
+	<br/>
+	
+	<div class="row m-3">
+		<h3 class="display-5">Proyectos a los que perteneces:</h3>
+	</div>
+	
+	<table class="table table-hover">
+	<thead>
+	  
+		    <tr class="table-active">
+		    	<th scope="col">
+					Nombre Proyecto
+				</th>
+		    	<th scope="col">
+					Líder del proyecto
+				</th>
+				<th scope="col">
+					Fecha de Inicio
+				</th>
+				<th scope="col">
+					Fecha de Finalización
+				</th>
+				<th scope="col">
+					Tu puesto
+				</th>
+		    </tr>
+	  </thead>
+	  <tbody>
+	  
+			<tr th:each="proyectoPertenece : ${proyectosPertenece}">
+				<td>
+					<a 	class="btn btn-sm bg-info"
+						th:href="|/proyecto/verProyecto?idProyecto=${proyectoPertenece.proyecto.id}|">
+						Ver
+					</a>
+					<th:block th:text="${proyectoPertenece.proyecto.nombre}"/>
+				</td>
+				<td th:text="${proyectoPertenece.proyecto.leader.nombre}"/>
+				<td th:text="${proyectoPertenece.proyecto.inicio}"/>
+				<td th:text="${proyectoPertenece.proyecto.fin}"/>
+				<td th:text="${proyectoPertenece.nombre}"/>
+			</tr>
+		   
+		</tbody>
+	</table>
+</div>
