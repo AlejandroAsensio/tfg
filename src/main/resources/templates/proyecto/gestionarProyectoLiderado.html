@@ -123,7 +123,9 @@
 							            			<label for="message-text" class="col-form-label">Nueva descripción del puesto:</label>
 							            			<textarea class="form-control" id="message-text" th:text="${puesto.descripcion}"></textarea>
 							          			</div>
-							            		<span for="message-text" class="col-form-label disabled font-weight-light">Para modificar las habilidades necesarias para este puesto, debe estar desocupado. Por favor, crea uno nuevo o despide a la persona que lo ocupa.</span>
+							          			<div class="form-group list-group-item-warning rounded p-2">
+							            			<span for="message-text" class="col-form-label disabled font-weight-light">Para modificar las habilidades necesarias para este puesto, debe estar desocupado. Por favor, crea uno nuevo o despide a la persona que lo ocupa.</span>
+							        			</div>
 							        		</form>
 							      		</div>
 							      		<div class="modal-footer d-flex justify-content-between">
