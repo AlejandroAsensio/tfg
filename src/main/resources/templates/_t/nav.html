@@ -1,17 +1,10 @@
 <!-- ***************************** NUEVA NAVBAR **********************************-->
-<nav class="navbar navbar-expand-lg navbar-dark bg-dark border-bottom px-5">
-
-	<a class="navbar-brand mr-5" href="/">Teafind</a>
-	
-	<button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNavDropdown"
-		aria-controls="navbarNavDropdown" aria-expanded="false" aria-label="Toggle navigation">
-		<span class="navbar-toggler-icon"></span>
-	</button>
+<nav class="navbar navbar-expand-lg sticky-top navbar-dark bg-dark border-bottom px-5">
 	
 	<div class="collapse navbar-collapse w-100 order-1 order-md-0 dual-collapse2" id="navbarNavDropdown">
 		<ul class="navbar-nav mr-auto">
 			<li class="nav-item active">
-        		<a class="nav-link" href="/">Inicio <span class="sr-only">(current)</span></a>
+        		<a class="nav-link" href="/">Proyectos <span class="sr-only">(current)</span></a>
       		</li>
      	 	
      	 	<li class="nav-item" th:if="${session.usuario!=null && session.usuario?.admin}">
@@ -42,11 +35,16 @@
     		</li>
 		</ul>
 	</div>
-	<div class="navbar-collapse collapse w-100 order-2 dual-collapse2">
+	
+	<div class="mx-auto order-0">
+        <a class="navbar-brand mx-auto" href="/" title="Página principal de Teafind">Teafind</a>
+    </div>
+	
+	<div class="navbar-collapse collapse w-100 order-3 dual-collapse2">
         <ul class="navbar-nav ml-auto">
             <!--INICIO DE SESIÓN-->
 			<li class="nav-item dropdown mr-auto" th:if="${session.usuario==null}">
-				<a class="nav-link float-right" data-toggle="dropdown" href="#" aria-haspopup="true" aria-expanded="false" role="button">
+				<a class="nav-link" data-toggle="dropdown" href="#" aria-haspopup="true" aria-expanded="false" role="button">
     				Iniciar sesión <i class="bi bi-box-arrow-in-right text-success"></i>
     			</a>
 				<div class="dropdown-menu dropdown-menu-right menuLogin">
@@ -74,16 +72,19 @@
 			
 			<!--Ventana de USUARIO-->
 			<li class="nav-item dropdown" th:unless="${session.usuario==null}">
-				<a class="nav-link float-right" href="#" id="navbarDropdownMenuLink" role="button"
+				<a class="nav-link" href="#" id="navbarDropdownMenuLink" role="button"
 					data-toggle="dropdown" aria-expanded="false"
-					th:text="${session.usuario?.nombre}">
+					th:text="${session.usuario?.email}">
 				</a>
 				<div class="dropdown-menu dropdown-menu-right" aria-labelledby="navbarDropdownMenuLink">
-					<a class="dropdown-item d-flex justify-content-between py-2" href="/usuario/u">
-						<span> Mi perfil </span>
-						<i class="bi bi-person-circle"></i>
+					<a class="dropdown-item d-flex justify-content-between py-2 bg-info enlacePerfilUsuario" href="/usuario/u">
+						<i class="bi bi-person-circle text-white display-4 p-0 align-self-center"></i>
+						<div class="align-self-center text-right">
+							<span class="d-block textoPerfilUsuario text-light">Mi perfil</span>
+							<span class="d-block textoPerfilUsuario text-white" th:text="${session.usuario?.nombre}"></span>
+						</div>
 					</a>
-					<a class="dropdown-item d-flex justify-content-between py-2" href="/usuario/mis_proyectos">
+					<a class="dropdown-item d-flex justify-content-between py-2 mt-2" href="/usuario/mis_proyectos">
 						<span> Mis proyectos </span>
 						<i class="bi bi-briefcase text-primary"></i>
 					</a>
@@ -109,6 +110,14 @@
 			<!--***************-->
         </ul>
     </div>
+    
+    <div class="ml-auto order-0">
+        <button class="navbar-toggler border-0" type="button" data-toggle="collapse" data-target=".dual-collapse2">
+        	<span class="navbar-toggler-icon"></span>
+
+        </button>
+    </div>
+    
 	<script src="/js/userMenu.js"></script>
 </nav>
 <!--*********************************************************************************-->

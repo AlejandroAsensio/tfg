@@ -14,9 +14,9 @@
 				</button>
 			</form>
 			<form action="/usuario/mis_proyectos">
-				<button type="submit" class="btn btn-outline-info btn-sm border-0">
+				<button type="submit" class="btn btn-outline-info btn-sm border-0" th:unless="${session.usuario == null}">
 					<i class="bi bi-arrow-left"></i>
-					 Volver a Mis Proyectos
+					 Ir a Mis Proyectos
 				</button>
 			</form>
 		</div>
