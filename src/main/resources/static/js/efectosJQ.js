@@ -1,5 +1,6 @@
+/*
 $(document).ready(function() {
-	/* Sombras de cards en hover
+	 Sombras de cards en hover
 	$(".card")
 		.on("mouseenter", function() {
 			$(this).addClass("shadow");
@@ -9,5 +10,6 @@ $(document).ready(function() {
 			$(this).removeClass("shadow");
 			$(this).removeClass("border-0");
 	})
-	*/
+	
 })
+*/

@@ -44,15 +44,14 @@ html, body {
 
 /*----------------------NAV----------------------
 ------------------------------------------------*/
-nav {
-	height: 65px;
-	width: 100%;
-}
 .dropdown-menu {
     width: 250px !important;
 }
 .oculto {
     display: none;
+}
+.navbarDropdownMenuLink{
+	position: absolute;
 }
 
 /*-------------------User Menu-------------------
