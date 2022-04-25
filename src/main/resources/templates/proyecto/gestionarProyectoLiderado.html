@@ -1,11 +1,15 @@
 <div class="container">
 	
 	<div class="row d-flex justify-content-between my-5">
-		<div class="col-xl-7 col-lg-6 col-md-12 col-sm-12 col-12">
+		<div class="col-xl-5 col-lg-5 col-md-12 col-sm-12 col-12">
 			<h2 class="display-4"><th:block th:text="|Gestionar ${proyecto.nombre}|"/></h2>
 		</div>
 		
-		<div class="d-flex justify-content-end align-self-center col-xl-5 col-lg-6 col-md-12 col-sm-12 col-12">
+		<div class="d-flex justify-content-end align-self-center col-xl-7 col-lg-7 col-md-12 col-sm-12 col-12">
+			<a type="button" class="btn btn-outline-info btn-sm border-0 mr-2 botonEdicion" th:href="|/puesto/c?nombreProyecto=${proyecto.nombre}|" hidden="hidden">
+				<i class="bi bi-plus-square"></i> 
+				 Crear puesto
+			</a>
 			<div>
 				<button type="submit" class="btn btn-outline-warning btn-sm border-0 mr-2 botonModoEdicion" onclick="edicionGestionProyecto();">
 					<i class="bi bi-pencil"></i>
@@ -26,7 +30,7 @@
 			<form action="/usuario/mis_proyectos">
 				<button type="submit" class="btn btn-outline-info btn-sm border-0">
 					<i class="bi bi-arrow-left"></i>
-					 Volver a Mis Proyectos
+					 Mis Proyectos
 				</button>
 			</form>
 		</div>
@@ -40,7 +44,7 @@
 		<div class="col-xl-5 col-lg-5 col-md-5 col-sm-12 col-12">
 			<form action="/proyecto/tuProyecto" method="POST" >
 				
-				<div class="mt-3">
+				<div class="mt-2">
 					<div>
 						<h3 class="display-5">Información general:</h3> 
 					</div>
@@ -82,9 +86,26 @@
 			</form>
 		</div>
 		
+		<!--**************NINGÚN PUESTO CREADO*********************-->
+		<div class="row py-4" th:if="${libres == 0 && ocupados == 0}">
+			<div class="container px-lg-5">
+		    	<div class="jumbotron p-4 p-lg-5 bg-warning text-center disabled">
+		            <div class="m-4 m-lg-5">
+		                <h1 class="display-5 fw-bold" th:text="|${session.usuario?.nombre}, tu proyecto no tiene puestos creados...|"></h1>
+		                <p class="fs-4" th:text="|Para que se una gente a ${proyecto.nombre} debes crear, al menos, uno nuevo.|"></p>
+		                <p class="lead">Habilita más arriba el modo de edición y pulsa en crear puesto o pulsa el siguiente botón para empezar a ampliar tu proyecto ahora mismo.</p>
+		                <div class="d-flex justify-content-center">
+			                <a class="btn btn-info m-3 col-4" th:href="|/puesto/c?nombreProyecto=${proyecto.nombre}|">Crea ahora un nuevo puesto</a>
+		                </div>
+		            </div>
+		        </div>
+		    </div>
+		</div>
+		<!--*******************************************************-->
+		
 		<!--************** Cards puestos ocupados **************-->
-		<div class="col-xl-7 col-lg-7 col-md-7 col-sm-12 col-12">
-			<div class="mt-3">
+		<div th:unless="${libres == 0 && ocupados == 0}" class="col-xl-7 col-lg-7 col-md-7 col-sm-12 col-12">
+			<div class="mt-2">
 				<div>
 					<h3 class="display-5">Tu equipo:</h3> 
 				</div>
@@ -93,6 +114,11 @@
 		
 			<div class="mx-3 mb-3">
 				
+				<!-- Mensaje mostrado al no haber puestos ocupados en el equipo -->
+				<h5 th:if="${ocupados == 0}" class="display-5 list-group-item-warning rounded text-center p-3 mt-5">
+					Por ahora nadie forma parte de tu equipo. Aquí podrás ver los puestos ocupados más adelante.
+				</h5>
+				<!--************************************************************-->
 				
 				<th:block th:each="puesto : ${proyecto.puestos}" class="mx-3">
 					<div th:if="${puesto.ocupante != null}" class="card text-center my-3 mx-3">
@@ -100,7 +126,7 @@
 		  				
 		  				<!-- POPUP de edición de puesto desde su propia card -->
 		  			
-							<button type="button" class="btn btn-outline-info btn-sm float-right border-0 botonEdicion" data-toggle="modal" th:attr="data-target='#modalPuestoOcupado-'+${puesto.id}" hidden="hidden">
+							<button type="button" class="btn btn-outline-info btn-sm float-right border-0 botonEdicion" data-toggle="modal" th:attr="data-target='#modalPuestoOcupado-'+${puesto.id}" title="Modificar puesto ocupado" hidden="hidden">
 								<i class="bi bi-pencil-square"></i>
 							</button>
 							
@@ -157,25 +183,27 @@
 	</div>
 		
 	
-	<div class="row mt-5 pl-3 d-flex justify-content-between">
+	<div th:unless="${libres == 0 && ocupados == 0}" class="row mt-5 pl-3">
 	
 	
 			<div>
 				<h3 class="display-5" th:text="|Puestos libres de ${proyecto.nombre}|"></h3> 
 			</div>
 			
-			<div class="align-self-center mr-3">
-				<a type="button" th:href="|/puesto/c?nombreProyecto=${proyecto.nombre}|" class="btn btn-outline-info btn-sm border-0 botonEdicion " role="button" title="Crear nuevo puesto" hidden="hidden">
-					<i class="bi bi-plus-square"></i> 
-					Crear puesto
-				</a>
-			</div>
 		
 	</div>
 	
 	<hr class="mb-4">
 	
 	<div class="row d-flex justify-content-center">
+	
+	<!-- Mensaje mostrado al no haber puestos ocupados en el equipo -->
+	<h5 th:if="${libres == 0 && ocupados > 0}" class="display-5 list-group-item-warning rounded text-center p-3 mt-5">
+		Actualmente no queda ningún puesto libre en el proyecto. ¡Crea uno nuevo si necesitas más gente en el equipo!
+	</h5>
+	
+	<!--************************************************************-->
+	
 	<!--************** Cards puestos libres **************-->
 		<div class="card-columns">
 		
@@ -183,7 +211,7 @@
 				<div class="rowCardPuestoLibre">
 					<div th:if="${puesto.ocupante == null}" class="card mt-2 mb-4 mx-3" style="width: 18rem;">
 						<div class="card-body">
-							<button type="button" class="btn btn-outline-info btn-sm float-right border-0 botonEdicion" data-toggle="modal" th:attr="data-target='#modalPuestoLibre-'+${puesto.id}" hidden="hidden">
+							<button type="button" class="btn btn-outline-info btn-sm float-right border-0 botonEdicion" data-toggle="modal" th:attr="data-target='#modalPuestoLibre-'+${puesto.id}" title="Modificar puesto libre" hidden="hidden">
 								<i class="bi bi-pencil-square"></i>
 							</button>
 							

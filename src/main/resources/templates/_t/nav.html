@@ -1,4 +1,3 @@
-<!-- ***************************** NUEVA NAVBAR **********************************-->
 <nav class="navbar navbar-expand-lg sticky-top navbar-dark bg-dark border-bottom px-5">
 	
 	<div class="collapse navbar-collapse w-100 order-1 order-md-0 dual-collapse2" id="navbarNavDropdown">
@@ -42,6 +41,14 @@
 	
 	<div class="navbar-collapse collapse w-100 order-3 dual-collapse2">
         <ul class="navbar-nav ml-auto">
+        
+        	<li th:if="${session.usuario != null}" class="nav-item mr-auto botonProyectos align-self-center mr-4">
+        		<a class="btn btn-outline-info border-0 text-info" href="/proyecto/c">
+					<i class="bi bi-plus-lg iconoBotonProyectos"></i>
+					<span class="textoBotonProyectos text-light">Nuevo proyecto</span>
+				</a>
+        	</li>
+        	
             <!--INICIO DE SESIÓN-->
 			<li class="nav-item dropdown mr-auto" th:if="${session.usuario==null}">
 				<a class="nav-link" data-toggle="dropdown" href="#" aria-haspopup="true" aria-expanded="false" role="button">
@@ -118,8 +125,7 @@
         </button>
     </div>
     
-	<script src="/js/userMenu.js"></script>
+	<script src="/js/efectosJQ.js"></script>
 </nav>
-<!--*********************************************************************************-->
 
 

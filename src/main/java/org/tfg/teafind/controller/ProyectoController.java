@@ -90,9 +90,20 @@ public class ProyectoController {
 				}
 			}
 		}
+		
+		//Para saber el número de puestos OCUPADOS del proyecto
+		int puestosOcupados = 0;
+		for (Puesto p : proyecto.getPuestos()) {
+			if (p.getOcupante() != null) {
+				puestosOcupados++;
+			}
+		}
 
 		m.put("pertenece", pertenece);
 		m.put("proyecto", proyecto);
+		m.put("ocupados", puestosOcupados);
+		//Número de puestos libres del proyecto
+		m.put("libres", proyecto.getPuestos().size() - puestosOcupados);
 		m.put("view", "/proyecto/verProyecto");
 		return "_t/frame";
 	}
@@ -104,11 +115,23 @@ public class ProyectoController {
 		Proyecto proyecto = proyectoRepository.getById(idProyecto);
 		Usuario leader = (Usuario) s.getAttribute("usuario");
 
+		//Se comprueba si el usuario es el lider o no para permitir el acceso
 		if ((leader == null) || (!leader.getId().equals(proyecto.getLeader().getId()))) {
 			PRG.error("No tienes permiso para gestionar este proyecto", "/");
 		}
+		
+		//Para saber el número de puestos OCUPADOS del proyecto
+		int puestosOcupados = 0;
+		for (Puesto p : proyecto.getPuestos()) {
+			if (p.getOcupante() != null) {
+				puestosOcupados++;
+			}
+		}
 
 		m.put("proyecto", proyecto);
+		m.put("ocupados", puestosOcupados);
+		//Número de puestos libres del proyecto
+		m.put("libres", proyecto.getPuestos().size() - puestosOcupados);
 		m.put("view", "/proyecto/gestionarProyectoLiderado");
 		return "_t/frame";
 	}

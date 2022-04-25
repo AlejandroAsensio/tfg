@@ -1,15 +1,14 @@
-/*
 $(document).ready(function() {
-	 Sombras de cards en hover
-	$(".card")
-		.on("mouseenter", function() {
-			$(this).addClass("shadow");
-			$(this).addClass("border-0");
-		})
-		.on("mouseleave", function() {
-			$(this).removeClass("shadow");
-			$(this).removeClass("border-0");
-	})
+	if (window.innerWidth >= 540) {
+		$(".textoBotonProyectos").hide();
+	}
 	
+	$("li.botonProyectos").hover(
+		function() {
+			$(".textoBotonProyectos").show(400);
+		},
+		function() {
+			$(".textoBotonProyectos").hide(400);
+		}
+	)
 })
-*/
