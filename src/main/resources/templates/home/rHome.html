@@ -1,13 +1,13 @@
 <div class="container">
 	<div class="row m-3">
-		<h2 class="display-4">Proyectos</h2>
+		<h1 class="font-weight-light">Proyectos</h1>
 	</div>
 </div>
 
-<div th:if="${proyectos.size > 0}" class="container rounded p-4">
+<div th:if="${proyectos.size > 0}" class="container p-4">
 	
-	<div class="row m-3 d-flex justify-content-between">
-		<h3 class="display-5">Lista de Proyectos</h3>
+	<div class="row ml-3 d-flex justify-content-between">
+		<h2 class="font-weight-light align-self-center">Lista de Proyectos</h2>
 		<div class="btn-group btn-group-sm" role="group" aria-label="Basic example">
 			<button type="button" class="btn btn-secondary btn-sm" onclick="layoutProjectsGrid();">
 				<i class="bi bi-grid-3x2-gap text-light p-2"></i> Grid
@@ -18,7 +18,7 @@
 		</div>
 	</div>
 	
-	<hr class="mb-4" />
+	<hr class="mb-3" />
 	
 	
 	<div id="proyectos" class="m-3">

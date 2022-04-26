@@ -1,5 +1,7 @@
 package org.tfg.teafind.controller;
 
+import java.util.List;
+
 import javax.servlet.http.HttpSession;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -15,16 +17,22 @@ import org.springframework.ui.ModelMap;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestParam;
+import org.tfg.teafind.entities.Proyecto;
 import org.tfg.teafind.entities.Usuario;
 //import org.springframework.web.bind.annotation.PostMapping;
 //import org.springframework.web.bind.annotation.RequestParam;
 import org.tfg.teafind.exception.DangerException;
 import org.tfg.teafind.exception.PRG;
 import org.tfg.teafind.helper.H;
+import org.tfg.teafind.repository.ProyectoRepository;
 import org.tfg.teafind.repository.UsuarioRepository;
 
 @Controller
 public class HomeController {
+	
+	@Autowired
+	private ProyectoRepository proyectoRepository;
+	
 	@Autowired
 	private UsuarioRepository usuarioRepository;
 
@@ -84,11 +92,16 @@ public class HomeController {
 	}
 
 /*
- * Comentado por redirección a / desde el controlador de proyecto
+ * Recuperado / en HomeController
  */
-//	@GetMapping("/")
-//	public String index(ModelMap m) {
-//		m.put("view", "home/index");
-//		return "_t/frame";
-//	}
+	@GetMapping("/")
+	public String index(ModelMap m) {
+		List<Proyecto> proyectos = proyectoRepository.findAll();
+		
+		m.put("proyectos", proyectos);
+		m.put("view", "home/rHome");
+		return "_t/frame";
+	}
+	
+	
 }

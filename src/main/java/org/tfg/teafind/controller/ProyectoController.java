@@ -13,6 +13,7 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.ModelMap;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestMapping;
 //import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 
@@ -26,7 +27,7 @@ import org.tfg.teafind.repository.ProyectoRepository;
 import org.tfg.teafind.repository.UsuarioRepository;
 
 @Controller
-//@RequestMapping("/proyecto") Comentado para permitir redirección a '/'
+@RequestMapping("/proyecto")
 public class ProyectoController {
 
 	@Autowired
@@ -35,26 +36,22 @@ public class ProyectoController {
 	@Autowired
 	private UsuarioRepository usuarioRepository;
 
-	//Cambiada la redirección habitual a /proyecto/r para que la vista general
-	// de lectura de proyectos sea la página principal/index '/'
-	//cambiado para eso el requestMapping y los get y postmapping de todo el controlador
-	// la redirección se hace a rHome de la carpeta de proyectos
-	@GetMapping("/")
-	public String r(ModelMap m) {
-		List<Proyecto> proyectos = proyectoRepository.findAll();
+//	@GetMapping("/")
+//	public String r(ModelMap m) {
+//		List<Proyecto> proyectos = proyectoRepository.findAll();
+//
+//		m.put("proyectos", proyectos);
+//		m.put("view", "/proyecto/rHome");
+//		return "_t/frame";
+//	}
 
-		m.put("proyectos", proyectos);
-		m.put("view", "/proyecto/rHome");
-		return "_t/frame";
-	}
-
-	@GetMapping("proyecto/c")
+	@GetMapping("c")
 	public String c(ModelMap m) {
 		m.put("view", "/proyecto/c");
 		return "_t/frame";
 	}
 
-	@PostMapping("proyecto/c")
+	@PostMapping("c")
 	public String cPost(@RequestParam("nombre") String nombre, @RequestParam("descripcion") String descripcion,
 			@DateTimeFormat(iso = DateTimeFormat.ISO.DATE) @RequestParam("fIni") LocalDate fIni,
 			@DateTimeFormat(iso = DateTimeFormat.ISO.DATE) @RequestParam("fFin") LocalDate fFin,
@@ -75,7 +72,7 @@ public class ProyectoController {
 
 	}
 
-	@GetMapping("proyecto/verProyecto")
+	@GetMapping("verProyecto")
 	public String verProyecto(ModelMap m, @RequestParam("idProyecto") Long idProyecto, HttpSession s) {
 		boolean pertenece = false;
 		Proyecto proyecto = proyectoRepository.getById(idProyecto);
@@ -108,7 +105,7 @@ public class ProyectoController {
 		return "_t/frame";
 	}
 
-	@GetMapping("proyecto/tuProyecto")
+	@GetMapping("tuProyecto")
 	public String uProyectoLiderado(ModelMap m, HttpSession s, @RequestParam("idProyecto") Long idProyecto)
 			throws DangerException {
 
@@ -136,7 +133,7 @@ public class ProyectoController {
 		return "_t/frame";
 	}
 
-	@PostMapping("proyecto/tuProyecto")
+	@PostMapping("tuProyecto")
 	public String uProyectoLideradoPost(@RequestParam("nombre") String nombre,
 			@RequestParam("descripcion") String descripcion,
 			@DateTimeFormat(iso = DateTimeFormat.ISO.DATE) @RequestParam("fIni") LocalDate fIni,

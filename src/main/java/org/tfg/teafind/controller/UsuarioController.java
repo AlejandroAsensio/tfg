@@ -103,10 +103,15 @@ public class UsuarioController {
 	/**
 	 * ReadOwnProjects
 	 * Vista para cada usuario de los proyectos de los que es líder y en los que ocupa un puesto
+	 * @throws DangerException 
 	 */
 	@GetMapping("mis_proyectos")
-	public String rOP(ModelMap m, HttpSession s) {
+	public String rOP(ModelMap m, HttpSession s) throws DangerException {
 		Usuario usuario = (Usuario) s.getAttribute("usuario");
+		if (usuario == null) {
+			PRG.error("Por favor, inicia sesión para acceder a tus proyectos.", "/");
+		}
+		
 		List<Proyecto> creados = proyectoRepository.findByLeaderId(usuario.getId());
 		List<Puesto> ocupa = puestoRepository.findByOcupanteId(usuario.getId());
 		
@@ -117,6 +122,7 @@ public class UsuarioController {
 		m.put("view", "/usuario/ownProjects");
 		return "_t/frame";
 	}
+	
 	@PostMapping("unir")
 	public String unir(ModelMap m,HttpSession s,
 			@RequestParam("idPuesto") Long idPuesto

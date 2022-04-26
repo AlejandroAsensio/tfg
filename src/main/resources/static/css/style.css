@@ -132,9 +132,8 @@ div.userMenuHeader :hover {
 /*--------------Cards Mis proyectos--------------
 ------------------------------------------------*/
 .cartaJumbo {
-	background-color: var(--jumbotron);
+	background-color: #E7D0FA;
 }
-
 
 /*------------Sobrescritura Bootstrap------------
 ------------------------------------------------*/
