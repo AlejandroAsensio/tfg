@@ -1,6 +1,8 @@
 <div class="container">
-	<div class="row my-5">
-		<h2 class="display-4">Mis proyectos</h2>
+	<div class="row mb-4 ml-1">
+		<div class="">
+			<h1 class="font-weight-light">Mis proyectos</h1>
+		</div>
 	</div>
 </div>
 
@@ -43,16 +45,16 @@
 <!--***********************************************************************************************-->
 
 <!--*******************************Cards para proyectos liderados*************************************-->
-<div class="container" th:if="${!proyectosCreados.isEmpty()}">
+<div class="container p-4" th:if="${!proyectosCreados.isEmpty()}">
 	<div>
-		<h3 class="display-5">Los que tú has creado:</h3>
+		<h3 class="font-weight-light">Los que tú has creado:</h3>
 	</div>
-	<hr class="mb-4">
+	<hr class="mb-3">
 
 	<section class="row">
 		<th:block class="contenedorCards" th:each="proyectoCreado : ${proyectosCreados}">
 			<div class="d-flex align-items-stretch col-xl-6 col-lg-6 col-md-6 col-sm-12 col-12">
-				<div class="card border-0 py-4 px-4 my-4 mx-3 cartaJumbo w-100">
+				<div class="card border-0 py-4 px-4 my-4 mx-3 cartaJumboPropios w-100">
 					<div class="card-body">
 						<h2 class="display-5" th:text="${proyectoCreado.nombre}" />
 							
@@ -88,32 +90,33 @@
 </div>
 <!--***********************************************************************************************-->
 
-<div class="container mt-4">
-	<h3 class="display-5">A los que te has unido:</h3>
-	<hr class="mb-4">
+<div class="container px-4">
+	<h3 class="font-weight-light">A los que te has unido:</h3>
+	<hr class="mb-3">
+	
+	
+	<!--*******************HEADER para página CON proyectos liderados y SIN unidos********************-->
+	<header class="" th:if="${!proyectosCreados.isEmpty() && proyectosPertenece.isEmpty()}">
+		<div class="container px-lg-5">
+	    	<div class="jumbotron p-4 p-lg-5 text-center">
+	            <div class="m-4 m-lg-5">
+	                <h1 class="display-5 fw-bold"><i class="bi bi-emoji-neutral"></i> Ups...</h1>
+	                <p class="lead" th:text="|${usuario.nombre}, parece que sólo perteneces a proyectos creados por tí.|"></p>
+	                <p class="">¡Pero eso no es malo!</p>
+	                <p class="lead">Sólo recuerda que todos los proyectos a los que te unas aparecerán en este apartado para que consultes su información general y puedas acceder a su página principal de forma sencilla.</p>
+	                <div class="d-flex justify-content-center">
+		                <a class="btn btn-info m-3 col-4" href="/">Revisa los proyectos ya creados</a>
+	                </div>
+	            </div>
+	        </div>
+	    </div>
+	</header>
+	<!--***********************************************************************************************-->
+
 </div>
 
-
-<!--*******************HEADER para página CON proyectos liderados y SIN unidos********************-->
-<header class="py-4" th:if="${!proyectosCreados.isEmpty() && proyectosPertenece.isEmpty()}">
-	<div class="container px-lg-5">
-    	<div class="jumbotron p-4 p-lg-5 text-center">
-            <div class="m-4 m-lg-5">
-                <h1 class="display-5 fw-bold">Ups...</h1>
-                <p class="lead" th:text="|${usuario.nombre}, parece que sólo perteneces a proyectos creados por tí.|"></p>
-                <p class="">¡Pero eso no es malo!</p>
-                <p class="lead">Sólo recuerda que todos los proyectos a los que te unas aparecerán en este apartado para que consultes su información general y puedas acceder a su página principal de forma sencilla.</p>
-                <div class="d-flex justify-content-center">
-	                <a class="btn btn-info m-3 col-4" href="/">Revisa los proyectos ya creados</a>
-                </div>
-            </div>
-        </div>
-    </div>
-</header>
-<!--***********************************************************************************************-->
-
 <!--*************************Cards para proyectos a los que pertenece*******************************-->
-<div class="container mt-4" th:if="${!proyectosPertenece.isEmpty()}">
+<div class="container px-4" th:if="${!proyectosPertenece.isEmpty()}">
 
 	<section class="row">
 		<th:block class="contenedorCards" th:each="proyectoPertenece : ${proyectosPertenece}">

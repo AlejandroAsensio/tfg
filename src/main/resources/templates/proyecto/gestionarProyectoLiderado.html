@@ -1,8 +1,8 @@
 <div class="container">
 	
-	<div class="row d-flex justify-content-between my-5">
+	<div class="row d-flex justify-content-between mb-4">
 		<div class="col-xl-5 col-lg-5 col-md-12 col-sm-12 col-12">
-			<h2 class="display-4"><th:block th:text="|Gestionar ${proyecto.nombre}|"/></h2>
+			<h1 class="font-weight-light"><th:block th:text="|Gestionar ${proyecto.nombre}|"></h1>
 		</div>
 		
 		<div class="d-flex justify-content-end align-self-center col-xl-7 col-lg-7 col-md-12 col-sm-12 col-12">
@@ -44,9 +44,9 @@
 		<div class="col-xl-5 col-lg-5 col-md-5 col-sm-12 col-12">
 			<form action="/proyecto/tuProyecto" method="POST" >
 				
-				<div class="mt-2">
+				<div class="">
 					<div>
-						<h3 class="display-5">Información general:</h3> 
+						<h3 class="font-weight-light">Información general:</h3> 
 					</div>
 				</div>
 				<hr class="mb-4">
@@ -105,9 +105,9 @@
 		
 		<!--************** Cards puestos ocupados **************-->
 		<div th:unless="${libres == 0 && ocupados == 0}" class="col-xl-7 col-lg-7 col-md-7 col-sm-12 col-12">
-			<div class="mt-2">
+			<div class="">
 				<div>
-					<h3 class="display-5">Tu equipo:</h3> 
+					<h3 class="font-weight-light">Tu equipo:</h3> 
 				</div>
 			</div>
 			<hr class="mb-4">
@@ -183,11 +183,11 @@
 	</div>
 		
 	
-	<div th:unless="${libres == 0 && ocupados == 0}" class="row mt-5 pl-3">
+	<div th:unless="${libres == 0 && ocupados == 0}" class="row mt-4 pl-3">
 	
 	
 			<div>
-				<h3 class="display-5" th:text="|Puestos libres de ${proyecto.nombre}|"></h3> 
+				<h3 class="font-weight-light" th:text="|Puestos libres de ${proyecto.nombre}|"></h3> 
 			</div>
 			
 		

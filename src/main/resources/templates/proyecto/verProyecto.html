@@ -1,8 +1,8 @@
 <div class="container">
 	
-	<div class="row d-flex justify-content-between my-5">
+	<div class="row d-flex justify-content-between mb-4">
 		<div class="col-xl-7 col-lg-6 col-md-12 col-sm-12 col-12">
-			<h2 class="display-4"><th:block th:text="${proyecto.nombre}"/></h2>
+			<h1 class="font-weight-light"><th:block th:text="${proyecto.nombre}"></h1>
 		</div>
 		
 		<div class="d-flex justify-content-end align-self-center col-xl-5 col-lg-6 col-md-12 col-sm-12 col-12">
@@ -16,7 +16,7 @@
 			<form action="/usuario/mis_proyectos">
 				<button type="submit" class="btn btn-outline-info btn-sm border-0" th:unless="${session.usuario == null}">
 					<i class="bi bi-arrow-left"></i>
-					 Ir a Mis Proyectos
+					 Mis Proyectos
 				</button>
 			</form>
 		</div>
@@ -26,109 +26,64 @@
 
 <div class="container p-4">
 	<!--************** Información general del proyecto **************-->
-	<div class="row">
-		<div class="col-xl-5 col-lg-5 col-md-5 col-sm-12 col-12">
-			<form action="/proyecto/tuProyecto" method="POST" >
-				
-				<div class="mt-3">
-					<div>
-						<h3 class="display-5">Información general:</h3> 
-					</div>
-				</div>
-				<hr class="mb-4">
-				
-				<div id="jumboGeneralInfo" class="mx-3">
-					<div class="form-group">
+	<!--<div class="col-xl-5 col-lg-5 col-md-5 col-sm-12 col-12">-->
+	
+	<!--	
+	<div>
+		<h3 class="font-weight-light">Información general:</h3> 
+	</div>
+	
+	<hr class="mb-4">
+	-->
+	
+	<form action="/proyecto/tuProyecto" method="POST" >
+		<div class="row mb-3">
+			
+			<div class="col-6">
+				<div class="form-row">
+					<div class="form-group col-md-6">
 						<label for="nombreP" class="font-weight-bold">Nombre del proyecto: </label>
 						<input type="text" name="nombre" id="nombreP" class="form-control disabled bg-light border-0" th:value="${proyecto.nombre}" disabled="disabled">
 					</div>
-					
-					<div class="form-group" th:unless="${proyecto.leader.id == session.usuario?.id}">
-						<label for="nombreP" class="font-weight-bold">Líder del proyecto: </label>
+					<div class="form-group col-md-6" th:unless="${proyecto.leader.id == session.usuario?.id}">
+						<label for="nombreP" class="font-weight-bold">Líder: </label>
 						<input type="text" name="nombre" id="nombreP" class="form-control disabled bg-light border-0" th:value="${proyecto.leader.nombre}" disabled="disabled">
 					</div>
-					
 					<div class="form-group" th:if="${proyecto.leader.id == session.usuario?.id}">
-						<label for="nombreP" class="font-weight-bold" th:text="|Eres el líder de ${proyecto.nombre}|"></label>
-						
-					</div>
-					
-					<div class="form-group">
-						<label for="descripcionP" class="font-weight-bold">Descripción del proyecto: </label>
-						<textarea th:text="${proyecto.descripcion}" name="descripcion" class="form-control disabled bg-light border-0" rows="3" disabled="disabled"></textarea>
-						<!--<input type="text" name="descripcion" id="descripcionP" class="form-control hiddenInputProyecto" th:value="${proyecto.descripcion}">-->
-					</div>
-					
-					<div class="form-group row">
-						<div class="col">
-							<label for="inicioP" class="font-weight-bold">Fecha de inicio: </label>
-							<input type="date" name="fIni" id="InicioP" class="form-control disabled bg-light border-0" th:value="${proyecto.inicio}" disabled="disabled">
-						</div>
-						<div class="col">
-							<label for="finP" class="font-weight-bold">Fecha de fin: </label>
-							<input type="date" name="fFin" id="finP" class="form-control disabled bg-light border-0" th:value="${proyecto.fin}" disabled="disabled">
-						</div>
-					</div>
+					<span for="nombreP" class="badge badge-pill badge-secondary border-1 pr-2">
+						<img src="/icon/check.png" width="25" height="auto" class="align-self-center"> Eres lider
+					</span>
 				</div>
-			</form>
-		</div>
-		
-		<!--**************NINGÚN PUESTO CREADO*********************-->
-		<div class="row py-4" th:if="${libres == 0 && ocupados == 0}">
-			<div class="container px-lg-5">
-		    	<div class="jumbotron p-4 p-lg-5 bg-warning text-center">
-		            <div class="m-4 m-lg-5">
-		                <h1 class="display-5 fw-bold" th:text="|${proyecto.nombre} no ha publicado aún ningún puesto.|"></h1>
-		                <p class="lead">Pásate de vez en cuando por aquí en busca de nuevas oportunidades. Nunca se sabe donde podría estar tu nuevo sitio <i class="bi bi-emoji-laughing"></i></p>
-		                <div class="d-flex justify-content-center">
-			                <a class="btn btn-info m-3 col-4" href="/">Volver a la vista de proyectos</a>
-		                </div>
-		            </div>
-		        </div>
-		    </div>
-		</div>
-		<!--*******************************************************-->
-		
-		<!--************** Cards puestos ocupados **************-->
-		<div th:unless="${libres == 0 && ocupados == 0}" class="col-xl-7 col-lg-7 col-md-7 col-sm-12 col-12">
-			<div class="mt-3">
-				<div>
-					<h3 class="display-5">Puestos ocupados:</h3> 
+				</div>
+					
+				<div class="form-row">
+					<div class="form-group col-md-6">
+						<label for="inicioP" class="font-weight-bold">Fecha de inicio: </label>
+						<input type="date" name="fIni" id="InicioP" class="form-control disabled bg-light border-0" th:value="${proyecto.inicio}" disabled="disabled">
+					</div>
+					<div class="form-group col-md-6">
+						<label for="finP" class="font-weight-bold">Fecha de fin: </label>
+						<input type="date" name="fFin" id="finP" class="form-control disabled bg-light border-0" th:value="${proyecto.fin}" disabled="disabled">
+					</div>
 				</div>
 			</div>
-			<hr class="mb-4">
-		
-			<div class="mx-3 mb-3">
 				
-				<!-- Mensaje mostrado al no haber puestos ocupados en el equipo -->
-				<h5 th:if="${ocupados == 0 && libres > 0}" class="display-5 list-group-item-warning rounded text-center p-3 mt-5" th:text="|No hay ningún puesto ocupado en este momento para ${proyecto.nombre}|"></h5>
-				<!--************************************************************-->
-				
-				<th:block th:if="${ocupados > 0}" th:each="puesto : ${proyecto.puestos}" class="mx-3">
-					<div th:if="${puesto.ocupante != null && puesto.ocupante.id != session.usuario?.id}" class="card text-center my-3 mx-3">
-		  				<div class="card-body">
-							
-							<h5 class="card-title text-left font-weight-bold" th:text="${puesto.nombre}"></h5>
-							<p class="card-text text-left" th:if="${session.usuario!=null && (pertenece || proyecto.leader.id == session.usuario?.id)}" th:text="|${puesto.ocupante.nombre} ${puesto.ocupante.apellido1} ${puesto.ocupante.apellido2}|"></p>
-						    <p class="card-text" th:text="${puesto.descripcion}"></p>
-		  				</div>
-						<div class="d-inline text-right pb-2 px-2">
-						    <span th:each="habilidad : ${puesto.requiere}" th:text="${habilidad.nombre}" class="badge badge-pill badge-primary mx-1"></span>
-						</div>
-					</div>
-				</th:block>
-				
+			<div class="col-6">
+				<div class="form-group">
+					<label for="descripcionP" class="font-weight-bold">Descripción del proyecto: </label>
+					<textarea th:text="${proyecto.descripcion}" name="descripcion" class="form-control disabled bg-light border-0" rows="3" disabled="disabled"></textarea>
+					<!--<input type="text" name="descripcion" id="descripcionP" class="form-control hiddenInputProyecto" th:value="${proyecto.descripcion}">-->
+				</div>
 			</div>
 			
 		</div>
-		
-	</div>
-		
+	</form>	
+	
 	<div class="row mt-5 pl-3" th:unless="${libres == 0 && ocupados == 0}" th:if="${session.usuario!=null && pertenece}">
 		<div class="col">
-			<div class="mt-3">
+			<div class="">
 				<div>
-					<h3 class="display-5" th:text="|Tu puesto en ${proyecto.nombre}|"></h3> 
+					<h3 class="font-weight-light" th:text="|Tu puesto en ${proyecto.nombre}|"></h3> 
 				</div>
 			</div>
 			<hr class="mb-4">
@@ -152,58 +107,112 @@
 			</div>
 			
 			<div class="mx-3 mb-3 d-flex justify-content-end">
-				<button class="btn btn-outline-danger btn-sm border-0" th:text="|Abandonar ${proyecto.nombre}|"></button>
+				<button type="button" class="btn btn-outline-danger btn-sm border-0">
+					 <i class="bi bi-x-square"></i> Abandonar <span th:text="${proyecto.nombre}" />
+				</button>
 			</div>
 			
 		</div>
 	</div>
-	
-	<div th:unless="${libres == 0 && ocupados == 0}">
-		<div class="row mt-5 pl-3">
 		
-			<div class="mt-3">
-				<h3 class="display-5" th:text="|Puestos libres de ${proyecto.nombre}|"></h3> 
-			</div>
-			
-		</div>
-		
-		<hr class="mb-4">
+	<!--**************NINGÚN PUESTO CREADO*********************-->
+	<div class="row py-4" th:if="${libres == 0 && ocupados == 0}">
+		<div class="container px-lg-5">
+	    	<div class="jumbotron p-4 p-lg-5 text-center sinPuestos">
+	            <div class="m-4 m-lg-5">
+	                <h1 class="display-5 fw-bold" th:text="|${proyecto.nombre} no ha publicado aún ningún puesto.|"></h1>
+	                <p class="lead">Pásate de vez en cuando por aquí en busca de nuevas oportunidades. Nunca se sabe donde podría estar tu nuevo sitio <i class="bi bi-emoji-laughing"></i></p>
+	                <div class="d-flex justify-content-center">
+		                <a class="btn btn-info m-3 col-4" href="/">Volver a la vista de proyectos</a>
+	                </div>
+	            </div>
+	        </div>
+	    </div>
 	</div>
+	<!--*******************************************************-->
 	
-	<div class="row d-flex justify-content-center">
 	
-		<!-- Mensaje mostrado al no haber puestos ocupados en el equipo -->
-		<h5 th:if="${ocupados > 0 && libres == 0}" class="display-5 list-group-item-warning rounded text-center p-3 mt-5" th:text="|Ahora mismo no hay ningún puesto libre para ${proyecto.nombre}.|"></h5>
-		<!--************************************************************-->
+	<div class="row">
+	
+		<!--****************************************** Cards puestos ocupados ******************************************-->
+		<div th:unless="${libres == 0 && ocupados == 0}" class="col-xl-6 col-lg-6 col-md-6 col-sm-12 col-12">
+			<div class="">
+				<div>
+					<h3 class="font-weight-light">Puestos ocupados:</h3> 
+				</div>
+			</div>
+			<hr class="mb-4">
 		
-		<!--************** Cards puestos libres **************-->
-		<div class="card-columns">
-		
-			<th:block th:if="${libres > 0}" th:each="puesto : ${proyecto.puestos}" class="col" id="bloquePuestosLibres">
-				<div class="rowCardPuestoLibre">
-					<div th:if="${puesto.ocupante == null}" class="card mt-2 mb-4 mx-3" style="width: 18rem;">
-						<div class="card-body">
-						    <h5 th:text="${puesto.nombre}" class="card-title text-left font-weight-bold"></h5>
-						    <!--<h6 class="card-subtitle mb-2 text-muted"></h6>-->
-						    <p th:text="${puesto.descripcion}" class="card-text"></p>
-						    <div class="d-inline pb-1 px-1 text-right">
-						    	<span th:each="habilidad : ${puesto.requiere}" th:text="${habilidad.nombre}" class="badge badge-pill badge-primary m-1"></span>
-						    </div>
-						    <div th:if="${puesto.ocupante==null && !pertenece && session.usuario!=null && proyecto.leader.id != session.usuario.id}" class="d-flex justify-content-end">
-						    	<form th:name="|unir${puesto.id}|" action="/usuario/unir" method="POST">
-									<input type="hidden" name="idPuesto" th:value="${puesto.id}"/>
-									<button type="submit" class="btn btn-outline-primary btn-sm border-0" onclick="confirmar(this.form)">Unirme</button>
-								</form>
-						    </div>
+			<div class="mx-3 mb-3">
+				
+				<!-- Mensaje mostrado al no haber puestos ocupados en el equipo -->
+				<h5 th:if="${ocupados == 0 && libres > 0}" class="display-5 list-group-item-warning rounded text-center p-3 mt-5" th:text="|No hay ningún puesto ocupado en este momento para ${proyecto.nombre}|"></h5>
+				<!--************************************************************-->
+				
+				<th:block th:if="${ocupados > 0}" th:each="puesto : ${proyecto.puestos}" class="mx-3">
+					<div th:if="${puesto.ocupante != null && puesto.ocupante.id != session.usuario?.id}" class="card text-center my-3 mx-3">
+		  				<div class="card-body">
+							
+							<h5 class="card-title text-left font-weight-bold" th:text="${puesto.nombre}"></h5>
+							<p class="card-text text-left" th:if="${session.usuario!=null && (pertenece || proyecto.leader.id == session.usuario?.id)}" th:text="|${puesto.ocupante.nombre} ${puesto.ocupante.apellido1} ${puesto.ocupante.apellido2}|"></p>
+						    <p class="card-text" th:text="${puesto.descripcion}"></p>
+		  				</div>
+						<div class="d-inline text-right pb-2 px-2">
+						    <span th:each="habilidad : ${puesto.requiere}" th:text="${habilidad.nombre}" class="badge badge-pill badge-primary mx-1"></span>
 						</div>
 					</div>
-				</div>
-			</th:block>
+				</th:block>
+			</div>
 		</div>
+		<!--***********************************************************************************************************-->
+		
+		<!--****************************************** Cards puestos libres ******************************************-->
+		<div th:unless="${libres == 0 && ocupados == 0}" class="col-xl-6 col-lg-6 col-md-6 col-sm-12 col-12">
+			<div>
+				<div>
+					<h3 class="font-weight-light" th:text="|Puestos libres de ${proyecto.nombre}|">Puestos libres:</h3> 
+				</div>
+			</div>
+			<hr class="mb-4">
+		
+			<div class="mx-3 mb-3">
+			
+				<!-- Mensaje mostrado al no haber puestos ocupados en el equipo -->
+				<h5 th:if="${ocupados > 0 && libres == 0}" class="display-5 list-group-item-warning rounded text-center p-3 mt-5" th:text="|Ahora mismo no hay ningún puesto libre para ${proyecto.nombre}.|"></h5>
+				<!--************************************************************-->
+				
+				<!--************** Cards puestos libres **************-->
+				
+				<th:block th:if="${libres > 0}" th:each="puesto : ${proyecto.puestos}" class="col" id="bloquePuestosLibres">
+					<div class="rowCardPuestoLibre">
+						<div th:if="${puesto.ocupante == null}" class="card mt-2 mb-4 mx-3" style="width: 18rem;">
+							<div class="card-body">
+							    <h5 th:text="${puesto.nombre}" class="card-title text-left font-weight-bold"></h5>
+							    <!--<h6 class="card-subtitle mb-2 text-muted"></h6>-->
+							    <p th:text="${puesto.descripcion}" class="card-text"></p>
+							    <div class="d-inline pb-1 px-1 text-right">
+							    	<span th:each="habilidad : ${puesto.requiere}" th:text="${habilidad.nombre}" class="badge badge-pill badge-primary m-1"></span>
+							    </div>
+							    <div th:if="${puesto.ocupante==null && !pertenece && session.usuario!=null && proyecto.leader.id != session.usuario.id}" class="d-flex justify-content-end">
+							    	<form th:name="|unir${puesto.id}|" action="/usuario/unir" method="POST">
+										<input type="hidden" name="idPuesto" th:value="${puesto.id}"/>
+										<button type="submit" class="btn btn-outline-primary btn-sm border-0" onclick="confirmar(this.form)">Unirme</button>
+									</form>
+							    </div>
+							</div>
+						</div>
+					</div>
+				</th:block>
+			</div>
+		</div>
+		<!--***********************************************************************************************************-->
 		
 	</div>
 	
+	
+	
 </div>
+
 <script>
 	function confirmar(formulario){
 		

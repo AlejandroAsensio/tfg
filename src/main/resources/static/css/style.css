@@ -129,10 +129,19 @@ div.userMenuHeader :hover {
   	}
 }
 
-/*--------------Cards Mis proyectos--------------
+/*-----------------Mis proyectos----------------
 ------------------------------------------------*/
 .cartaJumbo {
 	background-color: #E7D0FA;
+}
+.cartaJumboPropios {
+	background-color: var(--jumbotron);
+}
+
+/*-----------------Ver Proyecto-----------------
+------------------------------------------------*/
+.sinPuestos {
+	background-color:#F9F997;
 }
 
 /*------------Sobrescritura Bootstrap------------
