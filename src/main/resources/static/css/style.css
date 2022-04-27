@@ -108,6 +108,20 @@ div.userMenuHeader :hover {
 .hiddenCard {
     display: none;
 }
+.card.escalar {
+    transition-duration: 300ms;
+}
+.card.escalar:hover{
+	/*-ms-transform: scale(1.01);
+	-webkit-transform: scale(1.01); */
+	transform: translate(-6px, -5px);
+	-webkit-box-shadow: -6px 5px 0px 0px #30A0BA; 
+	box-shadow: 6px 5px 0px 0px #30A0BA;
+    transition-duration: 150ms;
+}
+.sinPuestos {
+	background-color:#F9F997;
+}
 
 /*---------------Gestion Proyectos---------------
 ------------------------------------------------*/
@@ -140,9 +154,7 @@ div.userMenuHeader :hover {
 
 /*-----------------Ver Proyecto-----------------
 ------------------------------------------------*/
-.sinPuestos {
-	background-color:#F9F997;
-}
+
 
 /*------------Sobrescritura Bootstrap------------
 ------------------------------------------------*/

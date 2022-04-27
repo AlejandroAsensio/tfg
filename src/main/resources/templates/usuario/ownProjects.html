@@ -54,7 +54,7 @@
 	<section class="row">
 		<th:block class="contenedorCards" th:each="proyectoCreado : ${proyectosCreados}">
 			<div class="d-flex align-items-stretch col-xl-6 col-lg-6 col-md-6 col-sm-12 col-12">
-				<div class="card border-0 py-4 px-4 my-4 mx-3 cartaJumboPropios w-100">
+				<div class="card escalar border-0 py-4 px-4 my-4 mx-3 cartaJumboPropios w-100">
 					<div class="card-body">
 						<h2 class="display-5" th:text="${proyectoCreado.nombre}" />
 							
@@ -121,7 +121,7 @@
 	<section class="row">
 		<th:block class="contenedorCards" th:each="proyectoPertenece : ${proyectosPertenece}">
 			<div class="d-flex align-items-stretch col-xl-6 col-lg-6 col-md-6 col-sm-12 col-12">
-				<div class="card border-0 py-4 px-4 my-4 mx-3 cartaJumbo w-100">
+				<div class="card escalar border-0 py-4 px-4 my-4 mx-3 cartaJumbo w-100">
 					<div class="card-body">
 						<h2 class="display-5" th:text="${proyectoPertenece.proyecto.nombre}" />
 							

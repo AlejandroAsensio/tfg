@@ -23,7 +23,7 @@
 	
 	<div id="proyectos" class="m-3">
 		
-		<div class="card m-3" th:each="proyecto : ${proyectos}" id="cardsList">
+		<div class="card escalar m-3" th:each="proyecto : ${proyectos}" id="cardsList">
 			<h6 class="card-header text-right text-muted bg-light" th:text="|${proyecto.leader?.nombre} ${proyecto.leader?.apellido1}|"/>
 			<div class="card-body">
 				<h5 class="card-title" th:text="${proyecto.nombre}" />
@@ -37,7 +37,7 @@
 	
 			
 		<div class="card-columns hiddenCard" id="cardsGrid">
-			<div class="card m-3 mb-4" style="width: 18rem;" th:each="proyecto : ${proyectos}">
+			<div class="card escalar m-3 mb-4" style="width: 18rem;" th:each="proyecto : ${proyectos}">
 				<div class="card-body">
 					<p class="disabled text-right text-muted" th:text="${proyecto.leader?.nombre}" />
 					<h5 class="card-title" th:text="${proyecto.nombre}"></h5>

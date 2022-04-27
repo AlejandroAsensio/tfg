@@ -26,18 +26,9 @@
 
 <div class="container p-4">
 	<!--************** Información general del proyecto **************-->
-	<!--<div class="col-xl-5 col-lg-5 col-md-5 col-sm-12 col-12">-->
-	
-	<!--	
-	<div>
-		<h3 class="font-weight-light">Información general:</h3> 
-	</div>
-	
-	<hr class="mb-4">
-	-->
 	
 	<form action="/proyecto/tuProyecto" method="POST" >
-		<div class="row mb-3">
+		<div class="row mb-3 px-3">
 			
 			<div class="col-6">
 				<div class="form-row">
@@ -50,10 +41,10 @@
 						<input type="text" name="nombre" id="nombreP" class="form-control disabled bg-light border-0" th:value="${proyecto.leader.nombre}" disabled="disabled">
 					</div>
 					<div class="form-group" th:if="${proyecto.leader.id == session.usuario?.id}">
-					<span for="nombreP" class="badge badge-pill badge-secondary border-1 pr-2">
-						<img src="/icon/check.png" width="25" height="auto" class="align-self-center"> Eres lider
-					</span>
-				</div>
+						<span for="nombreP" class="badge badge-pill badge-secondary border-1 pr-2">
+							<img src="/icon/check.png" width="25" height="auto" class="align-self-center"> Eres lider
+						</span>
+					</div>
 				</div>
 					
 				<div class="form-row">
@@ -92,7 +83,7 @@
 				
 				
 				<th:block th:each="puesto : ${proyecto.puestos}" class="mx-3">
-					<div th:if="${puesto.ocupante != null && puesto.ocupante.id == session.usuario?.id}" class="card text-center my-3 mx-3">
+					<div th:if="${puesto.ocupante != null && puesto.ocupante.id == session.usuario?.id}" class="card escalar text-center my-3 mx-3">
 		  				<div class="card-body">
 							
 							<h5 class="card-title text-left font-weight-bold" th:text="${puesto.nombre}"></h5>
@@ -116,9 +107,9 @@
 	</div>
 		
 	<!--**************NINGÚN PUESTO CREADO*********************-->
-	<div class="row py-4" th:if="${libres == 0 && ocupados == 0}">
+	<div class="row py-3" th:if="${libres == 0 && ocupados == 0}">
 		<div class="container px-lg-5">
-	    	<div class="jumbotron p-4 p-lg-5 text-center sinPuestos">
+	    	<div class="jumbotron p-3 p-lg-5 text-center sinPuestos">
 	            <div class="m-4 m-lg-5">
 	                <h1 class="display-5 fw-bold" th:text="|${proyecto.nombre} no ha publicado aún ningún puesto.|"></h1>
 	                <p class="lead">Pásate de vez en cuando por aquí en busca de nuevas oportunidades. Nunca se sabe donde podría estar tu nuevo sitio <i class="bi bi-emoji-laughing"></i></p>
@@ -138,7 +129,7 @@
 		<div th:unless="${libres == 0 && ocupados == 0}" class="col-xl-6 col-lg-6 col-md-6 col-sm-12 col-12">
 			<div class="">
 				<div>
-					<h3 class="font-weight-light">Puestos ocupados:</h3> 
+					<h3 class="font-weight-light pl-3">Los puestos ocupados:</h3> 
 				</div>
 			</div>
 			<hr class="mb-4">
@@ -150,7 +141,7 @@
 				<!--************************************************************-->
 				
 				<th:block th:if="${ocupados > 0}" th:each="puesto : ${proyecto.puestos}" class="mx-3">
-					<div th:if="${puesto.ocupante != null && puesto.ocupante.id != session.usuario?.id}" class="card text-center my-3 mx-3">
+					<div th:if="${puesto.ocupante != null && puesto.ocupante.id != session.usuario?.id}" class="card escalar text-center my-3 mx-3">
 		  				<div class="card-body">
 							
 							<h5 class="card-title text-left font-weight-bold" th:text="${puesto.nombre}"></h5>
@@ -169,9 +160,7 @@
 		<!--****************************************** Cards puestos libres ******************************************-->
 		<div th:unless="${libres == 0 && ocupados == 0}" class="col-xl-6 col-lg-6 col-md-6 col-sm-12 col-12">
 			<div>
-				<div>
-					<h3 class="font-weight-light" th:text="|Puestos libres de ${proyecto.nombre}|">Puestos libres:</h3> 
-				</div>
+				<h3 class="font-weight-light pl-3">Los puestos libres:</h3> 
 			</div>
 			<hr class="mb-4">
 		
@@ -183,23 +172,20 @@
 				
 				<!--************** Cards puestos libres **************-->
 				
-				<th:block th:if="${libres > 0}" th:each="puesto : ${proyecto.puestos}" class="col" id="bloquePuestosLibres">
-					<div class="rowCardPuestoLibre">
-						<div th:if="${puesto.ocupante == null}" class="card mt-2 mb-4 mx-3" style="width: 18rem;">
-							<div class="card-body">
-							    <h5 th:text="${puesto.nombre}" class="card-title text-left font-weight-bold"></h5>
-							    <!--<h6 class="card-subtitle mb-2 text-muted"></h6>-->
-							    <p th:text="${puesto.descripcion}" class="card-text"></p>
-							    <div class="d-inline pb-1 px-1 text-right">
-							    	<span th:each="habilidad : ${puesto.requiere}" th:text="${habilidad.nombre}" class="badge badge-pill badge-primary m-1"></span>
-							    </div>
-							    <div th:if="${puesto.ocupante==null && !pertenece && session.usuario!=null && proyecto.leader.id != session.usuario.id}" class="d-flex justify-content-end">
-							    	<form th:name="|unir${puesto.id}|" action="/usuario/unir" method="POST">
-										<input type="hidden" name="idPuesto" th:value="${puesto.id}"/>
-										<button type="submit" class="btn btn-outline-primary btn-sm border-0" onclick="confirmar(this.form)">Unirme</button>
-									</form>
-							    </div>
+				<th:block th:if="${libres > 0}" th:each="puesto : ${proyecto.puestos}" class="mx-3" id="bloquePuestosLibres">
+					<div th:if="${puesto.ocupante == null}" class="card escalar text-center my-3 mx-3">
+						<div class="card-body">
+						    <h5 th:text="${puesto.nombre}" class="card-title text-left font-weight-bold"></h5>
+						    <p th:text="${puesto.descripcion}" class="card-text"></p>
+						    <div class="d-inline justify-content-end pb-2 px-2">
+							    <span th:each="habilidad : ${puesto.requiere}" th:text="${habilidad.nombre}" class="badge badge-pill badge-primary mx-1"></span>
 							</div>
+					    	<form th:name="|unir${puesto.id}|" th:if="${puesto.ocupante==null && !pertenece && session.usuario!=null && proyecto.leader.id != session.usuario.id}" action="/usuario/unir" method="POST">
+					    		<div class="d-flex justify-content-end">
+									<input type="hidden" name="idPuesto" th:value="${puesto.id}"/>
+									<button type="submit" class="btn btn-outline-primary btn-sm border-0" onclick="confirmar(this.form)">Unirme</button>
+								</div>	
+							</form>
 						</div>
 					</div>
 				</th:block>
