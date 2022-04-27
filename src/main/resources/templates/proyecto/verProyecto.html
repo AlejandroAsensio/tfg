@@ -79,11 +79,10 @@
 			</div>
 			<hr class="mb-4">
 		
-			<div class="mx-3 mb-3">
-				
-				
-				<th:block th:each="puesto : ${proyecto.puestos}" class="mx-3">
-					<div th:if="${puesto.ocupante != null && puesto.ocupante.id == session.usuario?.id}" class="card escalar text-center my-3 mx-3">
+			<th:block th:each="puesto : ${proyecto.puestos}">
+				<div th:if="${puesto.ocupante != null && puesto.ocupante.id == session.usuario?.id}" class="mx-3 mb-3">
+					
+					<div  class="card escalar text-center my-3 mx-3">
 		  				<div class="card-body">
 							
 							<h5 class="card-title text-left font-weight-bold" th:text="${puesto.nombre}"></h5>
@@ -93,15 +92,19 @@
 						    <span th:each="habilidad : ${puesto.requiere}" th:text="${habilidad.nombre}" class="badge badge-pill badge-primary mx-1"></span>
 						</div>
 					</div>
-				</th:block>
+					
+					<form name="abandonarProyecto" action="/usuario/salir" method="POST">
+						<div class="mx-3 mb-3 d-flex justify-content-end">
+							<input type="hidden" name="idPuesto" th:value="${puesto.id}"/>
+							<button type="button" class="btn btn-outline-danger btn-sm border-0" onclick="salir(this.form)">
+								 <i class="bi bi-x-square"></i> Abandonar <span th:text="${proyecto.nombre}" />
+							</button>
+						</div>
+					</form>
+					
+				</div>
 				
-			</div>
-			
-			<div class="mx-3 mb-3 d-flex justify-content-end">
-				<button type="button" class="btn btn-outline-danger btn-sm border-0">
-					 <i class="bi bi-x-square"></i> Abandonar <span th:text="${proyecto.nombre}" />
-				</button>
-			</div>
+			</th:block>
 			
 		</div>
 	</div>
@@ -203,7 +206,12 @@
 	function confirmar(formulario){
 		
 		var res = confirm("¿Estás seguro de que quieres unirte?");
-		console.log(formulario);
+		if(res){
+			formulario.submit();
+		}
+	}
+	function salir(formulario) {
+		var res = confirm("¿Dejarás de formar parte del proyecto, estás seguro de que quieres abandonar tu puesto?");
 		if(res){
 			formulario.submit();
 		}

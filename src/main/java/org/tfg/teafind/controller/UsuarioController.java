@@ -134,6 +134,18 @@ public class UsuarioController {
 		return "redirect:/proyecto/verProyecto?idProyecto="+puesto.getProyecto().getId();
 	}
 	
+	@PostMapping("salir")
+	public String salir(ModelMap m,HttpSession s,
+			@RequestParam("idPuesto") Long idPuesto
+			) {
+		
+		Puesto puesto = puestoRepository.getById(idPuesto);
+		
+		puesto.setOcupante(null);
+		puestoRepository.save(puesto);
+		return "redirect:/proyecto/verProyecto?idProyecto="+puesto.getProyecto().getId();
+	}
+	
 	@GetMapping("u")
 	public String perfil(ModelMap m, HttpSession s) {
 		Usuario usuario = (Usuario) s.getAttribute("usuario");
