@@ -16,13 +16,14 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 //import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
-
+import org.tfg.teafind.entities.Habilidad;
 import org.tfg.teafind.entities.Proyecto;
 import org.tfg.teafind.entities.Puesto;
 import org.tfg.teafind.entities.Usuario;
 import org.tfg.teafind.exception.DangerException;
 import org.tfg.teafind.exception.InfoException;
 import org.tfg.teafind.exception.PRG;
+import org.tfg.teafind.repository.HabilidadRepository;
 import org.tfg.teafind.repository.ProyectoRepository;
 import org.tfg.teafind.repository.UsuarioRepository;
 
@@ -35,6 +36,9 @@ public class ProyectoController {
 
 	@Autowired
 	private UsuarioRepository usuarioRepository;
+	
+	@Autowired
+	private HabilidadRepository habilidadRepository;
 
 //	@GetMapping("/")
 //	public String r(ModelMap m) {
@@ -124,7 +128,11 @@ public class ProyectoController {
 				puestosOcupados++;
 			}
 		}
-
+		
+		//Obtiene la lista de habilidades para la modificación de puestos
+		List<Habilidad> habilidades = habilidadRepository.findAll();
+		
+		m.put("habilidades", habilidades);
 		m.put("proyecto", proyecto);
 		m.put("ocupados", puestosOcupados);
 		//Número de puestos libres del proyecto

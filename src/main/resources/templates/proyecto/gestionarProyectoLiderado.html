@@ -6,10 +6,67 @@
 		</div>
 		
 		<div class="d-flex justify-content-end align-self-center col-xl-7 col-lg-7 col-md-12 col-sm-12 col-12">
-			<a type="button" class="btn btn-outline-primary btn-sm border-0 mr-2 botonEdicion" th:href="|/puesto/c?nombreProyecto=${proyecto.nombre}|" hidden="hidden">
+			<a type="button" class="btn btn-outline-primary btn-sm border-0 mr-2 botonEdicion" data-toggle="modal" data-target="#newPuestoModal" th:href="|/puesto/c?nombreProyecto=${proyecto.nombre}|" hidden="hidden">
 				<i class="bi bi-plus-square"></i> 
 				 Crear puesto
 			</a>
+
+			<!-- ******************************** Modal para creación de puesto ********************************-->
+			<div class="modal fade text-left" id="newPuestoModal" tabindex="-1" role="dialog" aria-labelledby="newPuestoModalLabel" aria-hidden="true">
+				<div class="modal-dialog modal-dialog-centered" role="document">
+					<div class="modal-content">
+						<div class="modal-header">
+							<h5 class="modal-title font-weight-bold" id="modalPuestoLibreLabel"
+								th:text="|Nuevo puesto para ${proyecto.nombre}|"></h5>
+							<button type="button" class="close" data-dismiss="modal" aria-label="Close">
+								<span aria-hidden="true">&times;</span>
+							</button>
+						</div>
+						<form name="puestoForm" action="/puesto/c" method="POST">
+							<div class="modal-body">
+			
+								<div class="form-group">
+									<label for="recipient-name" class="col-form-label">Nombre del puesto:</label>
+									<input type="text" class="form-control" name="nombre" id="recipient-name" placeholder="Nombre">
+								</div>
+								<div class="form-group">
+									<label for="message-text" class="col-form-label">Descripción del puesto:</label>
+									<textarea class="form-control" name="descripcion" id="message-text"
+										text="Descripción"></textarea>
+								</div>
+								<div class="form-group">
+									<label for="message-text" class="col-form-label">¿Qué habilidades necesita su ocupante?</label>
+								</div>
+								<div class="row mx-2 mt-0 pt-0">
+									<th:block th:each="habilidad : ${habilidades}">
+										<div class="col-4" data-toggle="buttons">
+											<label class="btn btn-info btn-sm">
+												<input type="checkbox" class="custom-control-input" name="idsHabilidadesRequire[]"
+													th:value="${habilidad.id}" th:id="|id-${habilidad.id}-habilidad|" />
+												<th:block th:text="${habilidad.nombre}" />
+											</label>
+										</div>
+									</th:block>
+								</div>
+							</div>
+								
+							<div class="modal-footer">
+								<div>
+									<button type="button" class="btn btn-sm btn-outline-secondary border-0" data-dismiss="modal">Cancelar</button>
+									<button type="submit" class="btn btn-sm btn-outline-primary border-0" onclick="crearMasPuestos(true)" value="finalizar">Añadir más</button>
+									<button type="submit" class="btn btn-sm btn-outline-success border-0" onclick="crearMasPuestos(false)" value="añadir">Crear y finalizar</button>
+									<input type="hidden" name="idProyecto" th:value="${proyecto.id}" />
+									<input type="hidden" name="nombreProyecto" th:value="${proyecto.nombre}"/>
+									<input type="hidden" name="destino" value="" />
+								</div>
+							</div>
+						</form>
+					</div>
+			
+				</div>
+			</div>
+			<!--******************************* END Modal para creación de puesto *******************************-->
+			
 			<div>
 				<button type="submit" class="btn btn-outline-warning btn-sm border-0 mr-2 botonModoEdicion" onclick="edicionGestionProyecto();">
 					<i class="bi bi-pencil"></i>
@@ -140,9 +197,7 @@
 		
 							<!-- POPUP de edición de puesto desde su propia card -->
 		
-							<button type="button" class="btn btn-outline-info btn-sm float-right border-0 botonEdicion"
-								data-toggle="modal" th:attr="data-target='#modalPuestoOcupado-'+${puesto.id}"
-								title="Modificar puesto ocupado" hidden="hidden">
+							<button type="button" class="btn btn-outline-info btn-sm float-right border-0 botonEdicion" data-toggle="modal" th:attr="data-target='#modalPuestoOcupado-'+${puesto.id}" title="Modificar puesto ocupado" hidden="hidden">
 								<i class="bi bi-pencil-square"></i>
 							</button>
 		
@@ -245,16 +300,24 @@
 								            			<label for="message-text" class="col-form-label">Nueva descripción del puesto:</label>
 								            			<textarea class="form-control" id="message-text" th:text="${puesto.descripcion}"></textarea>
 								          			</div>
-								            		<div class="form-group">
+								          			<div class="form-group">
 								            			<label for="message-text" class="col-form-label">Reasigna las habilidades necesarias:</label>
-								            			<th:block class="mr-2" th:each="habilidad:${habilidades}">
-															<input type="checkbox" name="idsHabilidadesRequire[]" th:value="${habilidad.id}" th:id="|id-${habilidad.id}-habilidad|"/>
-															<label th:for="|id-${habilidad.id}-habilidad|" th:text="${habilidad.nombre}"/>
+								          			</div>
+								            		<div class="row mx-2 mt-0 pt-0">
+														<th:block th:each="habilidad : ${habilidades}">
+															<div class="col-4" data-toggle="buttons">
+																<label class="btn btn-info btn-sm">
+																	<input th:if="${puesto.requiere.contains(habilidad)}" checked="checked" type="checkbox" class="custom-control-input" name="idsHabilidadesRequire[]" th:value="${habilidad.id}" th:id="|id-${habilidad.id}-habilidad|"/>
+																	<input th:if="${!puesto.requiere.contains(habilidad)}" class="custom-control-input" name="idsHabilidadesRequire[]" th:value="${habilidad.id}" th:id="|id-${habilidad.id}-habilidad|"/>
+																	<th:block th:text="${habilidad.nombre}"/>
+																</label>
+															</div>
 														</th:block>
 								          			</div>
 								        		</form>
 								      		</div>
-								      		<div class="modal-footer">
+								      		<div class="modal-footer  d-flex justify-content-between">
+								      			<button type="button" class="btn btn-sm btn-outline-danger border-0" data-dismiss="modal">Eliminar puesto</button>
 										      	<div>
 										      		<button type="button" class="btn btn-sm btn-outline-secondary border-0" data-dismiss="modal">Cancelar</button>
 										        	<button type="button" class="btn btn-sm btn-outline-info border-0">Guardar cambios</button>
@@ -281,3 +344,4 @@
 </div>
 
 <script src="/js/edicionGestionProyectos.js"></script>
+<script src="/js/crearPuestos.js"></script>

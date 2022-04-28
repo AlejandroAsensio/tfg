@@ -25,7 +25,7 @@ import org.tfg.teafind.repository.PuestoRepository;
 
 
 @Controller
-@RequestMapping("/puesto")
+//@RequestMapping("/puesto")
 public class PuestoController {
 
 	@Autowired
@@ -39,7 +39,7 @@ public class PuestoController {
 	
 	
 	
-	@GetMapping("r")
+	@GetMapping("/puesto/r")
 	public String r(
 			ModelMap m
 			) {
@@ -48,7 +48,7 @@ public class PuestoController {
 		return "_t/frame";
 	}
 	
-	@GetMapping("c")
+	@GetMapping("/puesto/c")
 	public String c(
 			ModelMap m,
 			HttpSession s,
@@ -69,14 +69,14 @@ public class PuestoController {
 	}
 	
 	
-	@PostMapping("c")
+	@PostMapping("/puesto/c")
 	public String cPost(
 			HttpSession s,
 			@RequestParam("nombre") String nombre,
 			@RequestParam("descripcion") String descripcion,
 			@RequestParam("idsHabilidadesRequire[]")List<Long> idsHabilidadesRequire,
 			@RequestParam("idProyecto") Long idProyecto,
-			@RequestParam("destino") boolean fin,
+			@RequestParam("destino") boolean seguir,
 			@RequestParam("nombreProyecto") String nombreProyecto
 			) throws DangerException, InfoException {
 		String ruta = "";
@@ -96,11 +96,11 @@ public class PuestoController {
 		} catch (Exception e) {
 			PRG.error("La habilidad " + nombre + " ya existe ", "/usuario/c");
 		}
-		if(fin) {
-			ruta="redirect:/proyecto/tuProyecto?idProyecto="+idProyecto;
+		if(seguir) {
+			ruta="redirect:/puesto/c?nombreProyecto="+nombreProyecto;
 		}
-		else if(!fin) {
-			ruta="redirect:c?nombreProyecto="+nombreProyecto;
+		else if(!seguir) {
+			ruta="redirect:/proyecto/tuProyecto?idProyecto="+idProyecto;
 		}
 //		PRG.info(nombre + " creado correctamente.", "/usuario/r");
 		return ruta;

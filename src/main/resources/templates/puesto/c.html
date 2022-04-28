@@ -1,57 +1,83 @@
 <div class="container">
-	<div class="row m-3">
-		<h2 class="display-4">Crear puesto para el proyecto</h2>
+	<div class="row mb-4 ml-1">
+		<div class="">
+			<h1 class="font-weight-light" th:text="|Añadir otro puesto a ${proyecto.nombre}|"></h1>
+		</div>
 	</div>
-</div>	
+</div>
 
-<div class="container rounded p-4">
-	
-	<div class="row m-3">
-		<h3 class="display-5" th:text="${proyecto.nombre}"/>
-	</div>
+<div class="container p-4">
 	
 	<form name="puestoForm" action="/puesto/c" method="POST">
-		<div class="mb-3">
-			<label for="idNombre" class="form-label disabled">Nombre</label>
-			<input type="text" class="form-control" name="nombre" id="idNombre">
-		</div>
-		
-		<div class="mb-3">
-			<label for="idDescripcion" class="form-label disabled">Descripcion</label>
-			<input type="text"  class="form-control" name="descripcion" id="idDescripcion">
-		</div>
-		
-		<fieldset>
-		<legend>Habilidades requeridas para el puesto</legend>
-		<div class="mb-3 row">
-			<div class="mr-2" th:each="habilidad:${habilidades}">
-				<input type="checkbox" name="idsHabilidadesRequire[]" th:value="${habilidad.id}" th:id="|id-${habilidad.id}-habilidad|"/>
-				<label th:for="|id-${habilidad.id}-habilidad|" th:text="${habilidad.nombre}"/>
+	
+		<div class="row">
+			<div class="col-xl-4 col-lg-4 col-md-3 col-sm-12 col-12">
+				<h3 class="font-weight-light pl-3">Puestos existentes:</h3>
+				<hr class="mb-4">
+				
+				<div class="mx-3 mb-3">
+					<ul class="list-group" th:each="puesto : ${proyecto.puestos}">
+						<li th:if="${puesto.ocupante == null}" class="list-group-item list-group-item-light list-group-item-action" th:text="${puesto.nombre}" title="Puesto libre"></li>
+						<li th:if="${puesto.ocupante != null}" class="list-group-item list-group-item-info list-group-item-action" th:text="${puesto.nombre}" title="Puesto ocupado"></li>
+					</ul>
+				</div>
+			</div>
+			
+			<div class="col-xl-8 col-lg-8 col-md-9 col-sm-12 col-12">
+				<h3 class="font-weight-light pl-3">Datos del nuevo puesto:</h3>
+				<hr class="mb-4">
+				
+				<div class="mx-3 mb-3">
+					<div class="form-group">
+						<label for="recipient-name" class="col-form-label">Nombre del puesto:</label>
+						<input type="text" class="form-control" name="nombre" id="recipient-name" placeholder="Nombre">
+					</div>
+					<div class="form-group">
+						<label for="message-text" class="col-form-label">Descripción del puesto:</label>
+						<textarea class="form-control" name="descripcion" id="message-text"
+							text="Descripción"></textarea>
+					</div>
+					<div class="form-group">
+						<label for="message-text" class="col-form-label">¿Qué habilidades necesita su ocupante?</label>
+					</div>
+					<div class="row mx-2 mt-0 pt-0">
+						<th:block th:each="habilidad : ${habilidades}">
+							<div class="col-3" data-toggle="buttons">
+								<label class="btn btn-info btn-sm">
+									<input type="checkbox" class="custom-control-input" name="idsHabilidadesRequire[]"
+										th:value="${habilidad.id}" th:id="|id-${habilidad.id}-habilidad|" />
+									<th:block th:text="${habilidad.nombre}" />
+								</label>
+							</div>
+						</th:block>
+					</div>
+					
+					<div class="d-flex justify-content-between">
+						<div>
+							<a th:href="|/proyecto/tuProyecto?idProyecto=${proyecto.id}|" role="button" class="btn btn-outline-danger btn-sm border-0 m-2">
+								<i class="bi bi-x"></i> Cancelar
+							</a>
+						</div>
+						<div>
+							<button type="button" onclick="crearMasPuestos(true)" class="btn btn-outline-primary btn-sm border-0 m-2">
+								<i class="bi bi-node-plus"></i> Crear y añadir más
+							</button>
+							<button type="button" onclick="crearMasPuestos(false)" class="btn btn-outline-success btn-sm border-0 m-2">
+								<i class="bi bi-save"></i> Crear y volver
+							</button>
+						</div>	
+					</div>
+				</div>
+				
+				<input type="hidden" name="destino" value=""/>
+				<input type="hidden" name="idProyecto" th:value="${proyecto.id}"/>
+				<input type="hidden" name="nombreProyecto" th:value="${proyecto.nombre}"/>
+				
 			</div>
 		</div>
-		</fieldset>
 		
-		
-		<div class="m-3">
-			<input type="button" onclick="comprobarDestino(true)" class="btn btn-info m-2" value="Finalizar" />
-			<input type="button" onclick="comprobarDestino(false)" class="btn btn-info m-2" value="Añadir Mas" />
-			<a href="/proyecto/r" class="btn btn-info m-2">Cancelar</a>
-		</div>
-		<input type="hidden" name="destino" value=""/>
-		<input type="hidden" name="idProyecto" th:value="${proyecto.id}"/>
-		<input type="hidden" name="nombreProyecto" th:value="${proyecto.nombre}"/>
 		
 	</form>
 	
 </div>
-<script>
-	function comprobarDestino(fin){
-		if(fin){
-			puestoForm.destino.value=fin;
-		}
-		else if(!fin){
-			puestoForm.destino.value=fin;
-		}
-		puestoForm.submit();
-	}
-</script>
+<script src="/js/crearPuestos.js"></script>
