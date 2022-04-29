@@ -42,11 +42,13 @@
 	<div class="navbar-collapse collapse w-100 order-3 dual-collapse2">
         <ul class="navbar-nav ml-auto">
         
-        	<li th:if="${session.usuario != null}" class="nav-item mr-auto botonProyectos align-self-center mr-4">
-        		<a class="btn btn-outline-info border-0 text-info" href="/proyecto/c">
-					<i class="bi bi-plus-lg iconoBotonProyectos"></i>
-					<span class="textoBotonProyectos text-light">Nuevo proyecto</span>
-				</a>
+        	<li th:if="${session.usuario != null}" class="nav-item mr-auto align-self-center mr-4">
+        		<div class="wrapper">
+	        		<a class="button" href="/proyecto/c">
+						<div class="icon"><i class="bi bi-plus-lg"></i></div>
+						<span>Crear proyecto</span>
+					</a>
+        		</div>
         	</li>
         	
             <!--INICIO DE SESIÓN-->
