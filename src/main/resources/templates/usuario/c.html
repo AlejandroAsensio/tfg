@@ -1,94 +1,106 @@
 <div class="container">
-	<div class="row mb-4 ml-1">
-		<div class="">
-			<h1 class="font-weight-light">¡Regístrate gratis en Teafind!</h1>
+	
+	<div class="row d-flex justify-content-between mb-4">
+		<div class="col-xl-7 col-lg-6 col-md-12 col-sm-12 col-12">
+			<h1 class="font-weight-light">Regístrate gratis en Teafind</h1>
+		</div>
+		<div class="d-flex justify-content-end align-self-center col-xl-5 col-lg-6 col-md-12 col-sm-12 col-12">
+			<input type="button" class="btn btn-outline-warning btn-sm" value="Generar Usuario" id="plantilla">
 		</div>
 	</div>
+	
 </div>
 
 <div class="container p-4">
-	
-	<div class="row m-3">
-		<h3 class="display-5">Nuevo usuario</h3>
-		<input type="button" value="Plantilla nuevo usuario" id="plantilla">
-	</div>
-	
+
 	<form onsubmit="return validar();" action="/usuario/c" method="POST">
-		<div class="mb-3">
-			<label id="01" for="idNombre" class="form-label disabled">Nombre</label>
-			<input type="text" class="form-control" name="nombre" id="idNombre" required="required">
-		</div>
-		
-		<div class="mb-3">
-			<label for="idApe1" class="form-label disabled">Primer apellido</label>
-			<input type="text" class="form-control" name="apellido1" id="idApe1" required="required">
-		</div>
-		
-		<div class="mb-3">
-			<label for="idApe2" class="form-label disabled">Segundo apellido</label>
-			<input type="text" class="form-control" name="apellido2" id="idApe2">
-		</div>
-		
-		<div class="mb-3">
+	
+		<div class="row">
+			<div class="col-12">
+				<h3 class="font-weight-light pl-3">Introduce tus datos:</h3>
+				<hr class="mb-4">
+			</div>
 			
-			<label for="idTlf" class="form-label disabled">Teléfono (móvil)</label>
-			<div style="color:red" id="divtlf"></div>
-			<input type="text" class="form-control" name="telefono" id="idTlf" required="required">
+			<div class="col-xl-6 col-lg-6 col-md-6 col-sm-12 col-12 px-4">
+				<div class="mb-3">
+					<label id="01" for="idNombre" class="form-label disabled is-valid" value="Mark">Nombre</label>
+					<input type="text" class="form-control" name="nombre" id="idNombre" required="required">
+				</div>
+				
+				<div class="mb-3">
+					<label for="idApe1" class="form-label disabled">Primer apellido</label>
+					<input type="text" class="form-control" name="apellido1" id="idApe1" required="required">
+				</div>
+				
+				<div class="mb-3">
+					<label for="idApe2" class="form-label disabled">Segundo apellido</label>
+					<input type="text" class="form-control" name="apellido2" id="idApe2">
+				</div>
+			</div>
+			<div class="col-xl-6 col-lg-6 col-md-6 col-sm-12 col-12 px-4">
+				<div class="mb-3">
+					
+					<label for="idTlf" class="form-label disabled">Teléfono (móvil)</label>
+					<div style="color:red" id="divtlf"></div>
+					<input type="text" class="form-control" name="telefono" id="idTlf" required="required">
+					
+				</div>
+				
+				<div class="mb-3">
+					<label for="idEmail" class="form-label disabled">Email</label>
+					<div style="color:red" id="divemail"></div>
+					<input type="text" class="form-control" name="email" id="idEmail">
+					
+				</div>
+				<div class="form-row">
+					<div class="col mb-3">
+						<label for="idPass" class="form-label disabled">Contraseña</label>
+						<div style="color:red" id="divpass"></div>
+						<input type="password" class="form-control" name="password" id="idPass">
+						
+					</div>
+					<div class="col mb-3">
+						<label for="idPassConfirm" class="form-label disabled">Confirmar Contraseña</label>
+						<div style="color:red" id="divpassConfirm"></div>
+						<input type="password" class="form-control" name="passwordConfirm" id="idPassConfirm">
+					</div>
+				</div>
+			</div>
 			
-		</div>
-		
-		<div class="mb-3">
-			<label for="idEmail" class="form-label disabled">Email</label>
-			<div style="color:red" id="divemail"></div>
-			<input type="text" class="form-control" name="email" id="idEmail">
 			
-		</div>
-		
-		<div class="mb-3">
-			<label for="idPass" class="form-label disabled">Contraseña</label>
-			<div style="color:red" id="divpass"></div>
-			<input type="password" class="form-control" name="password" id="idPass">
+			<div class="col-12">
+				<h4 class="font-weight-light pl-3 pt-4">¿Qué habilidades tienes?</h4>
+				<hr class="mb-4">
 			
-		</div>
-		<div class="mb-3">
-			<label for="idPassConfirm" class="form-label disabled">Confirmar Contraseña</label>
-			<div style="color:red" id="divpassConfirm"></div>
-			<input type="password" class="form-control" name="passwordConfirm" id="idPassConfirm">
+				<div class="row mx-2 mt-0 pt-0">
+					<th:block th:each="habilidad : ${habilidades}">
+						<div class="col-2" data-toggle="buttons">
+							<label class="btn btn-info btn-sm">
+								<input type="checkbox" class="custom-control-input" name="idsHabilidadesRequire[]"
+									th:value="${habilidad.id}" th:id="|id-${habilidad.id}-habilidad|" />
+								<th:block th:text="${habilidad.nombre}" />
+							</label>
+						</div>
+					</th:block>
+				</div>
+			</div>
 			
-			
-		</div>
-		
-		
-		<fieldset>
-		<legend>Habilidades</legend>
-		<div class="mb-3 row">
-			<div class="mr-2" th:each="habilidad:${habilidades}">
-				<input type="checkbox" name="idsHabilidadesSabe[]" th:value="${habilidad.id}" th:id="|id-${habilidad.id}-habilidad|"/>
-				<label th:for="|id-${habilidad.id}-habilidad|" th:text="${habilidad.nombre}"/>
+			<div class="col-12">
+				<div class="d-flex justify-content-end">
+					<div>
+						<button type="reset" role="button" class="btn btn-outline-danger btn-sm border-0 m-2">
+							<i class="bi bi-stars"></i> Borrar campos
+						</button>
+						<div style="color : red;" id="divValidate"></div>
+					</div>
+					<div>
+						<button type="submit"  class="btn btn-outline-success btn-sm border-0 m-2">
+							<i class="bi bi-save"></i> Registrarte
+						</button>
+					</div>	
+				</div>
 			</div>
 		</div>
-		</fieldset>
-		
-		
-		<!--<div class="mb-3">
-			<label class="form-label disabled">¿Admin?</label>
-			</br>
-		
-			<input type="radio" name="admin" id="adminTrue" value="true">
-			<label for="adminTrue" class="disabled">Si</label>
-			
-			</br>
-			
-			<input type="radio"  name="admin" id="adminFalse" value="false" checked="checked">
-			<label for="adminFalse" class="disabled">No</label>
-		</div>-->
-		
-		<div class="m-3">
-			<div style="color : red;" id="divValidate"></div>
-			<input type="submit" class="btn btn-info m-2" value="Continuar" id="validarDatos"/>
-			<a href="/usuario/r" class="btn btn-info m-2">Cancelar</a>
-		</div>
-		
 	</form>
 	
 </div>
