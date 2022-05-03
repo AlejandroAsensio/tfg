@@ -13,7 +13,7 @@
 
 <div class="container p-4">
 
-	<form onsubmit="return validar();" action="/usuario/c" method="POST">
+	<form onsubmit="return validar();" action="/usuario/c" method="POST" class="needs-validation">
 	
 		<div class="row">
 			<div class="col-12">
@@ -21,7 +21,8 @@
 				<hr class="mb-4">
 			</div>
 			
-			<div class="col-xl-6 col-lg-6 col-md-6 col-sm-12 col-12 px-4">
+			<div class="col-xl-1 col-lg-1 col-md-1 col-sm-12 col-12"></div>
+			<div class="col-xl-5 col-lg-5 col-md-5 col-sm-12 col-12 px-4">
 				<div class="mb-3">
 					<label id="01" for="idNombre" class="form-label disabled is-valid" value="Mark">Nombre</label>
 					<input type="text" class="form-control" name="nombre" id="idNombre" required="required">
@@ -37,36 +38,36 @@
 					<input type="text" class="form-control" name="apellido2" id="idApe2">
 				</div>
 			</div>
-			<div class="col-xl-6 col-lg-6 col-md-6 col-sm-12 col-12 px-4">
+			<div class="col-xl-5 col-lg-5 col-md-5 col-sm-12 col-12 px-4">
 				<div class="mb-3">
 					
 					<label for="idTlf" class="form-label disabled">Teléfono (móvil)</label>
-					<div style="color:red" id="divtlf"></div>
 					<input type="text" class="form-control" name="telefono" id="idTlf" required="required">
+					<div style="color:red" id="divtlf"></div>
 					
 				</div>
 				
 				<div class="mb-3">
 					<label for="idEmail" class="form-label disabled">Email</label>
-					<div style="color:red" id="divemail"></div>
 					<input type="text" class="form-control" name="email" id="idEmail">
+					<div style="color:red" id="divemail"></div>
 					
 				</div>
 				<div class="form-row">
 					<div class="col mb-3">
 						<label for="idPass" class="form-label disabled">Contraseña</label>
-						<div style="color:red" id="divpass"></div>
 						<input type="password" class="form-control" name="password" id="idPass">
+						<div style="color:red" id="divpass"></div>
 						
 					</div>
 					<div class="col mb-3">
 						<label for="idPassConfirm" class="form-label disabled">Confirmar Contraseña</label>
-						<div style="color:red" id="divpassConfirm"></div>
 						<input type="password" class="form-control" name="passwordConfirm" id="idPassConfirm">
+						<div style="color:red" id="divpassConfirm"></div>
 					</div>
 				</div>
 			</div>
-			
+			<div class="col-xl-1 col-lg-1 col-md-1 col-sm-12 col-12"></div>
 			
 			<div class="col-12">
 				<h4 class="font-weight-light pl-3 pt-4">¿Qué habilidades tienes?</h4>
