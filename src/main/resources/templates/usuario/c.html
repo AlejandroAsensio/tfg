@@ -13,16 +13,39 @@
 
 <div class="container p-4">
 
-	<form onsubmit="return validar();" action="/usuario/c" method="POST" class="needs-validation">
+	<form onsubmit="return validar();" action="/usuario/c" method="POST" class="needs-validation" enctype="multipart/form-data">
 	
 		<div class="row">
+			
 			<div class="col-12">
 				<h3 class="font-weight-light pl-3">Introduce tus datos:</h3>
 				<hr class="mb-4">
 			</div>
 			
 			<div class="col-xl-1 col-lg-1 col-md-1 col-sm-12 col-12"></div>
+			<div class="col-xl-10 col-lg-10 col-md-10 col-sm-12 col-12 px-4 p-4 d-flex justify-content-start">
+				<div id="contenedorImagenSubida">
+					<img src="/img/profile/default.png" class="img-thumbnail rounded mr-4 imagenSubida" alt="Imagen de usuario"></img>
+				</div>
+				<div class="form-group self-align-center">
+					<label class="form-label" for="subirFoto">Selecciona tu foto de perfil:</label>
+					<input type="file" id="subirFoto" class="form-control-file" name="imagen" accept="image/png, image/jpeg">
+				</div>
+			</div>
+			<div class="col-xl-1 col-lg-1 col-md-1 col-sm-12 col-12"></div>
+			
+			<div class="col-xl-1 col-lg-1 col-md-1 col-sm-12 col-12"></div>
 			<div class="col-xl-5 col-lg-5 col-md-5 col-sm-12 col-12 px-4">
+				<div class="mb-3">
+					<label id="01" for="nick" class="form-label disabled is-valid" value="Mark">Elige tu nickname:</label>
+					<label class="sr-only" for="inlineFormInputGroup">Nombre de usuario</label>
+					<div class="input-group mb-2">
+						<div class="input-group-prepend">
+							<div class="input-group-text">@</div>
+						</div>
+						<input type="text" class="form-control" name="nick" required="required" id="inlineFormInputGroup" placeholder="Nombre de usuario">
+					</div>
+				</div>
 				<div class="mb-3">
 					<label id="01" for="idNombre" class="form-label disabled is-valid" value="Mark">Nombre</label>
 					<input type="text" class="form-control" name="nombre" id="idNombre" required="required">
@@ -105,4 +128,22 @@
 	</form>
 	
 </div>
+<script>
+$("input").change(function(e) {
+
+    for (var i = 0; i < e.originalEvent.srcElement.files.length; i++) {
+        
+        var file = e.originalEvent.srcElement.files[i];
+        
+        var img = document.createElement("img");
+        var reader = new FileReader();
+        reader.onloadend = function() {
+             img.src = reader.result;
+        }
+        reader.readAsDataURL(file);
+        $(".imagenSubida").hide();
+        $("#contenedorImagenSubida").append(img);
+    }
+});
+</script>
 <script src="/js/userValidation.js"></script>

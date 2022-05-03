@@ -3,8 +3,9 @@
 		<h2 class="display-4">Mi perfil</h2>
 	</div>
 </div>
-<form action="/usuario/u" method="POST">
+<form action="/usuario/u" method="POST" enctype="multipart/form-data">
 <div class="container rounded p-4">
+	<img alt="Foto de perfil" th:src="|/img/profile/${usuario.imagen}|"/>
 	Nombre <input type="text" name="nombre" th:value="${usuario.nombre}"/><br/><br/>
 	Primer Apellido <input type="text" name="apellido1" th:value="${usuario.apellido1}"/><br/><br/>
 	Segundo Apellido<input type="text" name="apellido2" th:value="${usuario.apellido2}"/><br/><br/>
@@ -12,6 +13,12 @@
 	Email<input type="text" id="idEmail" name="email" th:value="${usuario.email}"/><br/><br/>
 	<div id="divtlf"></div>
 	Teléfono <input type="text" id="idTlf" name="telefono" th:value="${usuario.telefono}"/><br/><br/>
+	<div class="form-row">
+		<div class="form-group">
+			<label class="form-label" for="subirFoto">Selecciona tu foto de perfil</label>
+			<input type="file" id="subirFoto" class="form-control-file" name="imagen" accept="image/png, image/jpeg">
+		</div>
+	</div>
 	Habilidades
 	<div th:each="habilidad:${habilidades}">
 				<input  

@@ -1,6 +1,10 @@
 package org.tfg.teafind.controller;
 
 
+import java.io.IOException;
+import java.nio.file.Files;
+import java.nio.file.Path;
+import java.nio.file.Paths;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -14,6 +18,7 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.multipart.MultipartFile;
 import org.tfg.teafind.entities.Habilidad;
 import org.tfg.teafind.entities.Proyecto;
 import org.tfg.teafind.entities.Puesto;
@@ -67,17 +72,23 @@ public class UsuarioController {
 	 */
 	@PostMapping("c")
 	public String cPost(
+			@RequestParam("nick") String nick, 
 			@RequestParam("nombre") String nombre, 
 			@RequestParam("apellido1") String apellido1,
 			@RequestParam("apellido2") String apellido2,
 			@RequestParam("telefono") String telefono,
 			@RequestParam("email") String email,
+			@RequestParam("imagen") MultipartFile imagen,
 			@RequestParam("password") String password,
 			@RequestParam(value="idsHabilidadesSabe[]",required=false) List<Long> idsHabilidadesSabe
 
 			) throws DangerException, InfoException {
+		String nombreImagen = "default.png";
+		Usuario usuario;
+		
 		try {
-			Usuario usuario= new Usuario(
+			usuario= new Usuario(
+					nick,
 					nombre, 
 					apellido1,
 					apellido2, 
@@ -86,6 +97,19 @@ public class UsuarioController {
 					password, 
 					false
 					);
+			if(!imagen.isEmpty() ) {
+				//Ruta relativa de almacenamiento
+				Path directorioImagenes = Paths.get("src//main//resources//static//img//profile");
+				String rutaAbsoluta = directorioImagenes.toFile().getAbsolutePath();
+				
+				byte[] bytesImg = imagen.getBytes();
+				Path rutaCompleta = Paths.get(rutaAbsoluta + "/" + imagen.getOriginalFilename());
+				Files.write(rutaCompleta, bytesImg);
+				
+				usuario.setImagen(imagen.getOriginalFilename());
+			} else {
+				usuario.setImagen(nombreImagen);
+			}
 			if(idsHabilidadesSabe!=null) {
 				for(Long idHabilidadSabe: idsHabilidadesSabe) {
 					usuario.addSabe(habilidadRepository.getById(idHabilidadSabe));
@@ -93,7 +117,7 @@ public class UsuarioController {
 			}
 			usuarioRepository.save(usuario);	
 		} catch (Exception e) {
-			PRG.error("El número de móvil/email ya están registrados ", "/usuario/c");
+			PRG.error("El número de móvil/email ya están registrados.", "/usuario/c");
 		}
 //		PRG.info(nombre + " creado correctamente.", "/usuario/r");
 		return "redirect:r";
@@ -164,6 +188,7 @@ public class UsuarioController {
 			@RequestParam("apellido2") String apellido2,
 			@RequestParam("telefono") String telefono,
 			@RequestParam("email") String email,
+			@RequestParam("imagen") MultipartFile imagen,
 			@RequestParam(value="idsHabilidades[]",required=false) List<Long> idsHabilidades,
 			@RequestParam(value="password",required=false) String password,
 			@RequestParam(value="newPassword",required=false) String newPassword,
@@ -179,6 +204,23 @@ public class UsuarioController {
 		usuario.setApellido2(apellido2);
 		usuario.setEmail(email);
 		usuario.setTelefono(telefono);
+		
+		if(!imagen.isEmpty() ) {
+			//Ruta relativa de almacenamiento
+			Path directorioImagenes = Paths.get("src/main/resources/static/img/profile");
+			String rutaAbsoluta = directorioImagenes.toFile().getAbsolutePath();
+			
+			try {
+				byte[] bytesImg = imagen.getBytes();
+				Path rutaCompleta = Paths.get(rutaAbsoluta + "/" + imagen.getOriginalFilename());
+				Files.write(rutaCompleta, bytesImg);
+			} catch (IOException e) {
+				PRG.error("Error procesando la imagen.", "/");
+			}
+			
+			usuario.setImagen(imagen.getOriginalFilename());
+		}
+		
 		if (idsHabilidades!=null) {
 			for (Long idHabilidad:idsHabilidades) {
 				nuevasHabilidades.add(habilidadRepository.getById(idHabilidad));

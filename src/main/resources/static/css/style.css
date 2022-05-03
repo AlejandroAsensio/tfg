@@ -151,6 +151,14 @@ div.userMenuHeader :hover {
 	}
 }
 
+/*--------------------Registro--------------------
+------------------------------------------------*/
+.imagenSubida {
+	width: 128px;
+	height: 128px;
+	object-fit: cover;
+	object-position: center center;
+}
 
 /*-------------------Proyectos-------------------
 ------------------------------------------------*/

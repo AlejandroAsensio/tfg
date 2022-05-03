@@ -20,10 +20,12 @@ public class Usuario {
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private Long id;
 	
-//	private String nick;
+	@Column(unique = true)
+	private String nick;
 	private String nombre;
 	private String apellido1;
 	private String apellido2;
+	
 	@Column(unique = true)
 	private String telefono;
 	
@@ -31,6 +33,9 @@ public class Usuario {
 	private String email;
 	
 	private String password;
+	
+	@Column(nullable = true, length = 64)
+	private String imagen;
 	private boolean admin;
 	
 	@ManyToMany
@@ -47,15 +52,28 @@ public class Usuario {
 		this.sabe = new ArrayList<Habilidad>();
 		this.ocupa = new ArrayList<Puesto>();
 	}
-	public Usuario(String nombre, String apellido1, String apellido2, String telefono, String email, String password,
-			boolean admin) {
-//		this.nick = nick;
+	public Usuario(String nick, String nombre, String apellido1, String apellido2, String telefono, String email, String password, boolean admin) {
+		this.nick = nick;
 		this.nombre = nombre;
 		this.apellido1 = apellido1;
 		this.apellido2 = apellido2;
 		this.telefono = telefono;
 		this.email = email;
 		this.password = encriptar(password);
+		this.admin = admin;
+		this.sabe = new ArrayList<Habilidad>();
+		this.ocupa = new ArrayList<Puesto>();
+	}
+	public Usuario(String nick, String nombre, String apellido1, String apellido2, String telefono, String email, String password, String imagen,
+			boolean admin) {
+		this.nick = nick;
+		this.nombre = nombre;
+		this.apellido1 = apellido1;
+		this.apellido2 = apellido2;
+		this.telefono = telefono;
+		this.email = email;
+		this.password = encriptar(password);
+		this.imagen = "default.jpg";
 		this.admin = admin;
 		this.sabe = new ArrayList<Habilidad>();
 		this.ocupa = new ArrayList<Puesto>();
@@ -110,6 +128,12 @@ public class Usuario {
 	public void setPassword(String password) {
 		this.password = encriptar(password);
 	}
+	public String getImagen() {
+		return imagen;
+	}
+	public void setImagen(String imagen) {
+		this.imagen = imagen;
+	}
 	public boolean isAdmin() {
 		return admin;
 	}
@@ -144,10 +168,10 @@ public class Usuario {
 		return (new BCryptPasswordEncoder()).encode(password);
 		
 	}
-	 public void addSabe(Habilidad habilidad) {
-		 this.sabe.add(habilidad);
-		 habilidad.getConocida().add(this);
-	 }
+	public void addSabe(Habilidad habilidad) {
+		this.sabe.add(habilidad);
+		habilidad.getConocida().add(this);
+	}
 	 
 	
 	/*TODO
