@@ -2,7 +2,7 @@
 	
 	<div class="row d-flex justify-content-start mb-5">
 		<div class="">
-			<img th:src="|/img/profile/${session.usuario?.imagen}|" class="imgPerfil img-thumbnail p-0 m-0"></img>
+			<img th:src="|/img/profile/${session.usuario?.imagen}|" class="card escalar imgPerfil p-0 m-0"></img>
 		</div>
 		<div class="p-4 pl-5">
 			<h1 class="display-2 self-align-center font-weight-light" th:text="${usuario.nick}"></h1>
@@ -38,32 +38,33 @@
 		<div class="tab-content" id="myTabContent">
 			<!--***CONTENEDOR1 - Datos personales *********************-->
 			<div class="tab-pane fade show active" id="home" role="tabpanel" aria-labelledby="home-tab">
+				<h4 class="mb-3">Modifica tus datos personales:</h4 >
 				<div class="form-row">
-					<div class="col-md-3"></div>
+					<div class="col-md-2"></div>
 					<div class="col-md-3">
 						<div class="form-group mb-3">
 							<label id="01" for="idNombre" class="form-label disabled is-valid" value="Mark">Nombre</label>
-							<input type="text" class="form-control" name="nombre" id="idNombre" required="required">
+							<input type="text" class="form-control" name="nombre" id="idNombre" th:value="${usuario.nombre}" required="required">
 						</div>
 						
 						<div class="form-group mb-3">
 							<label for="idApe1" class="form-label disabled">Primer apellido</label>
-							<input type="text" class="form-control" name="apellido1" id="idApe1" required="required">
+							<input type="text" class="form-control" name="apellido1" id="idApe1" th:value="${usuario.apellido1}" required="required">
 						</div>
 						<div class="form-group mb-3">
 							<label for="idApe2" class="form-label disabled">Segundo apellido</label>
-							<input type="text" class="form-control" name="apellido2" id="idApe2">
+							<input type="text" class="form-control" name="apellido2" id="idApe2" th:value="${usuario.apellido2}">
 						</div>
 					</div>
-					
+					<div class="col-md-1"></div>
 					<div class="col-md-3">
 						<div class="form-group mb-3">
 							<label for="idTlf" class="form-label disabled">Teléfono (móvil)</label>
-							<input type="text" class="form-control" name="telefono" id="idTlf" required="required">
+							<input type="text" class="form-control" name="telefono" id="idTlf" th:value="${usuario.telefono}" required="required">
 						</div>
 						<div class="form-group mb-3">
 							<label id="01" for="idDescripcion" class="form-label disabled is-valid" value="Mark">Descripción e intereses</label>
-							<textarea type="text" class="form-control" name="descripcion" id="idDescripcion"></textarea>
+							<textarea type="text" class="form-control" name="descripcion" id="idDescripcion" ></textarea>
 						</div>
 					</div>
 					<div class="col-md-3"></div>
@@ -73,84 +74,128 @@
 			<!--***FIN - CONTENEDOR1 - Datos personales *********************-->
 			
 			<!--***CONTENEDOR2 - Edición de habilidades *********************-->
-			<div class="tab-pane fade" id="profile" role="tabpanel" aria-labelledby="profile-tab">Contenedor 2</div>
+			<div class="tab-pane fade" id="profile" role="tabpanel" aria-labelledby="profile-tab">
+				<h4 class="mb-3">Amplía tus conocimientos:</h4>
+				<div class="row mx-2 mt-0 pt-0">
+					<th:block th:each="habilidad : ${habilidades}">
+						<div class="col-2" data-toggle="buttons">
+							<label class="btn btn-info btn-sm">
+								<input type="checkbox" class="custom-control-input" 
+									name="idsHabilidades[]"
+									th:value="${habilidad.id}" 
+									th:id="|id-${habilidad.id}-habilidad|" 
+									th:checked="${usuario.sabe.contains(habilidad)}"/>
+								<th:block th:text="${habilidad.nombre}" />
+							</label>
+						</div>
+					</th:block>
+				</div>
+			</div>
 			<!--***FIN - CONTENEDOR2 - Edición de habilidades *********************-->
 			
 			<!--***CONTENEDOR3 - Cuenta (Nick, correo, cambio contraseña,...) *********************-->
 			<div class="tab-pane fade" id="contact" role="tabpanel" aria-labelledby="contact-tab">
-
-				<div class="col-6">
-					
-					
-					<div class="mb-3">
-						<label for="idEmail" class="form-label disabled">Email</label>
-						<input type="text" class="form-control" name="email" id="idEmail">
-						<div style="color:red" id="divemail"></div>
-						
+				<h4 class="mb-3">Ajustes de tu cuenta:</h4>
+				<div class="form-row">
+					<div class="col-md-4"></div>
+					<div class="col-md-5">
+						<h5>Cambia tu contraseña:</h5>
 					</div>
-					<div class="form-row">
-						<div class="col mb-3">
-							<label for="idPass" class="form-label disabled">Contraseña</label>
-							<input type="password" class="form-control" name="password" id="idPass">
-							<div style="color:red" id="divpass"></div>
-							
-						</div>
-						<div class="col mb-3">
-							<label for="idPassConfirm" class="form-label disabled">Confirmar Contraseña</label>
-							<input type="password" class="form-control" name="passwordConfirm" id="idPassConfirm">
-							<div style="color:red" id="divpassConfirm"></div>
-						</div>
+					<div class="col-md-3">
+						<h5>Cambia tu foto:</h5>
 					</div>
 				</div>
-				
-			
+				<div class="form-row">
+					<div class="col-md-3">
+						<div class="form-group mb-3">
+							<label id="01" for="nick" class="form-label disabled is-valid" value="Mark">Cambia tu nick:</label>
+							<label class="sr-only" for="inlineFormInputGroup"></label>
+							<div class="input-group mb-2">
+								<div class="input-group-prepend">
+									<div class="input-group-text">@</div>
+								</div>
+								<input type="text" class="form-control" name="nick" required="required" id="inlineFormInputGroup" th:value="${usuario.nick}" th:placeholder="${usuario.nick}">
+							</div>
+						</div>
+						<div class="form-group mb-3">
+							<label for="idEmail" class="form-label disabled">Email</label>
+							<input type="text" class="form-control" name="email" id="idEmail" th:value="${usuario.email}">
+						</div>	
+					</div>
+					<div class="col-md-1"></div>
+					<div class="col-md-2">
+						<div class="form-group mb-3">
+							<label for="idPass" class="form-label disabled">Contraseña antigua</label>
+							<input type="password" class="form-control" name="password" id="idPass">
+						</div>
+					</div>
+					<div class="col-md-2">
+						<div class="form-group mb-3">
+							<label for="idPass" class="form-label disabled">Nueva contraseña</label>
+							<input type="password" class="form-control" id="idPass" name="newPassword">
+						</div>
+						<div class="form-group mb-3">
+							<label for="idPassConfirm" class="form-label disabled">Confirma la Contraseña</label>
+							<input type="password" class="form-control" name="passwordConfirm" id="idPassConfirm">
+						</div>
+					</div>
+					<div class="col-md-1"></div>
+					<div class="col-md-3">
+						<div id="contenedorImagenSubida" class="d-flex justify-content-center">
+							<img th:src="|/img/profile/${usuario.imagen}|" id="imagenSubida" class="img-thumbnail rounded imagenSubida img-responsive" alt="Imagen de usuario"></img>
+						</div>
+						<div class="pt-4">
+							<p class="form-label text-right mb-2">Elige tu foto de perfil</p>
+							<div class="custom-file mb-3">
+			      				<input type="file" class="custom-file-input" id="subirFoto" onchange="readURL(this);" name="imagen" accept="image/png, image/jpeg" lang="es">
+			      				<label class="custom-file-label" for="customFile">Elije tu foto</label>
+			    			</div>
+						</div>	
+						
+					</div>
+					
+				</div>
 			</div>
 			<!--***FIN - CONTENEDOR3 - Cuenta (Nick, correo, cambio contraseña,...) *********************-->
 		</div>
-		<hr class="mb-4">
-
-
-	
-		Nombre <input type="text" name="nombre" th:value="${usuario.nombre}"/><br/><br/>
-		Primer Apellido <input type="text" name="apellido1" th:value="${usuario.apellido1}"/><br/><br/>
-		Segundo Apellido<input type="text" name="apellido2" th:value="${usuario.apellido2}"/><br/><br/>
-		<div id="divemail"></div>
-		Email<input type="text" id="idEmail" name="email" th:value="${usuario.email}"/><br/><br/>
-		<div id="divtlf"></div>
-		Teléfono <input type="text" id="idTlf" name="telefono" th:value="${usuario.telefono}"/><br/><br/>
-		<div class="form-row">
-			<div class="form-group">
-				<label class="form-label" for="subirFoto">Selecciona tu foto de perfil</label>
-				<input type="file" id="subirFoto" class="form-control-file" name="imagen" accept="image/png, image/jpeg">
+		<div class="col-12 mt-4">
+			<div class="d-flex justify-content-end">
+				<button type="submit"  class="btn btn-outline-success btn-sm m-2">
+					<i class="bi bi-save"></i> Guardar cambios
+				</button>		
 			</div>
 		</div>
-		Habilidades
-		<div th:each="habilidad:${habilidades}">
-					<input  
-						th:id="|id-${habilidad.id}|" 
-						type="checkbox" 
-						name="idsHabilidades[]" 
-						th:value="${habilidad.id}" 
-						th:checked="${usuario.sabe.contains(habilidad)}"
-					/>
-					
-					<label th:for="|id-${habilidad.id}|" th:text="${habilidad.nombre}"/>
-		</div>
-		Cambiar contraseña<br/><br/>
-		Contraseña antigua <input type="password" name="password"/><br/><br/>
-		<div id="divpass"></div>
-		Contraseña nuevo <input type="password" id="idPass" name="newPassword"/><br/><br/>
-		<div id="divpassConfirm"></div>
-		Confirmar contraseña <input type="password" id="idPassConfirm" name="passwordConfirm"/><br/><br/>
-		
-	
-		<input type="submit" class="btn btn-success btn-sm" value="Modificar"/>
 	</form>
 </div>
+
 <script>
+//Cambio de "tab"
 $('#myTab a').on('click', function (event) {
 	event.preventDefault()
 	$(this).tab('show')
 })
+</script>
+<script>
+$(document).ready(function() {
+	
+	$(".custom-file-input").on("change", function() {
+		var fileName = $(this).val().split("\\").pop();
+		$(this).siblings(".custom-file-label").addClass("selected").html(fileName);
+	});
+})
+</script>
+<script>
+/*Script para sustituir la imagen por defecto con la imagen seleccionada en un input*/
+	function readURL(input) {
+		if (input.files && input.files[0]) {
+	    	var reader = new FileReader();
+	
+	    	reader.onload = function (e) {
+	      		$('#imagenSubida').attr('src', "#").attr('src', e.target.result);
+	    	};
+	
+	    	reader.readAsDataURL(input.files[0]);
+	  	}
+	}
 </script>
 <script src="/js/userValidation.js"></script>

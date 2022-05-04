@@ -123,12 +123,19 @@ html, body {
 	object-fit: cover;
 	border-radius: 50%;
 	object-position: center center;
+    transition: all 0.4 ease-in;
 }
 .imgPerfilMenu {
     height: 64px;
     width: 64px;
     border-radius: 50%;
     transition: all 0.4s ease-in-out;
+}
+.imgPerfil {
+	width: 200px;
+	height: 200px;
+	object-fit: cover;
+	object-position: center center;
 }
 .textoPerfilusuario {
     color: #f8f8fb;
@@ -171,15 +178,6 @@ html, body {
 .imagenSubida {
 	width: 128px;
 	height: 128px;
-	object-fit: cover;
-	object-position: center center;
-}
-
-/*-------------------User Menu-------------------
-------------------------------------------------*/
-.imgPerfil {
-	width: 200px;
-	height: 200px;
 	object-fit: cover;
 	object-position: center center;
 }
