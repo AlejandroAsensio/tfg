@@ -1,5 +1,5 @@
 :root {
-    --bg-main: rgb(248, 248, 251);
+    --bg-main: #f8f8fb;
     --jumbotron: #e9ecef;
 }
 
@@ -8,6 +8,15 @@
 html, body {
     font-family: 'Lato', sans-serif;
     background-color: var(--bg-main);
+}
+::-moz-selection { /* Code for Firefox */
+  color: #f8f8fb;
+  background: #30A0BA;
+}
+
+::selection {
+  color: #f8f8fb;
+  background: #30A0BA;
 }
 
 /*--------------------SCROLLBAR-------------------
@@ -108,26 +117,32 @@ html, body {
 
 /*-------------------User Menu-------------------
 ------------------------------------------------*/
-.profileCircle :hover {
-    box-shadow: 4px 4px 0px #20cae0;
-    transition-duration: 400ms;
+.imagenNavbar {
+	width: 30px;
+	height: 30px;
+	object-fit: cover;
+	border-radius: 50%;
+	object-position: center center;
 }
-i.bi bi-person-circle {
-    height: 26px !important;
-    width: 26px !important;
+.imgPerfilMenu {
+    height: 64px;
+    width: 64px;
+    border-radius: 50%;
+    transition: all 0.4s ease-in-out;
 }
-div.userMenuHeader {
-    color: var(--bg-main);
-    background-color: #20c997;
-    transition-duration: 900ms;
+.textoPerfilusuario {
+    color: #f8f8fb;
 }
-div.userMenuHeader :hover {
-    transition-duration: 400ms;
+.enlacePerfilUsuario {
+    transition: all 0.4s ease-in-out;
 }
-.textoUserMenuHover {
-    color: #20c997;
-    background-color: #40343b;
+.enlacePerfilUsuario:hover .imgPerfilMenu {
+    box-shadow: #f8f8fb 0px 0px 16px, #f8f8fb 0px 0px 12px, #f8f8fb 0px 0px 8px, #f8f8fb 0px 0px 4px, #f8f8fb 0px 0px 2px, #f8f8fb 0px 0px 1px, #f8f8fb 0px 0px 4px, #f8f8fb 0px 0px 2px, #f8f8fb 0px 0px 1px;
 }
+.enlacePerfilUsuario:hover .textoPerfilUsuario {
+    color: #fff;
+}
+
 
 /*---------------------LOGIN---------------------
 ------------------------------------------------*/
@@ -156,6 +171,15 @@ div.userMenuHeader :hover {
 .imagenSubida {
 	width: 128px;
 	height: 128px;
+	object-fit: cover;
+	object-position: center center;
+}
+
+/*-------------------User Menu-------------------
+------------------------------------------------*/
+.imgPerfil {
+	width: 200px;
+	height: 200px;
 	object-fit: cover;
 	object-position: center center;
 }

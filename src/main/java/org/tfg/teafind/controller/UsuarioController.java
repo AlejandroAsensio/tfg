@@ -100,10 +100,16 @@ public class UsuarioController {
 			if(!imagen.isEmpty() ) {
 				//Ruta relativa de almacenamiento
 				Path directorioImagenes = Paths.get("src//main//resources//static//img//profile");
+				//Ruta absoluta
 				String rutaAbsoluta = directorioImagenes.toFile().getAbsolutePath();
 				
+				//Bytes de la imagen
 				byte[] bytesImg = imagen.getBytes();
+				//Ruta completa que ocupará la imagen, con su nombre
+//				Path rutaCompleta = Paths.get(rutaAbsoluta + "/" + nick 
+//								+ imagen.getOriginalFilename().substring(imagen.getOriginalFilename().length() - 4));
 				Path rutaCompleta = Paths.get(rutaAbsoluta + "/" + imagen.getOriginalFilename());
+				//Escritura del fichero
 				Files.write(rutaCompleta, bytesImg);
 				
 				usuario.setImagen(imagen.getOriginalFilename());
@@ -171,8 +177,11 @@ public class UsuarioController {
 	}
 	
 	@GetMapping("u")
-	public String perfil(ModelMap m, HttpSession s) {
+	public String perfil(ModelMap m, HttpSession s) throws DangerException {
 		Usuario usuario = (Usuario) s.getAttribute("usuario");
+		if (usuario == null) {
+			PRG.error("Por favor, inicia sesión para acceder a tu perfil.", "/");
+		}
 		Usuario u = usuarioRepository.getById(usuario.getId());
 		List<Habilidad> habilidades = habilidadRepository.findAll();
 		m.put("usuario", u);
@@ -183,6 +192,7 @@ public class UsuarioController {
 	}
 	@PostMapping("u")
 	public String perfilPost(
+			@RequestParam("nombre") String nick, 
 			@RequestParam("nombre") String nombre, 
 			@RequestParam("apellido1") String apellido1,
 			@RequestParam("apellido2") String apellido2,
@@ -194,11 +204,12 @@ public class UsuarioController {
 			@RequestParam(value="newPassword",required=false) String newPassword,
 			@RequestParam(value="passwordConfirm",required=false) String passwordConfirm,
 			HttpSession s
-			) throws DangerException {
+			) throws DangerException, IOException {
 		Usuario u = (Usuario) s.getAttribute("usuario");
 		Usuario usuario = usuarioRepository.getById(u.getId());
 		ArrayList<Habilidad> nuevasHabilidades = new ArrayList<Habilidad>();
 		
+		usuario.setNick(nick);
 		usuario.setNombre(nombre);
 		usuario.setApellido1(apellido1);
 		usuario.setApellido2(apellido2);
@@ -207,16 +218,16 @@ public class UsuarioController {
 		
 		if(!imagen.isEmpty() ) {
 			//Ruta relativa de almacenamiento
-			Path directorioImagenes = Paths.get("src/main/resources/static/img/profile");
+			Path directorioImagenes = Paths.get("src//main//resources//static//img//profile");
+			//Ruta absoluta
 			String rutaAbsoluta = directorioImagenes.toFile().getAbsolutePath();
 			
-			try {
-				byte[] bytesImg = imagen.getBytes();
-				Path rutaCompleta = Paths.get(rutaAbsoluta + "/" + imagen.getOriginalFilename());
-				Files.write(rutaCompleta, bytesImg);
-			} catch (IOException e) {
-				PRG.error("Error procesando la imagen.", "/");
-			}
+			//Bytes de la imagen
+			byte[] bytesImg = imagen.getBytes();
+			//Ruta completa que ocupará la imagen, con su nombre
+			Path rutaCompleta = Paths.get(rutaAbsoluta + "/" + imagen.getOriginalFilename());
+			//Escritura del fichero
+			Files.write(rutaCompleta, bytesImg);
 			
 			usuario.setImagen(imagen.getOriginalFilename());
 		}

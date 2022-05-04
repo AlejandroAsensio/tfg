@@ -51,6 +51,14 @@
         		</div>
         	</li>
         	
+        	
+        	<li th:if="${session.usuario != null}">
+        		<a class="nav-link" href="#" id="navbarDropdownMenuLink" role="button"
+					data-toggle="dropdown" aria-expanded="false">
+					<img th:src="|/img/profile/${session.usuario?.imagen}|" class="imagenNavbar p-0 m-0"></img>
+				</a>
+        	</li>
+        	
             <!--INICIO DE SESIÓN-->
 			<li class="nav-item dropdown mr-auto" th:if="${session.usuario==null}">
 				<a class="nav-link" data-toggle="dropdown" href="#" aria-haspopup="true" aria-expanded="false" role="button">
@@ -87,10 +95,11 @@
 				</a>
 				<div class="dropdown-menu dropdown-menu-right" aria-labelledby="navbarDropdownMenuLink">
 					<a class="dropdown-item d-flex justify-content-between py-2 bg-info enlacePerfilUsuario" href="/usuario/u">
-						<i class="bi bi-person-circle text-white display-4 p-0 align-self-center"></i>
+						<img th:src="|/img/profile/${session.usuario?.imagen}|" class="imgPerfilMenu p-0 m-0"></img>
+						<!--<i class="bi bi-person-circle text-white display-4 p-0 align-self-center"></i>-->
 						<div class="align-self-center text-right">
-							<span class="d-block textoPerfilUsuario text-light">Mi perfil</span>
-							<span class="d-block textoPerfilUsuario text-white" th:text="${session.usuario?.nombre}"></span>
+							<span class="d-block textoPerfilUsuario seccionPerfil">Mi perfil</span>
+							<span class="d-block textoPerfilUsuario nombrePerfil" th:text="${session.usuario?.nombre}"></span>
 						</div>
 					</a>
 					<a class="dropdown-item d-flex justify-content-between py-2 mt-2" href="/usuario/mis_proyectos">

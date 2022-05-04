@@ -23,19 +23,7 @@
 			</div>
 			
 			<div class="col-xl-1 col-lg-1 col-md-1 col-sm-12 col-12"></div>
-			<div class="col-xl-10 col-lg-10 col-md-10 col-sm-12 col-12 px-4 p-4 d-flex justify-content-start">
-				<div id="contenedorImagenSubida">
-					<img src="/img/profile/default.png" class="img-thumbnail rounded mr-4 imagenSubida" alt="Imagen de usuario"></img>
-				</div>
-				<div class="form-group self-align-center">
-					<label class="form-label" for="subirFoto">Selecciona tu foto de perfil:</label>
-					<input type="file" id="subirFoto" class="form-control-file" name="imagen" accept="image/png, image/jpeg">
-				</div>
-			</div>
-			<div class="col-xl-1 col-lg-1 col-md-1 col-sm-12 col-12"></div>
-			
-			<div class="col-xl-1 col-lg-1 col-md-1 col-sm-12 col-12"></div>
-			<div class="col-xl-5 col-lg-5 col-md-5 col-sm-12 col-12 px-4">
+			<div class="col-xl-5 col-lg-5 col-md-4 col-sm-12 col-12 px-4 align-self-center">
 				<div class="mb-3">
 					<label id="01" for="nick" class="form-label disabled is-valid" value="Mark">Elige tu nickname:</label>
 					<label class="sr-only" for="inlineFormInputGroup">Nombre de usuario</label>
@@ -46,6 +34,22 @@
 						<input type="text" class="form-control" name="nick" required="required" id="inlineFormInputGroup" placeholder="Nombre de usuario">
 					</div>
 				</div>
+			</div>
+			<div class="col-xl-6 col-lg-6 col-md-7 col-sm-12 col-12 px-4 pr-5 d-flex justify-content-around">
+				<div class="self-align-center pt-4">
+					<p class="form-label text-right mb-2">Elige tu foto de perfil</p>
+					<div class="custom-file mb-3">
+	      				<input type="file" class="custom-file-input" id="subirFoto" onchange="readURL(this);" name="imagen" accept="image/png, image/jpeg" lang="es">
+	      				<label class="custom-file-label" for="customFile">Elije tu foto</label>
+	    			</div>
+				</div>	
+				<div id="contenedorImagenSubida">
+					<img src="/img/profile/default.png" id="imagenSubida" class="img-thumbnail rounded imagenSubida img-responsive" alt="Imagen de usuario"></img>
+				</div>
+			</div>
+			
+			<div class="col-xl-1 col-lg-1 col-md-1 col-sm-12 col-12"></div>
+			<div class="col-xl-5 col-lg-5 col-md-5 col-sm-12 col-12 px-4 mt-3">
 				<div class="mb-3">
 					<label id="01" for="idNombre" class="form-label disabled is-valid" value="Mark">Nombre</label>
 					<input type="text" class="form-control" name="nombre" id="idNombre" required="required">
@@ -61,7 +65,7 @@
 					<input type="text" class="form-control" name="apellido2" id="idApe2">
 				</div>
 			</div>
-			<div class="col-xl-5 col-lg-5 col-md-5 col-sm-12 col-12 px-4">
+ 			<div class="col-xl-5 col-lg-5 col-md-5 col-sm-12 col-12 px-4 mt-3">
 				<div class="mb-3">
 					
 					<label for="idTlf" class="form-label disabled">Teléfono (móvil)</label>
@@ -109,7 +113,7 @@
 				</div>
 			</div>
 			
-			<div class="col-12">
+			<div class="col-12 mt-4">
 				<div class="d-flex justify-content-end">
 					<div>
 						<button type="reset" role="button" class="btn btn-outline-danger btn-sm border-0 m-2">
@@ -118,7 +122,7 @@
 						<div style="color : red;" id="divValidate"></div>
 					</div>
 					<div>
-						<button type="submit"  class="btn btn-outline-success btn-sm border-0 m-2">
+						<button type="submit"  class="btn btn-outline-success btn-sm m-2">
 							<i class="bi bi-save"></i> Registrarte
 						</button>
 					</div>	
@@ -128,22 +132,29 @@
 	</form>
 	
 </div>
-<script>
-$("input").change(function(e) {
 
-    for (var i = 0; i < e.originalEvent.srcElement.files.length; i++) {
-        
-        var file = e.originalEvent.srcElement.files[i];
-        
-        var img = document.createElement("img");
-        var reader = new FileReader();
-        reader.onloadend = function() {
-             img.src = reader.result;
-        }
-        reader.readAsDataURL(file);
-        $(".imagenSubida").hide();
-        $("#contenedorImagenSubida").append(img);
-    }
-});
+<script>
+$(document).ready(function() {
+	
+	$(".custom-file-input").on("change", function() {
+		var fileName = $(this).val().split("\\").pop();
+		$(this).siblings(".custom-file-label").addClass("selected").html(fileName);
+	});
+})
 </script>
+<script>
+/*Script para sustituir la imagen por defecto con la imagen seleccionada en un input*/
+	function readURL(input) {
+		if (input.files && input.files[0]) {
+	    	var reader = new FileReader();
+	
+	    	reader.onload = function (e) {
+	      		$('#imagenSubida').attr('src', "#").attr('src', e.target.result);
+	    	};
+	
+	    	reader.readAsDataURL(input.files[0]);
+	  	}
+	}
+</script>
+
 <script src="/js/userValidation.js"></script>

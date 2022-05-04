@@ -74,8 +74,7 @@ public class HomeController {
 			Usuario usuario= usuarioRepository.getByEmail(email);
 			if (new BCryptPasswordEncoder().matches(pwd, usuario.getPassword())) {
 				s.setAttribute("usuario", usuario);
-			}
-			else {
+			} else {
 				PRG.error("Usuario/Contraseña incorrectos","/");
 			}
 		} catch (Exception e) {
