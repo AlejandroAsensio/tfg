@@ -99,10 +99,39 @@ public class PuestoController {
 		if(seguir) {
 			ruta="redirect:/puesto/c?nombreProyecto="+nombreProyecto;
 		}
+		
+		
 		else if(!seguir) {
 			ruta="redirect:/proyecto/tuProyecto?idProyecto="+idProyecto;
 		}
 //		PRG.info(nombre + " creado correctamente.", "/usuario/r");
 		return ruta;
+	}
+	
+	@PostMapping("/puesto/u")
+	public String uPost(
+			@RequestParam("idProyecto") Long idProyecto,
+			@RequestParam("idPuesto") Long idPuesto,
+			@RequestParam("nombre") String nombre,
+			@RequestParam("descripcion") String descripcion,
+			@RequestParam(value="idsHabilidades[]", required=false) List<Long> idsHabilidades
+			) throws DangerException {
+		try {
+			ArrayList<Habilidad> nuevasHabilidades = new ArrayList<Habilidad>();
+			Puesto puesto= puestoRepository.getById(idPuesto);
+			if (idsHabilidades!=null) {
+				for (Long idHabilidad:idsHabilidades) {
+					nuevasHabilidades.add(habilidadRepository.getById(idHabilidad));
+				}
+				puesto.setRequiere(nuevasHabilidades);
+			}
+			
+			puesto.setNombre(nombre);
+			puesto.setDescripcion(descripcion);
+			puestoRepository.save(puesto);
+		} catch (Exception e) {
+			PRG.error("El puesto "+nombre+" ya existe", "/proyecto/tuProyecto?idProyecto="+idProyecto);
+		}
+		return "redirect:/proyecto/tuProyecto?idProyecto="+idProyecto;
 	}
 }

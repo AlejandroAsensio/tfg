@@ -26,6 +26,7 @@ public class Habilidad {
 	private Collection<Usuario> conocida;
 	
 	@ManyToMany(mappedBy = "requiere")
+//	,cascade = CascadeType.ALL
 	private Collection<Puesto> requerida;
 	
 	//======================================================
@@ -85,5 +86,6 @@ public class Habilidad {
 	}
 	
 	//======================================================
+	
 	
 }

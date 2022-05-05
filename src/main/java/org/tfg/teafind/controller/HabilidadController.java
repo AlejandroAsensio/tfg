@@ -10,10 +10,14 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.tfg.teafind.entities.Habilidad;
+import org.tfg.teafind.entities.Puesto;
+import org.tfg.teafind.entities.Usuario;
 import org.tfg.teafind.exception.DangerException;
 import org.tfg.teafind.exception.InfoException;
 import org.tfg.teafind.exception.PRG;
 import org.tfg.teafind.repository.HabilidadRepository;
+import org.tfg.teafind.repository.PuestoRepository;
+import org.tfg.teafind.repository.UsuarioRepository;
 
 @Controller
 @RequestMapping("/habilidad")
@@ -21,6 +25,12 @@ public class HabilidadController {
 	
 	@Autowired
 	private HabilidadRepository habilidadRepository;
+	
+	@Autowired
+	private UsuarioRepository usuarioRepository;
+	
+	@Autowired
+	private PuestoRepository puestoRepository;
 	
 	@GetMapping("r")
 	public String r(
@@ -83,7 +93,23 @@ public class HabilidadController {
 	public String dPost(
 			@RequestParam("idHabilidad") Long idHabilidad
 			) {
+		Habilidad h = habilidadRepository.getById(idHabilidad);
+//		h.removeHabilidad();
+		
+		for(Usuario u: h.getConocida()) {
+			Usuario us = usuarioRepository.getById(u.getId());
+			us.getSabe().remove(h);
+			usuarioRepository.saveAndFlush(us);
+		}
+		for(Puesto p: h.getRequerida()) {
+			Puesto pu = puestoRepository.getById(p.getId());
+			pu.getRequiere().remove(h);
+			puestoRepository.saveAndFlush(pu);
+		}
+		
+		habilidadRepository.saveAndFlush(h);
 		habilidadRepository.deleteById(idHabilidad);
+
 		return "redirect:/habilidad/r";
 	}
 	

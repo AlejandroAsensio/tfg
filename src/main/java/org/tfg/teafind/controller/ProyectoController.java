@@ -25,6 +25,7 @@ import org.tfg.teafind.exception.InfoException;
 import org.tfg.teafind.exception.PRG;
 import org.tfg.teafind.repository.HabilidadRepository;
 import org.tfg.teafind.repository.ProyectoRepository;
+import org.tfg.teafind.repository.PuestoRepository;
 import org.tfg.teafind.repository.UsuarioRepository;
 
 @Controller
@@ -39,6 +40,9 @@ public class ProyectoController {
 	
 	@Autowired
 	private HabilidadRepository habilidadRepository;
+	
+	@Autowired
+	private PuestoRepository puestoRepository;
 
 //	@GetMapping("/")
 //	public String r(ModelMap m) {
@@ -163,5 +167,14 @@ public class ProyectoController {
 
 		return "redirect:/proyecto/tuProyecto?idProyecto=" + idProyecto;
 	}
-
+	@PostMapping("despedir")
+	public String despedir(
+			@RequestParam("idPuesto") Long idPuesto 
+			) {
+		Puesto puesto = puestoRepository.getById(idPuesto);
+		
+		puesto.setOcupante(null);
+		puestoRepository.save(puesto);
+		return "redirect:/proyecto/verProyecto?idProyecto="+puesto.getProyecto().getId();
+	}
 }
