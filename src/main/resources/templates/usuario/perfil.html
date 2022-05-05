@@ -44,27 +44,27 @@
 					<div class="col-md-3">
 						<div class="form-group mb-3">
 							<label id="01" for="idNombre" class="form-label disabled is-valid" value="Mark">Nombre</label>
-							<input type="text" class="form-control" name="nombre" id="idNombre" th:value="${usuario.nombre}" required="required">
+							<input type="text" class="form-control" name="nombre" id="idNombre" th:value="${usuario.nombre}" th:placeholder="${usuario.nombre}" required="required">
 						</div>
 						
 						<div class="form-group mb-3">
 							<label for="idApe1" class="form-label disabled">Primer apellido</label>
-							<input type="text" class="form-control" name="apellido1" id="idApe1" th:value="${usuario.apellido1}" required="required">
+							<input type="text" class="form-control" name="apellido1" id="idApe1" th:value="${usuario.apellido1}" th:placeholder="${usuario.apellido1}" required="required">
 						</div>
 						<div class="form-group mb-3">
 							<label for="idApe2" class="form-label disabled">Segundo apellido</label>
-							<input type="text" class="form-control" name="apellido2" id="idApe2" th:value="${usuario.apellido2}">
+							<input type="text" class="form-control" name="apellido2" id="idApe2" th:value="${usuario.apellido2}" th:placeholder="${usuario.apellido2}">
 						</div>
 					</div>
 					<div class="col-md-1"></div>
 					<div class="col-md-3">
 						<div class="form-group mb-3">
 							<label for="idTlf" class="form-label disabled">Teléfono (móvil)</label>
-							<input type="text" class="form-control" name="telefono" id="idTlf" th:value="${usuario.telefono}" required="required">
+							<input type="text" class="form-control" name="telefono" id="idTlf" th:value="${usuario.telefono}" th:placeholder="${usuario.telefono}" required="required">
 						</div>
 						<div class="form-group mb-3">
 							<label id="01" for="idDescripcion" class="form-label disabled is-valid" value="Mark">Descripción e intereses</label>
-							<textarea type="text" class="form-control" name="descripcion" id="idDescripcion" ></textarea>
+							<textarea type="text" class="form-control" name="descripcion" id="idDescripcion" th:text="${usuario.descripcion}" th:placeholder="${usuario.descripcion}"></textarea>
 						</div>
 					</div>
 					<div class="col-md-3"></div>
@@ -119,7 +119,7 @@
 						</div>
 						<div class="form-group mb-3">
 							<label for="idEmail" class="form-label disabled">Email</label>
-							<input type="text" class="form-control" name="email" id="idEmail" th:value="${usuario.email}">
+							<input type="text" class="form-control" name="email" id="idEmail" th:value="${usuario.email}" th:placeholder="${usuario.email}">
 						</div>	
 					</div>
 					<div class="col-md-1"></div>

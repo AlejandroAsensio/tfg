@@ -33,6 +33,7 @@ public class Usuario {
 	private String email;
 	
 	private String password;
+	private String descripcion;
 	
 	@Column(nullable = true, length = 64)
 	private String imagen;
@@ -127,6 +128,12 @@ public class Usuario {
 	}
 	public void setPassword(String password) {
 		this.password = encriptar(password);
+	}
+	public String getDescripcion() {
+		return descripcion;
+	}
+	public void setDescripcion(String descripcion) {
+		this.descripcion = descripcion;
 	}
 	public String getImagen() {
 		return imagen;

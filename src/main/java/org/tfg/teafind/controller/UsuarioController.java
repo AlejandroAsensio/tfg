@@ -198,6 +198,7 @@ public class UsuarioController {
 			@RequestParam("apellido2") String apellido2,
 			@RequestParam("telefono") String telefono,
 			@RequestParam("email") String email,
+			@RequestParam("descripcion") String descripcion,
 			@RequestParam("imagen") MultipartFile imagen,
 			@RequestParam(value="idsHabilidades[]",required=false) List<Long> idsHabilidades,
 			@RequestParam(value="password",required=false) String password,
@@ -215,6 +216,7 @@ public class UsuarioController {
 		usuario.setApellido2(apellido2);
 		usuario.setEmail(email);
 		usuario.setTelefono(telefono);
+		usuario.setDescripcion(descripcion);
 		
 		if(!imagen.isEmpty() ) {
 			//Ruta relativa de almacenamiento
