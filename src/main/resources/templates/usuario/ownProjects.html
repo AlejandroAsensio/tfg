@@ -54,12 +54,12 @@
 	<section class="row">
 		<th:block class="contenedorCards" th:each="proyectoCreado : ${proyectosCreados}">
 			<div class="d-flex align-items-stretch col-xl-6 col-lg-6 col-md-6 col-sm-12 col-12">
-				<div class="card escalar border-0 p-3 my-4 mx-3 cartaJumboPropios w-100">
+				<div class="card escalar border-0 my-4 mx-3 cartaJumboPropios w-100">
 					<div class="card-body">
-						<h2 class="font-weight-light" th:text="${proyectoCreado.nombre}" />
+						<h3 class="font-weight-light" th:text="${proyectoCreado.nombre}" />
 							
-						<hr class="my-4">
-						<p class="lead" th:text="${proyectoCreado.descripcion}" />
+						<hr class="mb-4">
+						<p class="" th:text="${proyectoCreado.descripcion}" />
 						<div class="d-flex justify-content-between my-4">
 							<div class="masDatos align-self-center">
 								<label class="d-block" th:text="|Nº de puestos ${proyectoCreado.puestos?.size}|"></label>
@@ -119,13 +119,13 @@
 	<section class="row">
 		<th:block class="contenedorCards" th:each="proyectoPertenece : ${proyectosPertenece}">
 			<div class="d-flex align-items-stretch col-xl-6 col-lg-6 col-md-6 col-sm-12 col-12">
-				<div class="card escalar border-0 p-3 my-4 mx-3 cartaJumbo w-100">
+				<div class="card escalar border-0 my-4 mx-3 cartaJumbo w-100">
 					<div class="card-body">
-						<h2 class="font-weight-light" th:text="${proyectoPertenece.proyecto.nombre}" />
+						<h3 class="font-weight-light" th:text="${proyectoPertenece.proyecto.nombre}" />
 							
-						<hr class="my-4">
+						<hr class="mb-4">
 						<label class="d-block" th:text="${proyectoPertenece.nombre}"></label>
-						<p class="lead" th:text="${proyectoPertenece.descripcion}" />
+						<p class="" th:text="${proyectoPertenece.descripcion}" />
 						<label class="d-block" th:text="|Líder del proyecto: ${proyectoPertenece.proyecto.leader.nombre}|"></label>
 						<div class="d-flex justify-content-end">
 							<form action="/proyecto/verProyecto" class="d-inline">

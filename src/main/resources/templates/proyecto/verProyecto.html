@@ -69,12 +69,14 @@
 			
 		</div>
 	</form>	
+	<!--**************************************************************-->
 	
-	<div class="row mt-5 pl-3" th:unless="${libres == 0 && ocupados == 0}" th:if="${session.usuario!=null && pertenece}">
+	<!--************** Puesto propio en el proyecto **************-->
+	<div class="row mt-5" th:unless="${libres == 0 && ocupados == 0}" th:if="${session.usuario!=null && pertenece}">
 		<div class="col">
 			<div class="">
 				<div>
-					<h3 class="font-weight-light" th:text="|Tu puesto en ${proyecto.nombre}|"></h3> 
+					<h3 class="font-weight-light ml-3" th:text="|Tu puesto en ${proyecto.nombre}|"></h3> 
 				</div>
 			</div>
 			<hr class="mb-4">
@@ -103,11 +105,12 @@
 					</form>
 					
 				</div>
-				
 			</th:block>
 			
 		</div>
 	</div>
+	<!--**************************************************************-->
+	
 		
 	<!--**************NINGÚN PUESTO CREADO*********************-->
 	<div class="row py-3" th:if="${libres == 0 && ocupados == 0}">

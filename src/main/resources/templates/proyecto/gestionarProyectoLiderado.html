@@ -212,16 +212,16 @@
 											</button>
 										</div>
 										<div class="modal-body">
-											<form action="/puesto/u" method="POST" id="formulario">
-											<input type="hidden" name="idPuesto" th:value="${puesto.id}"/>
-											<input type="hidden" name="idProyecto" th:value="${proyecto.id}"/>
+											<form action="/puesto/u" method="POST" th:id="|puestoOcupadoForm-${puesto.id}|">
+												<input type="hidden" name="idPuesto" th:value="${puesto.id}"/>
+												<input type="hidden" name="idProyecto" th:value="${proyecto.id}"/>
 												<div class="form-group">
 													<label for="recipient-name" class="col-form-label">Modifica el nombre del puesto:</label>
-													<input type="text" class="form-control" id="recipient-name" th:placeholder="${puesto.nombre}" name="nombre">
+													<input type="text" class="form-control" id="recipient-name" th:placeholder="${puesto.nombre}" th:value="${puesto.nombre}" name="nombre"/>
 												</div>
 												<div class="form-group">
 													<label for="message-text" class="col-form-label">Nueva descripción del puesto:</label>
-													<textarea class="form-control" id="message-text" th:text="${puesto.descripcion}" name="descripcion"/>
+													<textarea class="form-control" id="message-text" th:text="${puesto.descripcion}" th:placeholder="${puesto.descripcion}" name="descripcion"/>
 												</div>
 												<div class="form-group list-group-item-warning rounded p-2">
 													<span for="message-text" class="col-form-label disabled font-weight-light">
@@ -234,12 +234,12 @@
 										</div>
 										<div class="modal-footer d-flex justify-content-between">
 											<form method="POST" action="/proyecto/despedir"> 
-											<input type="hidden" name="idPuesto" th:value="${puesto.id}"/>
-											<button type="button" class="btn btn-sm btn-outline-danger border-0" data-dismiss="modal" th:text="|Despedir a ${puesto.ocupante.nombre}|" onclick="salir(this.form)"></button>
+												<input type="hidden" name="idPuesto" th:value="${puesto.id}"/>
+												<button type="button" class="btn btn-sm btn-outline-danger border-0" data-dismiss="modal" th:text="|Despedir a ${puesto.ocupante.nombre}|" onclick="despedir(this.form)"></button>
 											</form>
 											<div>
 												<button type="button" class="btn btn-sm btn-outline-secondary border-0" data-dismiss="modal">Cancelar</button>
-												<button type="button" class="btn btn-sm btn-outline-info border-0" onclick="document.getElementById('formulario').submit()">Guardar cambios</button>
+												<button type="button" class="btn btn-sm btn-outline-info border-0" th:onclick="|document.getElementById('puestoOcupadoForm-${puesto.id}').submit()|">Guardar cambios</button>
 											</div>
 										</div>
 									</div>
@@ -287,23 +287,24 @@
 								</button>
 								
 								<div class="modal fade text-left" th:id="|modalPuestoLibre-${puesto.id}|" tabindex="-1" role="dialog" aria-labelledby="modalPuestoLibreLabel" aria-hidden="true">
+									
 									<div class="modal-dialog modal-dialog-centered" role="document">
 										<div class="modal-content">
-											<div class="modal-header">
-								        		<h5 class="modal-title font-weight-bold" id="modalPuestoLibreLabel" th:text="${puesto.nombre}"></h5>
-								        		<button type="button" class="close" data-dismiss="modal" aria-label="Close">
-								          			<span aria-hidden="true">&times;</span>
-								        		</button>
-								      		</div>
-								      		<div class="modal-body">
-								        		<form>
+											<form method="post" action="/puesto/u" th:id="|puestoLibreForm-${puesto.id}|">
+												<div class="modal-header">
+									        		<h5 class="modal-title font-weight-bold" id="modalPuestoLibreLabel" th:text="${puesto.nombre}"></h5>
+									        		<button type="button" class="close" data-dismiss="modal" aria-label="Close">
+									          			<span aria-hidden="true">&times;</span>
+									        		</button>
+									      		</div>
+									      		<div class="modal-body">
 								          			<div class="form-group">
-								            			<label for="recipient-name" class="col-form-label">Modifica el nombre del puesto:</label>
-								            			<input type="text" class="form-control" id="recipient-name" th:placeholder="${puesto.nombre}">
+								            			<label for="recipient-name" class="form-label">Modifica el nombre del puesto:</label>
+								            			<input type="text" class="form-control" id="recipient-name" th:value="${puesto.nombre}" th:placeholder="${puesto.nombre}" name="nombre"/>
 								          			</div>
 								          			<div class="form-group">
 								            			<label for="message-text" class="col-form-label">Nueva descripción del puesto:</label>
-								            			<textarea class="form-control" id="message-text" th:text="${puesto.descripcion}"></textarea>
+								            			<textarea class="form-control" id="message-text" th:text="${puesto.descripcion}" th:placeholder="${puesto.descripcion}" name="descripcion"></textarea>
 								          			</div>
 								          			<div class="form-group">
 								            			<label for="message-text" class="col-form-label">Reasigna las habilidades necesarias:</label>
@@ -312,22 +313,27 @@
 														<th:block th:each="habilidad : ${habilidades}">
 															<div class="col-4" data-toggle="buttons">
 																<label class="btn btn-info btn-sm">
-																	<input th:if="${puesto.requiere.contains(habilidad)}" checked="checked" type="checkbox" class="custom-control-input" name="idsHabilidadesRequire[]" th:value="${habilidad.id}" th:id="|id-${habilidad.id}-habilidad|"/>
-																	<input th:if="${!puesto.requiere.contains(habilidad)}" class="custom-control-input" name="idsHabilidadesRequire[]" th:value="${habilidad.id}" th:id="|id-${habilidad.id}-habilidad|"/>
+																	<input th:if="${puesto.requiere.contains(habilidad)}" checked="checked" type="checkbox" class="custom-control-input" name="idsHabilidadesRequiere[]" th:value="${habilidad.id}" th:id="|id-${habilidad.id}-habilidad|"/>
+																	<input th:if="${!puesto.requiere.contains(habilidad)}" type="checkbox" class="custom-control-input" name="idsHabilidadesRequiere[]" th:value="${habilidad.id}" th:id="|id-${habilidad.id}-habilidad|"/>
 																	<th:block th:text="${habilidad.nombre}"/>
 																</label>
 															</div>
 														</th:block>
 								          			</div>
-								        		</form>
-								      		</div>
-								      		<div class="modal-footer  d-flex justify-content-between">
-								      			<button type="button" class="btn btn-sm btn-outline-danger border-0" data-dismiss="modal">Eliminar puesto</button>
+									      		</div>
+									      		<input type="hidden" name="idProyecto" th:value="${proyecto.id}"/>
+												<input type="hidden" name="idPuesto" th:value="${puesto.id}"/>
+											</form>
+								      		<div class="modal-footer d-flex justify-content-between">
+								      			<form action="/puesto/d" method="post">
+								      				<input type="hidden" name="idProyecto" th:value="${proyecto.id}"/>
+								      				<input type="hidden" name="idPuesto" th:value="${puesto.id}"/>
+							      					<button type="submit" class="btn btn-sm btn-outline-danger border-0" >Eliminar puesto</button>
+								      			</form>
 										      	<div>
-										      		<button type="button" class="btn btn-sm btn-outline-secondary border-0" data-dismiss="modal">Cancelar</button>
-										        	<button type="button" class="btn btn-sm btn-outline-info border-0">Guardar cambios</button>
+										      		<button type="button" class="btn btn-sm btn-outline-secondary order-0" data-dismiss="modal">Cancelar</button>
+										        	<button type="submit" class="btn btn-sm btn-outline-info border-0" th:onclick="|document.getElementById('puestoLibreForm-${puesto.id}').submit()|">Guardar cambios</button>
 										      	</div>
-								        
 								      		</div>
 								    	</div>
 									</div>
@@ -348,7 +354,7 @@
 	</div>
 </div>
 <script>
-	function salir(formulario) {
+	function despedir(formulario) {
 		var res = confirm("¿Dejará de formar parte del proyecto, estás seguro de que quieres despedirle de tu proyecto?");
 		if(res){
 			formulario.submit();

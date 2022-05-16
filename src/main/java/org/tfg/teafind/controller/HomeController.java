@@ -35,6 +35,15 @@ public class HomeController {
 	
 	@Autowired
 	private UsuarioRepository usuarioRepository;
+	
+	@GetMapping("/")
+	public String index(ModelMap m) {
+		List<Proyecto> proyectos = proyectoRepository.findAll();
+		
+		m.put("proyectos", proyectos);
+		m.put("view", "home/rHome");
+		return "_t/frame";
+	}
 
 	@GetMapping("/info")
 	public String info(
@@ -90,17 +99,18 @@ public class HomeController {
 		return "redirect:/";
 	}
 
-/*
- * Recuperado / en HomeController
- */
-	@GetMapping("/")
-	public String index(ModelMap m) {
-		List<Proyecto> proyectos = proyectoRepository.findAll();
+	@GetMapping("/team")
+	public String team(ModelMap m) {
 		
-		m.put("proyectos", proyectos);
-		m.put("view", "home/rHome");
+		m.put("view", "home/team");
 		return "_t/frame";
 	}
 	
+	@GetMapping("/about")
+	public String about(ModelMap m) {
+		
+		m.put("view", "home/about");
+		return "_t/frame";
+	}
 	
 }

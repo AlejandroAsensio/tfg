@@ -234,6 +234,43 @@ html, body {
 /*-----------------Ver Proyecto-----------------
 ------------------------------------------------*/
 
+/*-------------------Team View-------------------
+------------------------------------------------*/
+.team {
+	color: #8d97ad;
+  	font-weight: 300;
+}
+.team h1, .team h2, .team h3, .team h4, .team h5, .team h6 {
+  	color: #3e4555;
+}
+.team .font-weight-medium {
+	font-weight: 500;
+}
+.teamPic{
+	height: 320px;
+	width: 320px;
+}
+.team h5 {
+    line-height: 22px;
+    font-size: 18px;
+}
+.team .subtitle {
+    color: #8d97ad;
+    line-height: 24px;
+	font-size: 13px;
+}
+.team ul li a {
+	color: #8d97ad;
+	padding-right: 15px;
+	-webkit-transition: 0.1s ease-in;
+	-o-transition: 0.1s ease-in;
+	transition: 0.1s ease-in;
+}
+.team ul li a:hover {
+	-webkit-transform: translate3d(0px, -5px, 0px);
+	transform: translate3d(0px, -5px, 0px);
+	color: #316ce8;
+}
 
 /*------------Sobrescritura Bootstrap------------
 ------------------------------------------------*/

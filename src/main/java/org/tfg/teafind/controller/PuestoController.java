@@ -114,7 +114,7 @@ public class PuestoController {
 			@RequestParam("idPuesto") Long idPuesto,
 			@RequestParam("nombre") String nombre,
 			@RequestParam("descripcion") String descripcion,
-			@RequestParam(value="idsHabilidades[]", required=false) List<Long> idsHabilidades
+			@RequestParam(value="idsHabilidadesRequiere[]", required=false) List<Long> idsHabilidades
 			) throws DangerException {
 		try {
 			ArrayList<Habilidad> nuevasHabilidades = new ArrayList<Habilidad>();
@@ -133,5 +133,14 @@ public class PuestoController {
 			PRG.error("El puesto "+nombre+" ya existe", "/proyecto/tuProyecto?idProyecto="+idProyecto);
 		}
 		return "redirect:/proyecto/tuProyecto?idProyecto="+idProyecto;
+	}
+	
+	@PostMapping("/puesto/d")
+	public String dPost(
+			@RequestParam("idPuesto") Long idPuesto,
+			@RequestParam("idProyecto") Long idProyecto
+			) {
+		puestoRepository.deleteById(idPuesto);
+		return "redirect:/proyecto/tuProyecto?idProyecto=" + idProyecto;
 	}
 }
