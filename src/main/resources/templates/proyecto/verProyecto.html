@@ -189,6 +189,7 @@
 					    	<form th:name="|unir${puesto.id}|" th:if="${puesto.ocupante==null && !pertenece && session.usuario!=null && proyecto.leader.id != session.usuario.id}" action="/usuario/unir" method="POST">
 					    		<div class="d-flex justify-content-end">
 									<input type="hidden" name="idPuesto" th:value="${puesto.id}"/>
+									<input type="hidden" name="idProyecto" th:value="${proyecto.id}"/>
 									<button type="submit" class="btn btn-outline-primary btn-sm border-0" onclick="confirmar(this.form)">Unirme</button>
 								</div>	
 							</form>

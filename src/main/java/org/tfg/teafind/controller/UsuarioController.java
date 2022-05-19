@@ -155,10 +155,23 @@ public class UsuarioController {
 	
 	@PostMapping("unir")
 	public String unir(ModelMap m,HttpSession s,
-			@RequestParam("idPuesto") Long idPuesto
-			) {
+			@RequestParam("idPuesto") Long idPuesto,
+			@RequestParam("idProyecto") Long idProyecto
+			) throws DangerException {
 		Puesto puesto = puestoRepository.getById(idPuesto);
-		Usuario usuario = (Usuario) s.getAttribute("usuario");
+		
+		Usuario u = (Usuario) s.getAttribute("usuario");
+		
+		Usuario usuario = usuarioRepository.getById(u.getId()); 
+		var ok = true;
+		
+		for(Habilidad h: puesto.getRequiere()) {
+			if(!usuario.getSabe().contains(h)) {
+				PRG.error("No tienes los conocimientos necesarios para poder unirte a este puesto","/proyecto/verProyecto?idProyecto="+idProyecto);
+			}
+		}
+		
+		
 		puesto.setOcupante(usuario);
 		puestoRepository.save(puesto);
 		return "redirect:/proyecto/verProyecto?idProyecto="+puesto.getProyecto().getId();
