@@ -36,9 +36,18 @@ public class HomeController {
 	@Autowired
 	private UsuarioRepository usuarioRepository;
 	
-	@GetMapping("/")
-	public String index(ModelMap m) {
-		List<Proyecto> proyectos = proyectoRepository.findAll();
+	@GetMapping(value={"/","/{nombre}"})
+	public String index(ModelMap m, @RequestParam(value="nombre",required=false) String nombre) {
+		List<Proyecto> proyectos = null;
+		
+		if(nombre!=null) {
+			
+			proyectos = proyectoRepository.findByNombreContainingIgnoreCase(nombre);
+		}
+		else {
+			proyectos = proyectoRepository.findAll();	
+		}
+		
 		
 		m.put("proyectos", proyectos);
 		m.put("view", "home/rHome");

@@ -11,4 +11,6 @@ public interface ProyectoRepository extends JpaRepository<Proyecto, Long> {
 	public Proyecto getByNombre(String nombre);
 	
 	public List<Proyecto> findByLeaderId(Long id);
+	
+	public List<Proyecto> findByNombreContainingIgnoreCase(String nombre);
 }
