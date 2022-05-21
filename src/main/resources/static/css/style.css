@@ -53,6 +53,9 @@ html, body {
 
 /*----------------------NAV----------------------
 ------------------------------------------------*/
+.logoNavbar {
+	height: 30px;
+}
 .dropdown-menu {
     width: 250px !important;
 }
@@ -271,8 +274,23 @@ html, body {
 	transform: translate3d(0px, -5px, 0px);
 	color: #316ce8;
 }
+.logoTeam {
+	height: 120px;
+}
 
-/*------------Sobrescritura Bootstrap------------
+/*-----------------About View-----------------
+------------------------------------------------*/
+.logoAbout {
+	height: 220px;
+}
+
+/*-------------------Footer-------------------
+------------------------------------------------*/
+.logoFooter {
+	height: 24px;
+}
+
+/*---------Sobrescritura Bootstrap---------
 ------------------------------------------------*/
 .btn {
     border-radius: .65rem;
