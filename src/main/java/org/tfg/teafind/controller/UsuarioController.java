@@ -126,7 +126,7 @@ public class UsuarioController {
 				}
 			}
 			usuarioRepository.save(usuario);	
-			mailService.enviarEmail(email, "Bienvenido a Teafind " + nick, "<h1>¡Muchas gracias!<h1><br/>Acabas de registrarte en Teafind!!!.");
+			mailService.enviarEmail(email, "Bienvenido a Teafind " + nick, nombre);
 		} catch (Exception e) {
 			PRG.error("El número de móvil/email ya están registrados.", "/usuario/c");
 		}
