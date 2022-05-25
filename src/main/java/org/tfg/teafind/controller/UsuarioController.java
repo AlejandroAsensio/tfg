@@ -30,6 +30,7 @@ import org.tfg.teafind.repository.HabilidadRepository;
 import org.tfg.teafind.repository.ProyectoRepository;
 import org.tfg.teafind.repository.PuestoRepository;
 import org.tfg.teafind.repository.UsuarioRepository;
+import org.tfg.teafind.service.MailService;
 
 @Controller
 @RequestMapping("/usuario")
@@ -46,6 +47,9 @@ public class UsuarioController {
 	
 	@Autowired
 	private PuestoRepository puestoRepository;
+	
+	@Autowired
+	private MailService mailService;
 	
 	@GetMapping("r")
 	public String r(
@@ -97,31 +101,32 @@ public class UsuarioController {
 					password, 
 					false
 					);
-			if(!imagen.isEmpty() ) {
-				//Ruta relativa de almacenamiento
-				Path directorioImagenes = Paths.get("src//main//resources//static//img//profile");
-				//Ruta absoluta
-				String rutaAbsoluta = directorioImagenes.toFile().getAbsolutePath();
-				
-				//Bytes de la imagen
-				byte[] bytesImg = imagen.getBytes();
-				//Ruta completa que ocupará la imagen, con su nombre
-//				Path rutaCompleta = Paths.get(rutaAbsoluta + "/" + nick 
-//								+ imagen.getOriginalFilename().substring(imagen.getOriginalFilename().length() - 4));
-				Path rutaCompleta = Paths.get(rutaAbsoluta + "/" + imagen.getOriginalFilename());
-				//Escritura del fichero
-				Files.write(rutaCompleta, bytesImg);
-				
-				usuario.setImagen(imagen.getOriginalFilename());
-			} else {
-				usuario.setImagen(nombreImagen);
-			}
+//			if(!imagen.isEmpty() ) {
+//				//Ruta relativa de almacenamiento
+//				Path directorioImagenes = Paths.get("src//main//resources//static//img//profile");
+//				//Ruta absoluta
+//				String rutaAbsoluta = directorioImagenes.toFile().getAbsolutePath();
+//				
+//				//Bytes de la imagen
+//				byte[] bytesImg = imagen.getBytes();
+//				//Ruta completa que ocupará la imagen, con su nombre
+////				Path rutaCompleta = Paths.get(rutaAbsoluta + "/" + nick 
+////								+ imagen.getOriginalFilename().substring(imagen.getOriginalFilename().length() - 4));
+//				Path rutaCompleta = Paths.get(rutaAbsoluta + "/" + imagen.getOriginalFilename());
+//				//Escritura del fichero
+//				Files.write(rutaCompleta, bytesImg);
+//				
+//				usuario.setImagen(imagen.getOriginalFilename());
+//			} else {
+//				usuario.setImagen(nombreImagen);
+//			}
 			if(idsHabilidadesSabe!=null) {
 				for(Long idHabilidadSabe: idsHabilidadesSabe) {
 					usuario.addSabe(habilidadRepository.getById(idHabilidadSabe));
 				}
 			}
 			usuarioRepository.save(usuario);	
+			mailService.enviarEmail(email, "Bienvenido a Teafind " + nick, "<h1>¡Muchas gracias!<h1><br/>Acabas de registrarte en Teafind!!!.");
 		} catch (Exception e) {
 			PRG.error("El número de móvil/email ya están registrados.", "/usuario/c");
 		}
