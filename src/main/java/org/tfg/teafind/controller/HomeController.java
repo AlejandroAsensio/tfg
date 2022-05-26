@@ -36,7 +36,7 @@ public class HomeController {
 	@Autowired
 	private UsuarioRepository usuarioRepository;
 	
-	@GetMapping(value={"/","/{nombre}"})
+	@GetMapping("/")
 	public String index(ModelMap m, @RequestParam(value="nombre",required=false) String nombre) {
 		List<Proyecto> proyectos = null;
 		
