@@ -157,7 +157,7 @@ public class MailService {
     			+ "            </tr>\r\n"
     			+ "            <tr>\r\n"
     			+ "              <td style=\"padding:30px;background-color:#ffffff;\">\r\n"
-    			+ "                <p style=\"margin:0;\">Teafind es un proyecto de fin de grado. Si has recibido este correo y no te has registrado en Teafind, por favor, contacta con nosotros a teafindes@gmail.com.</p>\r\n"
+    			+ "                <p style=\"margin:0;\">Teafind es un proyecto de fin de grado. Si crees que has recibido este correo por error, por favor, contacta con nosotros a teafindes@gmail.com.</p>\r\n"
     			+ "              </td>\r\n"
     			+ "            </tr>\r\n"
     			+ "            <tr>\r\n"
