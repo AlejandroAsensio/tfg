@@ -87,7 +87,6 @@ public class UsuarioController {
 			@RequestParam(value="idsHabilidadesSabe[]",required=false) List<Long> idsHabilidadesSabe
 
 			) throws DangerException, InfoException {
-		String nombreImagen = "default.png";
 		Usuario usuario;
 		
 		try {
@@ -168,7 +167,6 @@ public class UsuarioController {
 		Usuario u = (Usuario) s.getAttribute("usuario");
 		
 		Usuario usuario = usuarioRepository.getById(u.getId()); 
-		var ok = true;
 		
 		for(Habilidad h: puesto.getRequiere()) {
 			if(!usuario.getSabe().contains(h)) {
