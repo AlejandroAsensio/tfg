@@ -1,6 +1,7 @@
 package org.tfg.teafind.controller;
 
 
+import java.io.File;
 import java.io.IOException;
 import java.nio.file.Files;
 import java.nio.file.Path;
@@ -94,7 +95,6 @@ public class UsuarioController {
 		Usuario usuario;
 		String nombreImagen = "default.png";
 		
-		logger.info("Nombre imagen antes de nombre subido: " + nombreImagen);
 		try {
 			usuario = new Usuario(
 					nick,
@@ -107,43 +107,39 @@ public class UsuarioController {
 					false
 					);
 			
-			logger.info("Usuario creado: " + usuario.toString());
+			//Ruta relativa de almacenamiento
+			Path directorioImagenes = Paths.get("src//main//resources//static//img//profile//");
+			File f = new File(directorioImagenes.toString());
+			f.mkdir();
 			
 			if (!imagen.isEmpty()) {
-				logger.info("Imagen no vacía");
-				//Ruta relativa de almacenamiento
-				Path directorioImagenes = Paths.get("src//main//resources//static//img//profile//");
-				logger.info("Directorio imagen: " + directorioImagenes);
+				nombreImagen = nick + "-" + NombreImagenUtils.getFileName(imagen.getOriginalFilename());
+				
 				//Ruta absoluta
 				String rutaAbsoluta = directorioImagenes.toFile().getAbsolutePath();
-				logger.info("Ruta absoluta imagen: " + rutaAbsoluta);
+
 				//Bytes de la imagen
 				byte[] bytesImg = imagen.getBytes();
+
 				//Ruta completa que ocupará la imagen, con su nombre
-//				Path rutaCompleta = Paths.get(rutaAbsoluta + "/" + nick 
-//								+ imagen.getOriginalFilename().substring(imagen.getOriginalFilename().length() - 4));
-				Path rutaCompleta = Paths.get(rutaAbsoluta + "/" + NombreImagenUtils.getFileName(nombreImagen));
-				logger.info("Ruta completa imagen: " + rutaCompleta);
+				Path rutaCompleta = Paths.get(rutaAbsoluta + "/" + nombreImagen);
+
 				//Escritura del fichero
 				Files.write(rutaCompleta, bytesImg);
 				
-				usuario.setImagen(imagen.getOriginalFilename());
-				
+				usuario.setImagen(nombreImagen);
 			} else {
-				logger.info("Imagen vacía - Asignado: " + nombreImagen);
 				usuario.setImagen(nombreImagen);
 			}
-			logger.info("Asignación de habilidades");
+			
 			if(idsHabilidadesSabe!=null) {
 				for(Long idHabilidadSabe: idsHabilidadesSabe) {
 					usuario.addSabe(habilidadRepository.getById(idHabilidadSabe));
 				}
 			}
-			logger.info("Guardado de usuario");
-			logger.info(usuario.toString());
+			
 			usuarioRepository.save(usuario);
-			logger.info("Enviar mail desactivado");
-//			mailService.enviarEmail(email, "Bienvenido a Teafind " + nick, nombre);
+			//mailService.enviarEmail(email, "Bienvenido a Teafind " + nick, nombre);
 		} catch (Exception e) {
 			PRG.error("El número de móvil/email ya están registrados.", "/usuario/c");
 		}
@@ -252,20 +248,28 @@ public class UsuarioController {
 		usuario.setTelefono(telefono);
 		usuario.setDescripcion(descripcion);
 		
-		if(!imagen.isEmpty() ) {
-			//Ruta relativa de almacenamiento
-			Path directorioImagenes = Paths.get("src//main//resources//static//img//profile");
+		
+		//Ruta relativa de almacenamiento
+		Path directorioImagenes = Paths.get("src//main//resources//static//img//profile//");
+		File f = new File(directorioImagenes.toString());
+		f.mkdir();
+		
+		if (!imagen.isEmpty()) {
+			String nombreImagen = nick + "-" + NombreImagenUtils.getFileName(imagen.getOriginalFilename());
+			
 			//Ruta absoluta
 			String rutaAbsoluta = directorioImagenes.toFile().getAbsolutePath();
-			
+
 			//Bytes de la imagen
 			byte[] bytesImg = imagen.getBytes();
+
 			//Ruta completa que ocupará la imagen, con su nombre
-			Path rutaCompleta = Paths.get(rutaAbsoluta + "/" + imagen.getOriginalFilename());
+			Path rutaCompleta = Paths.get(rutaAbsoluta + "/" + nombreImagen);
+
 			//Escritura del fichero
 			Files.write(rutaCompleta, bytesImg);
 			
-			usuario.setImagen(imagen.getOriginalFilename());
+			usuario.setImagen(nombreImagen);
 		}
 		
 		if (idsHabilidades!=null) {
