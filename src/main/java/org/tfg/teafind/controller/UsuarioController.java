@@ -255,7 +255,7 @@ public class UsuarioController {
 		f.mkdir();
 		
 		if (!imagen.isEmpty()) {
-			String nombreImagen = nick + "-" + NombreImagenUtils.getFileName(imagen.getOriginalFilename());
+			String nombreImagen = usuario.getImagen();
 			
 			//Ruta absoluta
 			String rutaAbsoluta = directorioImagenes.toFile().getAbsolutePath();
