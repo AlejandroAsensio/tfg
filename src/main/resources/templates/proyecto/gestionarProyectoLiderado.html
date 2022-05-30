@@ -53,8 +53,8 @@
 							<div class="modal-footer">
 								<div>
 									<button type="button" class="btn btn-sm btn-outline-secondary border-0" data-dismiss="modal">Cancelar</button>
-									<button type="submit" class="btn btn-sm btn-outline-primary border-0" onclick="crearMasPuestos(true)" value="finalizar">Añadir más</button>
-									<button type="submit" class="btn btn-sm btn-outline-success border-0" onclick="crearMasPuestos(false)" value="añadir">Crear y finalizar</button>
+									<button type="button" class="btn btn-sm btn-outline-primary border-0" onclick="crearMasPuestos(true)" value="finalizar">Añadir más</button>
+									<button type="button" class="btn btn-sm btn-outline-success border-0" onclick="crearMasPuestos(false)" value="añadir">Crear y finalizar</button>
 									<input type="hidden" name="idProyecto" th:value="${proyecto.id}" />
 									<input type="hidden" name="nombreProyecto" th:value="${proyecto.nombre}"/>
 									<input type="hidden" name="destino" value="" />
