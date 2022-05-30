@@ -179,10 +179,17 @@ public class Usuario {
 		this.sabe.add(habilidad);
 		habilidad.getConocida().add(this);
 	}
+	@Override
+	public String toString() {
+		return "Usuario [id=" + id + ", nick=" + nick + ", nombre=" + nombre + ", apellido1=" + apellido1
+				+ ", apellido2=" + apellido2 + ", telefono=" + telefono + ", email=" + email + ", password=" + password
+				+ ", descripcion=" + descripcion + ", imagen=" + imagen + ", admin=" + admin + ", sabe=" + sabe
+				+ ", creados=" + creados + ", ocupa=" + ocupa + "]";
+	}
 	 
 	
+	
 	/*TODO
-	 
 	 * y añadir o modificar mis habilidades
 	*/
 	

@@ -10,6 +10,7 @@ import java.util.List;
 
 import javax.servlet.http.HttpSession;
 
+import org.jboss.logging.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Controller;
@@ -31,6 +32,7 @@ import org.tfg.teafind.repository.ProyectoRepository;
 import org.tfg.teafind.repository.PuestoRepository;
 import org.tfg.teafind.repository.UsuarioRepository;
 import org.tfg.teafind.service.MailService;
+import org.tfg.teafind.utils.NombreImagenUtils;
 
 @Controller
 @RequestMapping("/usuario")
@@ -50,6 +52,8 @@ public class UsuarioController {
 	
 	@Autowired
 	private MailService mailService;
+	
+	Logger logger = Logger.getLogger(UsuarioController.class);
 	
 	@GetMapping("r")
 	public String r(
@@ -88,9 +92,11 @@ public class UsuarioController {
 
 			) throws DangerException, InfoException {
 		Usuario usuario;
+		String nombreImagen = "default.png";
 		
+		logger.info("Nombre imagen antes de nombre subido: " + nombreImagen);
 		try {
-			usuario= new Usuario(
+			usuario = new Usuario(
 					nick,
 					nombre, 
 					apellido1,
@@ -100,32 +106,44 @@ public class UsuarioController {
 					password, 
 					false
 					);
-//			if(!imagen.isEmpty() ) {
-//				//Ruta relativa de almacenamiento
-//				Path directorioImagenes = Paths.get("src//main//resources//static//img//profile");
-//				//Ruta absoluta
-//				String rutaAbsoluta = directorioImagenes.toFile().getAbsolutePath();
-//				
-//				//Bytes de la imagen
-//				byte[] bytesImg = imagen.getBytes();
-//				//Ruta completa que ocupará la imagen, con su nombre
-////				Path rutaCompleta = Paths.get(rutaAbsoluta + "/" + nick 
-////								+ imagen.getOriginalFilename().substring(imagen.getOriginalFilename().length() - 4));
-//				Path rutaCompleta = Paths.get(rutaAbsoluta + "/" + imagen.getOriginalFilename());
-//				//Escritura del fichero
-//				Files.write(rutaCompleta, bytesImg);
-//				
-//				usuario.setImagen(imagen.getOriginalFilename());
-//			} else {
-//				usuario.setImagen(nombreImagen);
-//			}
+			
+			logger.info("Usuario creado: " + usuario.toString());
+			
+			if (!imagen.isEmpty()) {
+				logger.info("Imagen no vacía");
+				//Ruta relativa de almacenamiento
+				Path directorioImagenes = Paths.get("src//main//resources//static//img//profile//");
+				logger.info("Directorio imagen: " + directorioImagenes);
+				//Ruta absoluta
+				String rutaAbsoluta = directorioImagenes.toFile().getAbsolutePath();
+				logger.info("Ruta absoluta imagen: " + rutaAbsoluta);
+				//Bytes de la imagen
+				byte[] bytesImg = imagen.getBytes();
+				//Ruta completa que ocupará la imagen, con su nombre
+//				Path rutaCompleta = Paths.get(rutaAbsoluta + "/" + nick 
+//								+ imagen.getOriginalFilename().substring(imagen.getOriginalFilename().length() - 4));
+				Path rutaCompleta = Paths.get(rutaAbsoluta + "/" + NombreImagenUtils.getFileName(nombreImagen));
+				logger.info("Ruta completa imagen: " + rutaCompleta);
+				//Escritura del fichero
+				Files.write(rutaCompleta, bytesImg);
+				
+				usuario.setImagen(imagen.getOriginalFilename());
+				
+			} else {
+				logger.info("Imagen vacía - Asignado: " + nombreImagen);
+				usuario.setImagen(nombreImagen);
+			}
+			logger.info("Asignación de habilidades");
 			if(idsHabilidadesSabe!=null) {
 				for(Long idHabilidadSabe: idsHabilidadesSabe) {
 					usuario.addSabe(habilidadRepository.getById(idHabilidadSabe));
 				}
 			}
-			usuarioRepository.save(usuario);	
-			mailService.enviarEmail(email, "Bienvenido a Teafind " + nick, nombre);
+			logger.info("Guardado de usuario");
+			logger.info(usuario.toString());
+			usuarioRepository.save(usuario);
+			logger.info("Enviar mail desactivado");
+//			mailService.enviarEmail(email, "Bienvenido a Teafind " + nick, nombre);
 		} catch (Exception e) {
 			PRG.error("El número de móvil/email ya están registrados.", "/usuario/c");
 		}
@@ -256,13 +274,9 @@ public class UsuarioController {
 			}
 		}
 		usuario.setSabe(nuevasHabilidades);
-//		if(password != null || password.compareTo("")!=0) {
-//			
-//		}
-		if(password == null || password.compareTo("")==0) {
+		if (password == null || password.compareTo("") == 0) {
 			
-		}
-		else {
+		} else {
 			if (new BCryptPasswordEncoder().matches(password, usuario.getPassword())) {
 				if(newPassword.equals(passwordConfirm)) {
 					usuario.setPassword(newPassword);
