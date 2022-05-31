@@ -131,6 +131,14 @@ html, body {
 	object-position: center center;
     transition: all 0.4 ease-in;
 }
+/*.imagenNavbar.imagenLiderLista {
+	width: 30px;
+	height: 30px;
+	object-fit: cover;
+	border-radius: 50%;
+	object-position: center center;
+    transition: all 0.4 ease-in;
+}*/
 .imgPerfilMenu {
     height: 64px;
     width: 64px;
@@ -239,6 +247,9 @@ html, body {
 
 /*-----------------Ver Proyecto-----------------
 ------------------------------------------------*/
+#textareaVerProyecto {
+    resize: none;
+}
 
 /*-------------------Team View-------------------
 ------------------------------------------------*/

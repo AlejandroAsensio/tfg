@@ -29,7 +29,7 @@
 		
 		<div class="card escalar m-3 hiddenCard" th:each="proyecto : ${proyectos}" id="cardsList">
 			<!--<h6 class="card-header text-right text-muted bg-light" th:text="|${proyecto.leader?.nombre} ${proyecto.leader?.apellido1}|"/>-->
-			<img class="imagenNavbar float-right" th:src="|/img/profile/${proyecto.leader.imagen}|" th:alt="${proyecto.leader.nick}" th:title="${proyecto.leader.nick}">
+			<img class="imagenNavbar float-right m-3" th:src="|/img/profile/${proyecto.leader.imagen}|" th:alt="${proyecto.leader.nick}" th:title="${proyecto.leader.nick}">
 			<div class="card-body">
 				<h5 class="card-title" th:text="${proyecto.nombre}" />
 				<p class="card-text" th:text="${proyecto.descripcion}"/>

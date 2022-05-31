@@ -38,11 +38,14 @@
 					</div>
 					<div class="form-group col-md-6" th:unless="${proyecto.leader.id == session.usuario?.id}">
 						<label for="nombreP" class="font-weight-bold">Líder: </label>
-						<input type="text" name="nombre" id="nombreP" class="form-control disabled bg-light border-0" th:value="${proyecto.leader.nombre}" disabled="disabled">
+						<div class="d-flex justify-content-left">
+							<img class="imagenNavbar align-self-center" th:src="|/img/profile/${proyecto.leader.imagen}|" th:alt="${proyecto.leader.nombre}" th:title="${proyecto.leader.nombre}">
+							<input type="text" name="nombre" id="nombreP" class="form-control disabled bg-light border-0" th:value="${proyecto.leader.nombre}" disabled="disabled">
+						</div>
 					</div>
 					<div class="form-group" th:if="${proyecto.leader.id == session.usuario?.id}">
-						<span for="nombreP" class="badge badge-pill badge-secondary border-1 pr-2">
-							<img src="/icon/check.png" width="25" height="auto" class="align-self-center"> Eres lider
+						<span for="nombreP" class="badge badge-pill badge-secondary border-1 pr-2 pl-0 ml-0 py-0">
+							<img th:src="|/img/profile/${proyecto.leader.imagen}|" height="auto" class="imagenNavbar align-self-center mr-1"> Eres lider
 						</span>
 					</div>
 				</div>
@@ -62,7 +65,7 @@
 			<div class="col-6">
 				<div class="form-group">
 					<label for="descripcionP" class="font-weight-bold">Descripción del proyecto: </label>
-					<textarea th:text="${proyecto.descripcion}" name="descripcion" class="form-control disabled bg-light border-0" rows="3" disabled="disabled"></textarea>
+					<textarea id="textareaVerProyecto" th:text="${proyecto.descripcion}" name="descripcion" class="form-control disabled bg-light border-0" rows="3" disabled="disabled"></textarea>
 					<!--<input type="text" name="descripcion" id="descripcionP" class="form-control hiddenInputProyecto" th:value="${proyecto.descripcion}">-->
 				</div>
 			</div>
@@ -149,8 +152,9 @@
 				<th:block th:if="${ocupados > 0}" th:each="puesto : ${proyecto.puestos}" class="mx-3">
 					<div th:if="${puesto.ocupante != null && puesto.ocupante.id != session.usuario?.id}" class="card escalar text-center my-3 mx-3">
 		  				<div class="card-body">
-							
+							<img class="imagenNavbar float-right" th:src="|/img/profile/${puesto.ocupante.imagen}|" th:alt="${puesto.ocupante.nombre}" th:title="${puesto.ocupante.nombre}">
 							<h5 class="card-title text-left font-weight-bold" th:text="${puesto.nombre}"></h5>
+							
 							<p class="card-text text-left" th:if="${session.usuario!=null && (pertenece || proyecto.leader.id == session.usuario?.id)}" th:text="|${puesto.ocupante.nombre} ${puesto.ocupante.apellido1} ${puesto.ocupante.apellido2}|"></p>
 						    <p class="card-text" th:text="${puesto.descripcion}"></p>
 		  				</div>

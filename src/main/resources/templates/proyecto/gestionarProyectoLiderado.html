@@ -128,7 +128,7 @@
 			<div class="col-6">
 				<div class="form-row">
 					<div class="form-group col">
-						<label for="descripcionP" class="font-weight-bold">Descripción del proyecto: </label>
+						<label id="textareaVerProyecto" for="descripcionP" class="font-weight-bold">Descripción del proyecto: </label>
 						<textarea th:text="${proyecto.descripcion}" name="descripcion"
 							class="form-control disabled bg-light border-0 inputEdicionProyecto" rows="3"
 							disabled="disabled"></textarea>
@@ -197,7 +197,7 @@
 		
 							<!-- POPUP de edición de puesto desde su propia card -->
 		
-							<button type="button" class="btn btn-outline-info btn-sm float-right border-0 botonEdicion" data-toggle="modal" th:attr="data-target='#modalPuestoOcupado-'+${puesto.id}" title="Modificar puesto ocupado" hidden="hidden">
+							<button type="button" class="btn btn-outline-info btn-sm float-right border-0 botonEdicion ml-2" data-toggle="modal" th:attr="data-target='#modalPuestoOcupado-'+${puesto.id}" title="Modificar puesto ocupado" hidden="hidden">
 								<i class="bi bi-pencil-square"></i>
 							</button>
 		
@@ -245,7 +245,9 @@
 									</div>
 								</div>
 							</div>
-		
+							<!-- FIN POPUP de edición de puesto desde su propia card -->
+
+							<img class="imagenNavbar float-right" th:src="|/img/profile/${puesto.ocupante.imagen}|" th:alt="${puesto.ocupante.nombre}" th:title="${puesto.ocupante.nombre}">
 							<h5 class="card-title text-left font-weight-bold" th:text="${puesto.nombre}"></h5>
 							<p class="card-text text-left"
 								th:text="|${puesto.ocupante.nombre} ${puesto.ocupante.apellido1} ${puesto.ocupante.apellido2}|">

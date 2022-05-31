@@ -163,7 +163,7 @@ public class UsuarioController {
 	}
 	@PostMapping("u")
 	public String perfilPost(
-			@RequestParam("nombre") String nick, 
+			@RequestParam("nick") String nick, 
 			@RequestParam("nombre") String nombre, 
 			@RequestParam("apellido1") String apellido1,
 			@RequestParam("apellido2") String apellido2,
@@ -181,26 +181,26 @@ public class UsuarioController {
 		Usuario usuario = usuarioRepository.getById(u.getId());
 		ArrayList<Habilidad> nuevasHabilidades = new ArrayList<Habilidad>();
 		
-		if (u.getNick().compareTo(nick) != 0 || !u.getNick().isBlank()) {
+		if (!nick.isBlank()) {
 			usuario.setNick(nick);
 		}
-		if (u.getNombre().compareTo(nombre) != 0 || !u.getNombre().isBlank()) {
+		if (!nombre.isBlank()) {
 			usuario.setNombre(nombre);
 		}
-		if (u.getApellido1().compareTo(apellido1) != 0 || !u.getApellido1().isBlank()) {
+		if (!apellido1.isBlank()) {
 			usuario.setApellido1(apellido1);
 		}
-		if (u.getApellido2().compareTo(apellido2) != 0 || !u.getApellido2().isBlank()) {
+		if (!apellido2.isBlank()) {
 			usuario.setApellido2(apellido2);
 		}
-		if (u.getEmail().compareTo(email) != 0 || !u.getEmail().isBlank()) {
+		if (!email.isBlank()) {
 			usuario.setEmail(email);
 		}
-		if (u.getTelefono().compareTo(telefono) != 0 || !u.getTelefono().isBlank()) {
+		if (!telefono.isBlank()) {
 			usuario.setTelefono(telefono);
 		}
 		if (!descripcion.isBlank()) {
-			if (u.getDescripcion().compareTo(descripcion) != 0) {
+			if (usuario.getDescripcion().compareTo(descripcion) != 0) {
 				usuario.setDescripcion(descripcion);
 			}
 		} else {
@@ -218,7 +218,7 @@ public class UsuarioController {
 			//Si el usuario tiene la imagen default, se cogerá el nombre de la nueva subida
 			if (usuario.getImagen().compareTo("default.png") == 0) {
 				nombreImagen = nick + "-" + NombreImagenUtils.getFileName(imagen.getOriginalFilename());
-			} else if (usuario.getImagen() == null || usuario.getImagen().isEmpty()) {
+			} else if (usuario.getImagen() == null || usuario.getImagen().isEmpty() || usuario.getImagen().compareTo("null") == 0) {
 				nombreImagen = nick + "-" + NombreImagenUtils.getFileName(imagen.getOriginalFilename());
 			} else {
 				nombreImagen = usuario.getImagen();
