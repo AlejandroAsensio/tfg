@@ -56,9 +56,16 @@ public class HabilidadController {
 			@RequestParam("descripcion") String descripcion
 			) throws DangerException, InfoException {
 		try {
-			habilidadRepository.save(new Habilidad(nombre, descripcion));	
+			if(nombre==null || nombre.equals("") || descripcion == null || descripcion.equals("")) {
+				PRG.error("Error al crear la habilidad");
+			}
+			else {
+				
+				habilidadRepository.save(new Habilidad(nombre, descripcion));	
+			}
+				
 		} catch (Exception e) {
-			PRG.error("La habilidad " + nombre + " ya existe.", "/habilidad/c");
+			PRG.error("La habilidad " + nombre + " ya existe o tiene campos vacios", "/habilidad/c");
 		}
 		PRG.info(nombre + " creado correctamente.", "/habilidad/r");
 //		return "redirect:r";

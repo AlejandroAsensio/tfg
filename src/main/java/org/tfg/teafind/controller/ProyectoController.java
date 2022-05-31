@@ -54,7 +54,10 @@ public class ProyectoController {
 //	}
 
 	@GetMapping("c")
-	public String c(ModelMap m) {
+	public String c(ModelMap m,HttpSession s) throws DangerException {
+		if(s.getAttribute("usuario") == null) {
+			PRG.error("Tienes que iniciar sesion para poder crear proyectos","/");
+		}
 		m.put("view", "/proyecto/c");
 		return "_t/frame";
 	}
