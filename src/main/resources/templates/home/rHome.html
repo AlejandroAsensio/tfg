@@ -28,7 +28,8 @@
 	<div id="proyectos" class="m-3">
 		
 		<div class="card escalar m-3 hiddenCard" th:each="proyecto : ${proyectos}" id="cardsList">
-			<h6 class="card-header text-right text-muted bg-light" th:text="|${proyecto.leader?.nombre} ${proyecto.leader?.apellido1}|"/>
+			<!--<h6 class="card-header text-right text-muted bg-light" th:text="|${proyecto.leader?.nombre} ${proyecto.leader?.apellido1}|"/>-->
+			<img class="imagenNavbar float-right" th:src="|/img/profile/${proyecto.leader.imagen}|" th:alt="${proyecto.leader.nick}" th:title="${proyecto.leader.nick}">
 			<div class="card-body">
 				<h5 class="card-title" th:text="${proyecto.nombre}" />
 				<p class="card-text" th:text="${proyecto.descripcion}"/>
@@ -43,7 +44,8 @@
 		<div class="card-columns" id="cardsGrid">
 			<div class="card escalar m-3 mb-4" style="width: 18rem;" th:each="proyecto : ${proyectos}">
 				<div class="card-body">
-					<p class="disabled text-right text-muted" th:text="${proyecto.leader?.nombre}" />
+					<!--<p class="disabled text-right text-muted" th:text="${proyecto.leader?.nombre}" />-->
+					<img class="imagenNavbar float-right" th:src="|/img/profile/${proyecto.leader.imagen}|" th:alt="${proyecto.leader.nick}" th:title="${proyecto.leader.nick}">
 					<h5 class="card-title" th:text="${proyecto.nombre}"></h5>
 					<p class="card-text" th:text="${proyecto.descripcion}" />
 					<form action="/proyecto/verProyecto">
