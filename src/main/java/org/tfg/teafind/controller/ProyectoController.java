@@ -89,8 +89,6 @@ public class ProyectoController {
 		Proyecto proyecto = proyectoRepository.getById(idProyecto);
 		Usuario usuario = (Usuario) s.getAttribute("usuario");
 		
-		
-		
 		if (usuario != null) {
 			for (Puesto p : proyecto.getPuestos()) {
 				if (p.getOcupante() != null) {
@@ -108,6 +106,8 @@ public class ProyectoController {
 				puestosOcupados++;
 			}
 		}
+
+		
 		
 		m.put("pertenece", pertenece);
 		m.put("proyecto", proyecto);

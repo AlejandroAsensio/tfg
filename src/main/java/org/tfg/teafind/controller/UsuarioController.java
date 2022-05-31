@@ -146,6 +146,122 @@ public class UsuarioController {
 //		PRG.info(nombre + " creado correctamente.", "/usuario/r");
 		return "redirect:r";
 	}
+
+	@GetMapping("u")
+	public String perfil(ModelMap m, HttpSession s) throws DangerException {
+		Usuario usuario = (Usuario) s.getAttribute("usuario");
+		if (usuario == null) {
+			PRG.error("Por favor, inicia sesión para acceder a tu perfil.", "/");
+		}
+		Usuario u = usuarioRepository.getById(usuario.getId());
+		List<Habilidad> habilidades = habilidadRepository.findAll();
+		m.put("usuario", u);
+		m.put("habilidades", habilidades);
+		m.put("view", "/usuario/perfil");
+		
+		return "_t/frame";
+	}
+	@PostMapping("u")
+	public String perfilPost(
+			@RequestParam("nick") String nick, 
+			@RequestParam("nombre") String nombre, 
+			@RequestParam("apellido1") String apellido1,
+			@RequestParam("apellido2") String apellido2,
+			@RequestParam("telefono") String telefono,
+			@RequestParam("email") String email,
+			@RequestParam(value="descripcion", required=false) String descripcion,
+			@RequestParam(value="imagen", required=false) MultipartFile imagen,
+			@RequestParam(value="idsHabilidades[]",required=false) List<Long> idsHabilidades,
+			@RequestParam(value="password",required=false) String password,
+			@RequestParam(value="newPassword",required=false) String newPassword,
+			@RequestParam(value="passwordConfirm",required=false) String passwordConfirm,
+			HttpSession s
+			) throws DangerException, IOException {
+		Usuario u = (Usuario) s.getAttribute("usuario");
+		Usuario usuario = usuarioRepository.getById(u.getId());
+		ArrayList<Habilidad> nuevasHabilidades = new ArrayList<Habilidad>();
+		
+		if (!nick.isBlank()) {
+			usuario.setNick(nick);
+		}
+		if (!nombre.isBlank()) {
+			usuario.setNombre(nombre);
+		}
+		if (!apellido1.isBlank()) {
+			usuario.setApellido1(apellido1);
+		}
+		if (!apellido2.isBlank()) {
+			usuario.setApellido2(apellido2);
+		}
+		if (!email.isBlank()) {
+			usuario.setEmail(email);
+		}
+		if (!telefono.isBlank()) {
+			usuario.setTelefono(telefono);
+		}
+		if (!descripcion.isBlank()) {
+			if (usuario.getDescripcion().compareTo(descripcion) != 0) {
+				usuario.setDescripcion(descripcion);
+			}
+		} else {
+			usuario.setDescripcion("Acerca de " + nick);
+		}
+		
+		//Ruta relativa de almacenamiento
+		Path directorioImagenes = Paths.get("src//main//resources//static//img//profile//");
+		File f = new File(directorioImagenes.toString());
+		f.mkdir();
+		
+		String nombreImagen;
+
+		if (!imagen.isEmpty()) {
+			//Si el usuario tiene la imagen default, se cogerá el nombre de la nueva subida
+			if (usuario.getImagen().compareTo("default.png") == 0) {
+				nombreImagen = nick + "-" + NombreImagenUtils.getFileName(imagen.getOriginalFilename());
+			} else if (usuario.getImagen() == null || usuario.getImagen().isEmpty() || usuario.getImagen().compareTo("null") == 0) {
+				nombreImagen = nick + "-" + NombreImagenUtils.getFileName(imagen.getOriginalFilename());
+			} else {
+				nombreImagen = usuario.getImagen();
+			}
+			
+			//Ruta absoluta
+			String rutaAbsoluta = directorioImagenes.toFile().getAbsolutePath();
+
+			//Bytes de la imagen
+			byte[] bytesImg = imagen.getBytes();
+
+			//Ruta completa que ocupará la imagen, con su nombre
+			Path rutaCompleta = Paths.get(rutaAbsoluta + "/" + nombreImagen);
+
+			//Escritura del fichero
+			Files.write(rutaCompleta, bytesImg);
+			
+			usuario.setImagen(nombreImagen);
+		}
+		
+		if (idsHabilidades!=null) {
+			for (Long idHabilidad:idsHabilidades) {
+				nuevasHabilidades.add(habilidadRepository.getById(idHabilidad));
+			}
+		}
+		usuario.setSabe(nuevasHabilidades);
+		if (password == null || password.compareTo("") != 0) {
+			if (new BCryptPasswordEncoder().matches(password, usuario.getPassword())) {
+				if(newPassword.equals(passwordConfirm)) {
+					usuario.setPassword(newPassword);
+				}
+				else {
+					PRG.error("Las contraseñas no coinciden","/usuario/u");	
+				}
+			}
+			else {
+				PRG.error("Contraseña incorrecta","/usuario/u");
+			}
+		}
+		
+		usuarioRepository.save(usuario);
+		return "redirect:/usuario/u";
+	}
 	
 	
 	/**
@@ -204,99 +320,6 @@ public class UsuarioController {
 		puesto.setOcupante(null);
 		puestoRepository.save(puesto);
 		return "redirect:/proyecto/verProyecto?idProyecto="+puesto.getProyecto().getId();
-	}
-	
-	@GetMapping("u")
-	public String perfil(ModelMap m, HttpSession s) throws DangerException {
-		Usuario usuario = (Usuario) s.getAttribute("usuario");
-		if (usuario == null) {
-			PRG.error("Por favor, inicia sesión para acceder a tu perfil.", "/");
-		}
-		Usuario u = usuarioRepository.getById(usuario.getId());
-		List<Habilidad> habilidades = habilidadRepository.findAll();
-		m.put("usuario", u);
-		m.put("habilidades", habilidades);
-		m.put("view", "/usuario/perfil");
-		
-		return "_t/frame";
-	}
-	@PostMapping("u")
-	public String perfilPost(
-			@RequestParam("nombre") String nick, 
-			@RequestParam("nombre") String nombre, 
-			@RequestParam("apellido1") String apellido1,
-			@RequestParam("apellido2") String apellido2,
-			@RequestParam("telefono") String telefono,
-			@RequestParam("email") String email,
-			@RequestParam("descripcion") String descripcion,
-			@RequestParam("imagen") MultipartFile imagen,
-			@RequestParam(value="idsHabilidades[]",required=false) List<Long> idsHabilidades,
-			@RequestParam(value="password",required=false) String password,
-			@RequestParam(value="newPassword",required=false) String newPassword,
-			@RequestParam(value="passwordConfirm",required=false) String passwordConfirm,
-			HttpSession s
-			) throws DangerException, IOException {
-		Usuario u = (Usuario) s.getAttribute("usuario");
-		Usuario usuario = usuarioRepository.getById(u.getId());
-		ArrayList<Habilidad> nuevasHabilidades = new ArrayList<Habilidad>();
-		
-		usuario.setNick(nick);
-		usuario.setNombre(nombre);
-		usuario.setApellido1(apellido1);
-		usuario.setApellido2(apellido2);
-		usuario.setEmail(email);
-		usuario.setTelefono(telefono);
-		usuario.setDescripcion(descripcion);
-		
-		
-		//Ruta relativa de almacenamiento
-		Path directorioImagenes = Paths.get("src//main//resources//static//img//profile//");
-		File f = new File(directorioImagenes.toString());
-		f.mkdir();
-		
-		if (!imagen.isEmpty()) {
-			String nombreImagen = usuario.getImagen();
-			
-			//Ruta absoluta
-			String rutaAbsoluta = directorioImagenes.toFile().getAbsolutePath();
-
-			//Bytes de la imagen
-			byte[] bytesImg = imagen.getBytes();
-
-			//Ruta completa que ocupará la imagen, con su nombre
-			Path rutaCompleta = Paths.get(rutaAbsoluta + "/" + nombreImagen);
-
-			//Escritura del fichero
-			Files.write(rutaCompleta, bytesImg);
-			
-			usuario.setImagen(nombreImagen);
-		}
-		
-		if (idsHabilidades!=null) {
-			for (Long idHabilidad:idsHabilidades) {
-				nuevasHabilidades.add(habilidadRepository.getById(idHabilidad));
-			}
-		}
-		usuario.setSabe(nuevasHabilidades);
-		if (password == null || password.compareTo("") == 0) {
-			
-		} else {
-			if (new BCryptPasswordEncoder().matches(password, usuario.getPassword())) {
-				if(newPassword.equals(passwordConfirm)) {
-					usuario.setPassword(newPassword);
-				}
-				else {
-					PRG.error("Las contraseñas no coinciden","/usuario/u");	
-				}
-			}
-			else {
-				PRG.error("Contraseña incorrecta","/usuario/u");
-			}
-		}
-		
-		usuarioRepository.save(usuario);
-		
-		return "redirect:/usuario/u";
 	}
 
 }
