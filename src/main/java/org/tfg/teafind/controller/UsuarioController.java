@@ -68,8 +68,12 @@ public class UsuarioController {
 	}
 	
 	@GetMapping("c")
-	public String c(ModelMap m) {
+	public String c(ModelMap m,HttpSession s) throws DangerException {
+		if(s.getAttribute("usuario")!=null) {
+			PRG.error("No puedes registrar un usuario nuevo con la sesión iniciada","/");
+		}
 		List<Habilidad> habilidades = habilidadRepository.findAll();
+		
 		m.put("habilidades", habilidades);
 		m.put("view", "/usuario/c");
 		return "_t/frame";
