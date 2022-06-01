@@ -51,8 +51,11 @@ public class PuestoController {
 	public String c(
 			ModelMap m,
 			HttpSession s,
-			@RequestParam ("nombreProyecto") String nombreProyecto
+			@RequestParam (value="nombreProyecto",required=false) String nombreProyecto
 			) throws DangerException {
+		if (nombreProyecto == null || nombreProyecto.equals("")) {
+			PRG.error("Error","/");
+		}
 		Proyecto proyecto = proyectoRepository.getByNombre(nombreProyecto);
 		Usuario leader = (Usuario) s.getAttribute("usuario");
 		
