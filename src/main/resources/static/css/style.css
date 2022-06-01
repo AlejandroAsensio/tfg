@@ -1,13 +1,24 @@
 :root {
-    --bg-main: #f8f8fb;
-    --jumbotron: #e9ecef;
+    --blanco: #fff;
+    --off: #F8F8FB;
+    --gris: #B8CCD4;
+    --negro: #343A40;
+    --main-light: #97dce4;
+    --main: #00AFC1;
+    --main-dark: #007582;
+    --atencion: #FFD124;
+    --enfasis: #C21372;
+    --enfasis-light: #ffbbe0;
+
+    --success: #1eb690;
+    --danger: #dc3567;
 }
 
 /*----------------------BODY---------------------
 ------------------------------------------------*/
 html, body {
     font-family: 'Lato', sans-serif;
-    background-color: var(--bg-main);
+    background-color: var(--off);
 }
 ::-moz-selection { /* Code for Firefox */
   color: #f8f8fb;
@@ -131,14 +142,6 @@ html, body {
 	object-position: center center;
     transition: all 0.4 ease-in;
 }
-/*.imagenNavbar.imagenLiderLista {
-	width: 30px;
-	height: 30px;
-	object-fit: cover;
-	border-radius: 50%;
-	object-position: center center;
-    transition: all 0.4 ease-in;
-}*/
 .imgPerfilMenu {
     height: 64px;
     width: 64px;
@@ -170,14 +173,27 @@ html, body {
 /*---------------------LOGIN---------------------
 ------------------------------------------------*/
 .menuLogin {
-    /*
-    background: linear-gradient(-45deg, #ee7752, #e73c7e, #23a6d5, #23d5ab);
-    */
-    background: linear-gradient(-45deg, #fff, #c0fdf3, #aed7f3, #ddacf0);
+    background: linear-gradient(-45deg, var(--main), var(--main-dark), var(--main-light), var(--negro));
 	background-size: 400% 400%;
-	animation: gradient 25s ease infinite;
+	animation: gradient 25s ease-in-out infinite;
+}
+.botonLogin {
+    background: linear-gradient(-45deg, var(--main), var(--main-dark), var(--main-light), var(--negro));
+	background-size: 600% 600%;
+	animation: gradient-inverse 25s ease-in-out infinite;
 }
 @keyframes gradient {
+	0% {
+		background-position: 100% 50%;
+	}
+	50% {
+		background-position: 0% 50%;
+	}
+	100% {
+		background-position: 100% 50%;
+	}
+}
+@keyframes gradient-inverse {
 	0% {
 		background-position: 0% 50%;
 	}
@@ -244,7 +260,7 @@ html, body {
 	background-color: #E7D0FA;
 }
 .cartaJumboPropios {
-	background-color: var(--jumbotron);
+	background-color: var(--gris);
 }
 
 /*-----------------Ver Proyecto-----------------
@@ -304,21 +320,4 @@ html, body {
 ------------------------------------------------*/
 .logoFooter {
 	height: 24px;
-}
-
-/*---------Sobrescritura Bootstrap---------
-------------------------------------------------*/
-.btn {
-    border-radius: .65rem;
-}
-.btn-group-lg>.btn,
-.btn-lg {
-    border-radius: .7rem;
-}
-.btn-group-sm>.btn,
-.btn-sm {
-    border-radius: .6rem;
-}
-.dropdown-menu {
-    border-radius: .6rem;
 }
