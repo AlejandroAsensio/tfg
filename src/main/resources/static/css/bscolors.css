@@ -6,6 +6,7 @@
     --main-light: #97dce4;
     --main: #00AFC1;
     --main-dark: #007582;
+    --main-darkest: #00474F;
     --atencion: #FFD124;
     --enfasis: #C21372;
     --enfasis-light: #ffbbe0;
@@ -23,6 +24,7 @@
 .tx-main-light { color: var(--main-light);}
 .tx-main { color: var(--main);}
 .tx-main-dark { color: var(--main-dark);}
+.tx-main-darkest { color: var(--main-dark);}
 .tx-atencion { color: var(--atencion);}
 .tx-enfasis { color: var(--enfasis);}
 .tx-enfasis-light { color: var(--enfasis-light);}
@@ -35,6 +37,7 @@
 .bgc-main-light { background-color: var(--main-light);}
 .bgc-main { background-color: var(--main);}
 .bgc-main-dark { background-color: var(--main-dark);}
+.bgc-main-darkest { background-color: var(--main-dark);}
 .bgc-atencion { background-color: var(--atencion);}
 .bgc-enfasis { background-color: var(--enfasis);}
 .bgc-enfasis-light { background-color: var(--enfasis-light);}
