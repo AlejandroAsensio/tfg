@@ -6,7 +6,8 @@
     --main-light: #97dce4;
     --main: #00AFC1;
     --main-dark: #007582;
-    --main-darkest: #00474F;
+    --main-darker: #00474F;
+    --main-darkest: #002e33;
     --atencion: #FFD124;
     --enfasis: #C21372;
     --enfasis-light: #ffbbe0;
@@ -24,7 +25,8 @@
 .tx-main-light { color: var(--main-light);}
 .tx-main { color: var(--main);}
 .tx-main-dark { color: var(--main-dark);}
-.tx-main-darkest { color: var(--main-dark);}
+.tx-main-darkest { color: var(--main-darker);}
+.tx-main-darkest { color: var(--main-darkest);}
 .tx-atencion { color: var(--atencion);}
 .tx-enfasis { color: var(--enfasis);}
 .tx-enfasis-light { color: var(--enfasis-light);}
@@ -37,7 +39,8 @@
 .bgc-main-light { background-color: var(--main-light);}
 .bgc-main { background-color: var(--main);}
 .bgc-main-dark { background-color: var(--main-dark);}
-.bgc-main-darkest { background-color: var(--main-dark);}
+.bgc-main-darkest { background-color: var(--main-darker);}
+.bgc-main-darkest { background-color: var(--main-darkest);}
 .bgc-atencion { background-color: var(--atencion);}
 .bgc-enfasis { background-color: var(--enfasis);}
 .bgc-enfasis-light { background-color: var(--enfasis-light);}
@@ -127,4 +130,32 @@
 .btn-outline-info:not(:disabled):not(.disabled):active:focus,
 .show>.btn-outline-info.dropdown-toggle:focus {
     box-shadow: 0 0 0 .2rem rgba(23, 162, 184, .5)
+}
+
+/***************btn-outline-info******************/
+.custom-control-input:focus~.custom-control-label::before {
+    border-color: var(--main-darkest) !important;
+    box-shadow: 0 0 0 0 rgba(255, 47, 69, 0.25) !important;
+}
+.custom-control-input:checked~.custom-control-label::before {
+    border-color: var(--main-light) !important;
+    background-color: var(--main-dark) !important;
+}
+.custom-control-input:active~.custom-control-label::before {
+    background-color:  var(--main-dark) !important;
+    border-color: var(--main-light) !important;
+}
+.custom-control-input:focus:not(:checked)~.custom-control-label::before {
+    border-color: var(--main-light) !important;
+}
+.custom-control-input-green:not(:disabled):active~.custom-control-label::before {
+    background-color: var(--main-dark) !important;
+    border-color: var(--main-light) !important;
+}
+.custom-switch .custom-control-label::after {
+    background-color: var(--main);
+}
+.custom-switch .custom-control-input:disabled:checked~.custom-control-label::before {
+    background-color: rgb(0, 71, 79, rgba(23, 162, 184, .5));
+    border: none;
 }

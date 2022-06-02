@@ -41,7 +41,6 @@ public class HomeController {
 		List<Proyecto> proyectos = null;
 		
 		if(nombre!=null) {
-			
 			proyectos = proyectoRepository.findByNombreContainingIgnoreCase(nombre);
 		}
 		else {

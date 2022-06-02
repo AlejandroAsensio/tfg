@@ -41,8 +41,8 @@
         	
             <!--INICIO DE SESIÓN-->
 			<li class="nav-item dropdown mr-auto" th:if="${session.usuario==null}">
-				<a class="nav-link" data-toggle="dropdown" href="#" aria-haspopup="true" aria-expanded="false" role="button">
-    				Iniciar sesión <i class="bi bi-box-arrow-in-right text-success"></i>
+				<a class="nav-link text-light" data-toggle="dropdown" href="#" aria-haspopup="true" aria-expanded="false" role="button">
+    				Iniciar sesión <i class="bi bi-box-arrow-in-right tx-good"></i>
     			</a>
 				<div class="dropdown-menu dropdown-menu-right menuLogin">
 					<form class="px-4 pt-3 pb-2" action="/login" method="POST">
@@ -84,24 +84,24 @@
 					</a>
 					<a class="dropdown-item d-flex justify-content-between py-2 mt-2" href="/usuario/mis_proyectos">
 						<span> Mis proyectos </span>
-						<i class="bi bi-briefcase text-primary"></i>
+						<i class="bi bi-briefcase tx-main"></i>
 					</a>
 
 					<div class="dropdown-divider"></div>
 
 					<a class="dropdown-item d-flex justify-content-between mt-2 py-2" href="#">
 						<span>Acerca de</span>
-						<i class="bi bi-info-circle text-warning"></i>
+						<i class="bi bi-info-circle tx-atencion"></i>
 					</a>
 
 					<a class="dropdown-item d-flex justify-content-between py-2" href="#">
 						<span>Ayuda</span>
-						<i class="bi bi-question-circle text-success"></i>
+						<i class="bi bi-question-circle tx-good"></i>
 					</a>
 
 					<a class="dropdown-item d-flex justify-content-between mt-2 mb-2 py-2" href="/logout">
 						<span>Cerrar sesión</span>
-						<i class="bi bi-box-arrow-right text-danger"></i>
+						<i class="bi bi-box-arrow-right tx-bad"></i>
 					</a>
 				</div>
 			</li>

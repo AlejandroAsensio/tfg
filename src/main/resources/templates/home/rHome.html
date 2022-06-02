@@ -12,49 +12,67 @@
 	
 	<div class="row ml-3 d-flex justify-content-between">
 		<h3 class="font-weight-light align-self-center">Lista de Proyectos</h3>
-		<div class="btn-group btn-group-sm mr-3" role="group" aria-label="Basic example">
-			<button type="button" class="btn btn-secondary btn-sm" onclick="layoutProjectsGrid();">
-				<i class="bi bi-grid-3x2-gap text-light p-2"></i> Grid
-			</button>
-			<button type="button" class="btn btn-secondary btn-sm" onclick="layoutProjectsList();">
-				<i class="bi bi-view-stacked text-light p-2"></i> Lista
-			</button>
+
+		<div class="d-flex justify-content-end">
+			<div id="finalizadosSwitch" class="custom-control custom-switch finalizados align-self-center mr-3">
+				<input type="checkbox" class="custom-control-input" id="customSwitch1">
+				<label class="custom-control-label" for="customSwitch1">Finalizados</label>
+			</div>
+			<div>
+				<ul class="nav nav-pills" id="pills-tab" role="tablist">
+					<li class="nav-item" role="presentation">
+						<a class="nav-link active" id="pills-home-tab" data-toggle="pill" href="#grid" role="tab"
+							aria-controls="pills-home" aria-selected="true"><i class="bi bi-grid-3x2-gap"></i></a>
+					</li>
+					<li class="nav-item" role="presentation">
+						<a class="nav-link" id="pills-profile-tab" data-toggle="pill" href="#list" role="tab"
+							aria-controls="pills-profile" aria-selected="false"><i class="bi bi-view-stacked"></i></a>
+					</li>
+				</ul>
+			</div>
 		</div>
+
 	</div>
 	
 	<hr class="mb-3" />
-	
-	
-	<div id="proyectos" class="m-3">
-		<th:block th:each="proyecto : ${proyectos}">
-		<div  th:if="${{!proyecto.isEnded()}}" class="card escalar m-3 hiddenCard"  id="cardsList">
-			<!--<h6 class="card-header text-right text-muted bg-light" th:text="|${proyecto.leader?.nombre} ${proyecto.leader?.apellido1}|"/>-->
-			<img class="imagenNavbar float-right m-3" th:src="|/img/profile/${proyecto.leader.imagen}|" th:alt="${proyecto.leader.nick}" th:title="${proyecto.leader.nick}">
-			<div class="card-body">
-				<h5 class="card-title" th:text="${proyecto.nombre}" />
-				<p class="card-text" th:text="${proyecto.descripcion}"/>
-				<form action="/proyecto/verProyecto">
-					<input type="hidden" name="idProyecto" th:value="${proyecto.id}"/>
-					<input class="btn btn-info" type="submit" value="Más información"/>
-				</form>
+
+	<div class="tab-content" id="proyectos">
+		<div class="tab-pane fade show active" id="grid" role="tabpanel" aria-labelledby="pills-home-tab">
+			<div class="card-columns" id="cardsGrid">
+				<th:block th:each="proyecto : ${proyectos}">
+					<div th:class="${proyecto.isEnded ? 'proyectoFinalizado card escalar m-3 mb-4' : 'card escalar m-3 mb-4'}" style="width: 18rem;">
+						<div class="card-body">
+							<img class="imagenNavbar float-right" th:src="|/img/profile/${proyecto.leader.imagen}|" th:alt="${proyecto.leader.nick}" th:title="${proyecto.leader.nick}">
+							<h5 class="card-title" th:text="${proyecto.nombre}"></h5>
+							<p class="card-text" th:text="${proyecto.descripcion}"></p>
+							<form action="/proyecto/verProyecto">
+								<input type="hidden" name="idProyecto" th:value="${proyecto.id}"/>
+								<input class="btn btn-info text-right" type="submit" value="Más información"/>
+							</form>
+						</div>	
+					</div>
+				</th:block>
 			</div>
 		</div>
-		</th:block>
-			
-		<div class="card-columns" id="cardsGrid">
-		<th:block th:each="proyecto : ${proyectos}">
-			<div class="card escalar m-3 mb-4" style="width: 18rem;" th:if="${{!proyecto.isEnded()}}">
-				<div class="card-body">
-					<!--<p class="disabled text-right text-muted" th:text="${proyecto.leader?.nombre}" />-->
-					<img class="imagenNavbar float-right" th:src="|/img/profile/${proyecto.leader.imagen}|" th:alt="${proyecto.leader.nick}" th:title="${proyecto.leader.nick}">
-					<h5 class="card-title" th:text="${proyecto.nombre}"></h5>
-					<p class="card-text" th:text="${proyecto.descripcion}" />
-					<form action="/proyecto/verProyecto">
-						<input type="hidden" name="idProyecto" th:value="${proyecto.id}"/>
-						<input class="btn btn-info text-right" type="submit" value="Más información"/>
-					</form>
-				</div>	
-			</div>
+
+		<div class="tab-pane fade" id="list" role="tabpanel" aria-labelledby="pills-profile-tab">
+			<th:block th:each="proyecto : ${proyectos}">
+				<div th:class="${proyecto.isEnded ? 'proyectoFinalizado card escalar m-3' : 'card escalar m-3' }" id="cardsList">
+					<div class="card-body">
+						<label class="float-right">
+							<th:block th:text="${proyecto.leader.nick}"></th:block>
+							<img class="imagenNavbar ml-2" th:src="|/img/profile/${proyecto.leader.imagen}|" th:alt="${proyecto.leader.nick}" th:title="${proyecto.leader.nick}">
+						</label>
+						
+						<h5 class="card-title" th:text="${proyecto.nombre}"></h5>
+						<p class="card-text" th:text="${proyecto.descripcion}"></p>
+						<form action="/proyecto/verProyecto">
+							<input type="hidden" name="idProyecto" th:value="${proyecto.id}"/>
+							<input class="btn btn-info" type="submit" value="Más información"/>
+						</form>
+					</div>
+				</div>
+			</th:block>
 		</div>
 		
 	</div>

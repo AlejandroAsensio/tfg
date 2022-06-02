@@ -6,12 +6,14 @@
     --main-light: #97dce4;
     --main: #00AFC1;
     --main-dark: #007582;
+    --main-darker: #00474F;
+    --main-darkest: #002e33;
     --atencion: #FFD124;
     --enfasis: #C21372;
     --enfasis-light: #ffbbe0;
 
-    --good: #1eb690;
-    --bad: #dc3567;
+    --success: #1eb690;
+    --danger: #dc3567;
 }
 
 /*----------------------BODY---------------------
@@ -102,7 +104,7 @@ html, body {
     transition-duration: 0.3s;
 }
 .wrapper .button .icon {
-    color: #30A0BA;
+    color: var(--main);
     display: inline-block;
     height: 30px;
     width: 30px;
@@ -112,7 +114,7 @@ html, body {
     line-height: 30px;
 }
 .wrapper .button:hover .icon {
-    background: #30A0BA;
+    background: var(--main);
     transition: all 0.3s ease-out;
 }
 .wrapper .button .icon i {
@@ -124,7 +126,7 @@ html, body {
     color: #fff;
 }
 .wrapper .button span {
-	color: #30A0BA;
+	color: var(--main-dark);
     font-size: 15px;
     font-weight: 500;
     line-height: 30px;
@@ -172,6 +174,9 @@ html, body {
 
 /*---------------------LOGIN---------------------
 ------------------------------------------------*/
+.texto-login {
+    color: var(--main-light);
+}
 .menuLogin {
     background: linear-gradient(-45deg, var(--main), var(--main-dark), var(--main-light), var(--negro));
 	background-size: 400% 400%;
@@ -216,7 +221,8 @@ html, body {
 
 /*-------------------Proyectos-------------------
 ------------------------------------------------*/
-.hiddenCard {
+.proyectoFinalizado {
+    background-color: var(--enfasis-light);
     display: none;
 }
 .card.escalar {

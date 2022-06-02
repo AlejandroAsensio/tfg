@@ -152,7 +152,7 @@ public class UsuarioController {
 			}
 			
 			usuarioRepository.save(usuario);
-			mailService.enviarEmail(email, "Bienvenido a Teafind " + nick, nombre);
+			mailService.enviarEmailBienvenida(email, nick, nombre);
 		} catch (Exception e) {
 			PRG.error("El número de móvil/email ya están registrados.", "/usuario/c");
 		}
@@ -162,58 +162,62 @@ public class UsuarioController {
 	@GetMapping("verificar")
 	public String verificar(ModelMap m,HttpSession s) throws DangerException {
 
-		
-		
 		if(s.getAttribute("usuario") == null) {
-			PRG.error("Inicia sesión antes","/login");
+			PRG.error("Por favor, inicia sesión para acceder aquí.","/login");
 		}
 		Usuario u = (Usuario) s.getAttribute("usuario");
 		if(u.isVerified()) {
-			PRG.error("Tu cuenta ya está verificada","/");
+			PRG.error("Tu cuenta ya está verificada.","/");
 		}
 		
 		m.put("view", "/usuario/verificar");
 		return "_t/frame";
 	}
+
 	@PostMapping("sendEmail")
 	public String enviarEmail(HttpSession s) throws DangerException, MessagingException {
 		
 		Usuario usuario = (Usuario) s.getAttribute("usuario");
-		if(s.getAttribute("usuario") == null) {
-			PRG.error("Inicia sesión antes","/login");
+
+		if (s.getAttribute("usuario") == null) {
+			PRG.error("Por favor, inicia sesión para acceder aquí.","/login");
+		}
+
+		if (usuario.isVerified()) {
+			PRG.error("Tu cuenta ya está verificada.","/login");
 		}
 		
 		int nToken = (int) (Math.random() * 90000+ 10000);
 		s.setAttribute("nToken", nToken);
-		mailService.enviarEmail(usuario.getEmail(), nToken, usuario.getNombre());
+
+		mailService.enviarEmailVerificacion(usuario.getEmail(), nToken);
 		return "redirect:/usuario/verificar";
 	}
+
 	@PostMapping("verificar")
 	public String verificarPost(@RequestParam ("numero") int numero,
 			HttpSession s) throws DangerException {
-		if(s.getAttribute("usuario") == null) {
-			PRG.error("Inicia sesión antes","/login");
+		if (s.getAttribute("usuario") == null) {
+			PRG.error("Por favor, inicia sesión para acceder aquí.","/login");
 		}
-		
 		
 		Usuario u = (Usuario) s.getAttribute("usuario");
 		int nToken = (int) s.getAttribute("nToken");
+		String redirect = null;
 		
-		if(u.isVerified()) {
-			PRG.error("Tu cuenta ya está verificada","/");
+		if (u.isVerified()) {
+			PRG.error("Tu cuenta ya está verificada.","/");
 		}
 		
-		if(numero == nToken) {
+		if (numero == nToken) {
 			u.setVerified(true);
 			usuarioRepository.save(u);
 			s.invalidate();
-			return "redirect:/login";
+			redirect = "redirect:/login";
+		} else {
+			redirect = "redirect:/usuario/verificar";
 		}
-		else {
-			return "redirect:/usuario/verificar";
-		}
-		
-		
+		return redirect;
 	}
 
 	@GetMapping("u")
@@ -230,6 +234,7 @@ public class UsuarioController {
 		
 		return "_t/frame";
 	}
+
 	@PostMapping("u")
 	public String perfilPost(
 			@RequestParam("nick") String nick, 

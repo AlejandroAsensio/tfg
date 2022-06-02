@@ -21,13 +21,11 @@ function edicionGestionProyecto() {
 	if (activo) {
 		$(".escalar").each(function() {
 			$(this).addClass("escalarOff").removeClass("escalar");
-			console.log("si");
 		})
 		activo = false;
 	} else {
 		$(".escalarOff").each(function() {
 			$(this).addClass("escalar").removeClass("escalarOff");
-			console.log("no");
 		})
 		activo = true;
 	}

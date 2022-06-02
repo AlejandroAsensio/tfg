@@ -1,9 +1,11 @@
-function layoutProjectsGrid() {
-    $("div#cardsList").hide();
-    $("div#cardsGrid").fadeIn(650);
-}
-
-function layoutProjectsList() {
-    $("div#cardsGrid").hide();
-    $("div#cardsList").fadeIn(650);
-}
+$(document).ready(function() {
+    $("div#finalizadosSwitch").on("change", function() {
+        $(".proyectoFinalizado").each(function (i){
+            console.log("Hiden nº " + i)
+            $(this).prop("hidden", function(i, v) {
+                console.log("Toggle -" + v)
+                return !v;
+            });
+        })
+    })
+})
