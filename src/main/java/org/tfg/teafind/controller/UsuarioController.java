@@ -9,6 +9,7 @@ import java.nio.file.Paths;
 import java.util.ArrayList;
 import java.util.List;
 
+import javax.mail.MessagingException;
 import javax.servlet.http.HttpSession;
 
 import org.jboss.logging.Logger;
@@ -151,7 +152,7 @@ public class UsuarioController {
 			}
 			
 			usuarioRepository.save(usuario);
-			//mailService.enviarEmail(email, "Bienvenido a Teafind " + nick, nombre);
+			mailService.enviarEmail(email, "Bienvenido a Teafind " + nick, nombre);
 		} catch (Exception e) {
 			PRG.error("El número de móvil/email ya están registrados.", "/usuario/c");
 		}
@@ -175,15 +176,16 @@ public class UsuarioController {
 		return "_t/frame";
 	}
 	@PostMapping("sendEmail")
-	public String enviarEmail(HttpSession s) throws DangerException {
+	public String enviarEmail(HttpSession s) throws DangerException, MessagingException {
 		
+		Usuario usuario = (Usuario) s.getAttribute("usuario");
 		if(s.getAttribute("usuario") == null) {
 			PRG.error("Inicia sesión antes","/login");
 		}
 		
 		int nToken = (int) (Math.random() * 90000+ 10000);
 		s.setAttribute("nToken", nToken);
-		//mailService.enviarEmail(email, "Bienvenido a Teafind " + nick, nombre);
+		mailService.enviarEmail(usuario.getEmail(), nToken, usuario.getNombre());
 		return "redirect:/usuario/verificar";
 	}
 	@PostMapping("verificar")
