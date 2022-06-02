@@ -2,6 +2,8 @@ package org.tfg.teafind.controller;
 
 import java.util.List;
 
+import javax.servlet.http.HttpSession;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.ModelMap;
@@ -34,8 +36,16 @@ public class HabilidadController {
 	
 	@GetMapping("r")
 	public String r(
-			ModelMap m
-			) {
+			ModelMap m,
+			HttpSession s
+			) throws DangerException {
+		Usuario u = null;
+		if(s.getAttribute("usuario")!=null) {
+			u = (Usuario) s.getAttribute("usuario");
+		}
+		if(s.getAttribute("usuario")==null || !u.isAdmin()) {
+			PRG.error("No tienes permiso para acceder","/");
+		}
 		List<Habilidad> habilidades = habilidadRepository.findAll();
 		
 		m.put("habilidades", habilidades);
@@ -44,7 +54,14 @@ public class HabilidadController {
 	}
 	
 	@GetMapping("c")
-	public String c(ModelMap m) {
+	public String c(ModelMap m,HttpSession s) throws DangerException {
+		Usuario u = null;
+		if(s.getAttribute("usuario")!=null) {
+			u = (Usuario) s.getAttribute("usuario");
+		}
+		if(s.getAttribute("usuario")==null || !u.isAdmin()) {
+			PRG.error("No tienes permiso para acceder","/");
+		}
 		m.put("view", "/habilidad/c");
 		return "_t/frame";
 	}
@@ -73,8 +90,15 @@ public class HabilidadController {
 	@GetMapping("u")
 	public String u(
 			@RequestParam("idHabilidad") Long idHabilidad,
-			ModelMap m
-			) {
+			ModelMap m,HttpSession s
+			) throws DangerException {
+		Usuario u = null;
+		if(s.getAttribute("usuario")!=null) {
+			u = (Usuario) s.getAttribute("usuario");
+		}
+		if(s.getAttribute("usuario")==null || !u.isAdmin()) {
+			PRG.error("No tienes permiso para acceder","/");
+		}
 		m.put("habilidad", habilidadRepository.getById(idHabilidad));
 		m.put("view", "habilidad/u");
 		return "_t/frame";

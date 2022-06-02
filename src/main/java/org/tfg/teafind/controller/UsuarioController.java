@@ -58,8 +58,16 @@ public class UsuarioController {
 	
 	@GetMapping("r")
 	public String r(
-			ModelMap m
-			) {
+			ModelMap m,
+			HttpSession s
+			) throws DangerException {
+		Usuario u = null;
+		if(s.getAttribute("usuario")!=null) {
+			u = (Usuario) s.getAttribute("usuario");
+		}
+		if(s.getAttribute("usuario")==null || !u.isAdmin()) {
+			PRG.error("No tienes permiso para acceder","/");
+		}
 		List<Usuario> usuarios = usuarioRepository.findAll();
 		
 		m.put("usuarios", usuarios);
@@ -147,7 +155,7 @@ public class UsuarioController {
 			PRG.error("El número de móvil/email ya están registrados.", "/usuario/c");
 		}
 //		PRG.info(nombre + " creado correctamente.", "/usuario/r");
-		return "redirect:r";
+		return "redirect:/";
 	}
 
 	@GetMapping("u")

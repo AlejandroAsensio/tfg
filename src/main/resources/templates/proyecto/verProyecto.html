@@ -190,7 +190,7 @@
 						    <div class="d-inline justify-content-end pb-2 px-2">
 							    <span th:each="habilidad : ${puesto.requiere}" th:text="${habilidad.nombre}" class="badge badge-pill badge-primary mx-1"></span>
 							</div>
-					    	<form th:name="|unir${puesto.id}|" th:if="${puesto.ocupante==null && !pertenece && session.usuario!=null && proyecto.leader.id != session.usuario.id}" action="/usuario/unir" method="POST">
+					    	<form th:name="|unir${puesto.id}|" th:if="${puesto.ocupante==null && !pertenece && session.usuario!=null && proyecto.leader.id != session.usuario.id && !proyecto.isEnded()} " action="/usuario/unir" method="POST">
 					    		<div class="d-flex justify-content-end">
 									<input type="hidden" name="idPuesto" th:value="${puesto.id}"/>
 									<input type="hidden" name="idProyecto" th:value="${proyecto.id}"/>

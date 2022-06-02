@@ -97,6 +97,10 @@ public class Proyecto {
 	public void setPuestos(Collection<Puesto> puestos) {
 		this.puestos = puestos;
 	}
+	public boolean isEnded() {
+		
+		return this.getFin().isBefore(LocalDate.now());
+	}
 	
  
 }
