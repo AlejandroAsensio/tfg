@@ -1,0 +1,20 @@
+<div class="container">
+	<div class="row m-3">
+		<h2 class="display-4">Verificar Cuenta</h2>
+	</div>
+</div>	
+
+<div class="container rounded p-4">
+	
+	<form action="/usuario/verificar" method="POST">
+	<!--<input type="number" th:value="${session.nToken}"/>-->
+	<label th:text="${session.nToken}"/>
+	<input type="number" name="numero"/> 
+	<input type="submit" value="Verificar Código"/>
+	</form>
+	
+	<form action="/usuario/sendEmail" method="POST">
+	<input type="submit" value="Enviar Código"/>
+	</form>
+		
+</div>

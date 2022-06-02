@@ -39,6 +39,8 @@ public class Usuario {
 	private String imagen;
 	private boolean admin;
 	
+	private boolean verified;
+	
 	@ManyToMany
 	private Collection<Habilidad> sabe;
 	
@@ -53,7 +55,7 @@ public class Usuario {
 		this.sabe = new ArrayList<Habilidad>();
 		this.ocupa = new ArrayList<Puesto>();
 	}
-	public Usuario(String nick, String nombre, String apellido1, String apellido2, String telefono, String email, String password, boolean admin) {
+	public Usuario(String nick, String nombre, String apellido1, String apellido2, String telefono, String email, String password, boolean admin, boolean verified) {
 		this.nick = nick;
 		this.nombre = nombre;
 		this.apellido1 = apellido1;
@@ -62,8 +64,15 @@ public class Usuario {
 		this.email = email;
 		this.password = encriptar(password);
 		this.admin = admin;
+		this.verified = verified;
 		this.sabe = new ArrayList<Habilidad>();
 		this.ocupa = new ArrayList<Puesto>();
+	}
+	public boolean isVerified() {
+		return verified;
+	}
+	public void setVerified(boolean verified) {
+		this.verified = verified;
 	}
 	public Usuario(String nick, String nombre, String apellido1, String apellido2, String telefono, String email, String password, String imagen,
 			boolean admin) {
