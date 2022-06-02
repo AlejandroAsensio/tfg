@@ -223,7 +223,6 @@ html, body {
 ------------------------------------------------*/
 .proyectoFinalizado {
     background-color: var(--enfasis-light);
-    display: none;
 }
 .card.escalar {
     transition-duration: 300ms;
@@ -232,8 +231,8 @@ html, body {
 	/*-ms-transform: scale(1.01);
 	-webkit-transform: scale(1.01); */
 	transform: translate(-6px, -5px);
-	-webkit-box-shadow: -6px 5px 0px 0px #30A0BA; 
-	box-shadow: 6px 5px 0px 0px #30A0BA;
+	-webkit-box-shadow: -6px 5px 0px 0px var(--main-dark); 
+	box-shadow: 6px 5px 0px 0px var(--main-dark);
     transition-duration: 150ms;
 }
 .sinPuestos {
