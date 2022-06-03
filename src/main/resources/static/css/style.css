@@ -46,13 +46,13 @@ html, body {
 }
 /* Handle */
 ::-webkit-scrollbar-thumb {
-  background: rgba(97, 140, 180, 0.979); 
+  background: var(--main); 
   border-radius: 12px;
-  border: 2px solid var(--bg-main);
+  border: 2px solid var(--off);
 }
 /* Handle on hover */
 ::-webkit-scrollbar-thumb:hover {
-  background: rgba(48, 101, 150, 0.979); 
+  background: var(--main-dark); 
 }
 /* Handle on active */
 ::-webkit-scrollbar-thumb:active {

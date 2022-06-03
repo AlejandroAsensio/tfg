@@ -374,7 +374,7 @@ public class UsuarioController {
 		
 		for(Habilidad h: puesto.getRequiere()) {
 			if(!usuario.getSabe().contains(h)) {
-				PRG.error("No tienes los conocimientos necesarios para poder unirte a este puesto","javascript:history.back()");
+				PRG.error("No tienes los conocimientos necesarios para poder unirte a este puesto.","javascript:history.back()");
 			}
 		}
 		

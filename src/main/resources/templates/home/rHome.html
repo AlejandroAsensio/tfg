@@ -40,15 +40,18 @@
 		<div class="tab-pane fade show active" id="grid" role="tabpanel" aria-labelledby="pills-home-tab">
 			<div class="card-columns" id="cardsGrid">
 				<th:block th:each="proyecto : ${proyectos}">
-					<div th:class="${proyecto.isEnded ? 'proyectoFinalizado card escalar m-3 mb-4' : 'card escalar m-3 mb-4'}" style="width: 18rem;">
+					<div th:class="${proyecto.isEnded ? 'proyectoFinalizado card escalar m-3 mb-4' : 'card escalar m-3 mb-4'}" style="width: 18rem;" data-label="Finalizado">
 						<div class="card-body">
 							<img class="imagenNavbar float-right" th:src="|/img/profile/${proyecto.leader.imagen}|" th:alt="${proyecto.leader.nick}" th:title="${proyecto.leader.nick}">
 							<h5 class="card-title" th:text="${proyecto.nombre}"></h5>
 							<p class="card-text" th:text="${proyecto.descripcion}"></p>
-							<form action="/proyecto/verProyecto">
-								<input type="hidden" name="idProyecto" th:value="${proyecto.id}"/>
-								<input class="btn btn-info text-right" type="submit" value="Más información"/>
-							</form>
+							<div class="d-flex justify-content-between">
+								<form action="/proyecto/verProyecto">
+									<input type="hidden" name="idProyecto" th:value="${proyecto.id}"/>
+									<input class="btn btn-info text-right" type="submit" value="Más información"/>
+								</form>
+								<h6 th:if="${proyecto.isEnded}" class="tx-bad align-self-end endRibbon">Finalizado</h6>
+							</div>
 						</div>	
 					</div>
 				</th:block>
@@ -57,19 +60,21 @@
 
 		<div class="tab-pane fade" id="list" role="tabpanel" aria-labelledby="pills-profile-tab">
 			<th:block th:each="proyecto : ${proyectos}">
-				<div th:class="${proyecto.isEnded ? 'proyectoFinalizado card escalar m-3' : 'card escalar m-3' }" id="cardsList">
+				<div th:class="${proyecto.isEnded ? 'proyectoFinalizado card escalar m- grid-item' : 'card escalar m-3' }" id="cardsList">
 					<div class="card-body">
 						<label class="float-right">
 							<th:block th:text="${proyecto.leader.nick}"></th:block>
 							<img class="imagenNavbar ml-2" th:src="|/img/profile/${proyecto.leader.imagen}|" th:alt="${proyecto.leader.nick}" th:title="${proyecto.leader.nick}">
 						</label>
-						
 						<h5 class="card-title" th:text="${proyecto.nombre}"></h5>
 						<p class="card-text" th:text="${proyecto.descripcion}"></p>
-						<form action="/proyecto/verProyecto">
-							<input type="hidden" name="idProyecto" th:value="${proyecto.id}"/>
-							<input class="btn btn-info" type="submit" value="Más información"/>
-						</form>
+						<div class="d-flex justify-content-between">
+							<form action="/proyecto/verProyecto">
+								<input type="hidden" name="idProyecto" th:value="${proyecto.id}"/>
+								<input class="btn btn-info" type="submit" value="Más información"/>
+							</form>
+							<h6 th:if="${proyecto.isEnded}" class=" tx-bad align-self-end">Proyecto finalizado</h6>
+						</div>
 					</div>
 				</div>
 			</th:block>
