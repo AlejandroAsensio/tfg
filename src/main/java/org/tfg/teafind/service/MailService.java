@@ -305,7 +305,6 @@ public class MailService {
     			+ "            </tr>\r\n"
     			+ "            <tr>\r\n"
     			+ "              <td style=\"padding:30px;text-align:center;font-size:12px;background-color:#404040;color:#cccccc;\">\r\n"
-    			+ "                <p style=\"margin:0 0 8px 0;\"><a href=\"https://bit.ly/38kd14F\" style=\"text-decoration:none;\"><img src=\"https://assets.codepen.io/210284/twitter_1.png\" width=\"40\" height=\"40\" alt=\"t\" style=\"display:inline-block;color:#cccccc;\"></a></p>\r\n"
     			+ "                <p style=\"margin:0;font-size:14px;line-height:20px;\">Teafind, España 2022<br></p>\r\n"
     			+ "                <p style=\"margin:0 0 8px 0;\"><a href=\"https://creativecommons.org/licenses/by-nc-nd/4.0/\" style=\"text-decoration:none;\"><img src=\"https://licensebuttons.net/l/by-nc-nd/4.0/80x15.png\" alt=\"f\" style=\"display:inline-block;color:#cccccc;\"></a></p>\r\n"
     			+ "              </td>\r\n"
