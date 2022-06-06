@@ -11,6 +11,7 @@
     --atencion: #FFD124;
     --enfasis: #C21372;
     --enfasis-light: #ffbbe0;
+    --enfasis-lighter: #f3e3ec;
 
     --success: #1eb690;
     --danger: #dc3567;
@@ -30,6 +31,7 @@
 .tx-atencion { color: var(--atencion);}
 .tx-enfasis { color: var(--enfasis);}
 .tx-enfasis-light { color: var(--enfasis-light);}
+.tx-enfasis-lighter { color: var(--enfasis-lighter);}
 .tx-good { color: var(--success);}
 .tx-bad { color: var(--danger);}
 .bgc-blanco { background-color: var(--blanco);}
@@ -44,8 +46,37 @@
 .bgc-atencion { background-color: var(--atencion);}
 .bgc-enfasis { background-color: var(--enfasis);}
 .bgc-enfasis-light { background-color: var(--enfasis-light);}
+.bgc-enfasis-lighter { background-color: var(--enfasis-lighter);}
 .bgc-good { background-color: var(--success);}
 .bgc-bad { background-color: var(--danger);}
+
+.bgc-proyectoFinalizado {
+    background: linear-gradient(-45deg, var(--enfasis-lighter), var(--off), var(--enfasis-lighter));
+	background-size: 600% 600%;
+	animation: gradient 25s ease-in-out infinite;
+}
+@keyframes gradient {
+	0% {
+		background-position: 100% 50%;
+	}
+	50% {
+		background-position: 0% 50%;
+	}
+	100% {
+		background-position: 100% 50%;
+	}
+}
+@keyframes gradient-inverse {
+	0% {
+		background-position: 0% 50%;
+	}
+	50% {
+		background-position: 100% 50%;
+	}
+	100% {
+		background-position: 0% 50%;
+	}
+}
 
 /*---------Sobrescritura Bootstrap--------------
 ------------------------------------------------*/
@@ -158,4 +189,19 @@
 .custom-switch .custom-control-input:disabled:checked~.custom-control-label::before {
     background-color: rgb(0, 71, 79, rgba(23, 162, 184, .5));
     border: none;
+}
+
+/******************Toggle pills********************/
+.nav-pills .nav-link.active,
+.nav-pills .show>.nav-link {
+    color: #fff;
+    background-color: var(--atencion);
+}
+.nav-pills i {
+    color: var(--atencion);
+}
+.nav-pills .nav-link.active,
+.nav-pills .show>.nav-link i {
+    color: #fff;
+    background-color: var(--main);
 }

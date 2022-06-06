@@ -11,6 +11,7 @@
     --atencion: #FFD124;
     --enfasis: #C21372;
     --enfasis-light: #ffbbe0;
+    --enfasis-lighter: #f3e3ec;
 
     --success: #1eb690;
     --danger: #dc3567;
@@ -84,6 +85,7 @@ html, body {
 .enlacePerfilUsuario :hover{
 	color: white;
 }
+.navbar
 
 /*Botón Crear Proyecto*/
 .wrapper .button {
@@ -221,9 +223,6 @@ html, body {
 
 /*-------------------Proyectos-------------------
 ------------------------------------------------*/
-.proyectoFinalizado {
-    background-color: var(--enfasis-light);
-}
 .card.escalar {
     transition-duration: 300ms;
 }
@@ -238,6 +237,19 @@ html, body {
 .sinPuestos {
 	background-color:#F9F997;
 }
+.proyectoFinalizado {
+    background-color: var(--enfasis-light);
+    transition-duration: 300ms;
+}
+.proyectoFinalizado:hover{
+	/*-ms-transform: scale(1.01);
+	-webkit-transform: scale(1.01); */
+	transform: translate(-6px, -5px);
+	-webkit-box-shadow: -6px 5px 0px 0px var(--enfasis); 
+	box-shadow: 6px 5px 0px 0px var(--enfasis);
+    transition-duration: 150ms;
+}
+
 
 /*---------------Gestion Proyectos---------------
 ------------------------------------------------*/
