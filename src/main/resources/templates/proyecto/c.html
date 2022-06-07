@@ -1,47 +1,78 @@
 <div class="container">
-	<div class="row m-3">
-		<h2 class="display-4">Proyectos</h2>
+	
+	<div class="row d-flex justify-content-between mb-4">
+		<div class="col-xl-7 col-lg-6 col-md-12 col-sm-12 col-12">
+			<h1 class="font-weight-light">Crea tu nuevo proyecto</h1>
+		</div>
 	</div>
-</div>	
+	
+</div>
 
 <div class="container rounded p-4">
-	
-	<div class="row m-3">
-		<h3 class="display-5">Nuevo Proyecto</h3>
+
+	<div class="row d-flex justify-content-center">
+		<div class="col-md-7">
+			<h3 class="font-weight-light pl-3">Introduce los datos del proyecto:</h3>
+			<hr class="mb-4">
+		</div>
 	</div>
-	
+
 	<form onsubmit="return validar();" action="/proyecto/c" method="POST">
-		<div class="mb-3">
-			<label for="idNombre" class="form-label disabled">Nombre</label>
-			<input type="text" class="form-control" name="nombre" id="idNombre">
+	
+		<div class="form-row">
+			<div class="form-group col-md-3"></div>
+			<div class="form-group col-md-6">
+				<label for="idNombre" class="form-label disabled">Nombre del proyecto:</label>
+				<input type="text" class="form-control" name="nombre" id="idNombre">
+			</div>
+			<div class="form-group col-md-3"></div>
 		</div>
-		
-		<div class="mb-3">
-			<label for="idDescripcion" class="form-label disabled">Descripcion</label>
-			<input type="text"  class="form-control" name="descripcion" id="idDescripcion">
+		<div class="form-row">
+			<div class="form-group col-md-3"></div>
+			<div class="form-group col-md-6">
+				<label for="idDescripcion" class="form-label disabled">Descripción del proyecto:</label>
+				<textarea class="form-control" name="descripcion" id="idDescripcion"></textarea>
+			</div>
+			<div class="form-group col-md-3"></div>	
 		</div>
-		
-		<div class="mb-3">
-			<label for="id-fIni" class="form-label disabled">Fecha de Inicio</label>
-			<input  name="fIni" id="id-fIni">
+
+		<div class="form-row">
+			<div class="form-group col-md-3"></div>
+			<div class="form-group col-md-3">
+				<label for="id-fIni"  class="form-label disabled">Fecha de inicio:</label>
+				<input type="date" class="form-control" name="fIni" id="id-fIni">
+			</div>
+			<div class="form-group col-md-3">
+				<label for="id-fIni" class="form-label disabled">Fecha de fin:</label>
+				<input type="date" class="form-control" name="fFin" onchange="fechaValidationFin();" id="id-fFin">
+				<div id="divFecha" style="color : red"></div>
+			</div>
+			<div class="form-group col-md-3"></div>
 		</div>
-		<div id="divFecha" style="color : red"></div>
-		<div class="mb-3">
-			<label for="id-fFin" class="form-label disabled">Fecha Fin</label>
-			<input name="fFin" onchange="fechaValidationFin();" id="id-fFin">
-		</div>
-		
-		
-		<div class="m-3">
-			<input type="submit" class="btn btn-info m-2" value="Continuar"/>
-			<a href="/proyecto/r" class="btn btn-info m-2">Cancelar</a>
-		</div>
+
 		<input type="hidden" name="idUsuario" th:value="${session.usuario.id}"/>
-		
+
+		<div class="form-row mt-3">
+			<div class="form-group col-md-3"></div>
+			<div class="form-group col-md-6 list-group-item-warning rounded px-3 py-2">
+				<span for="message-text" class="col-form-label disabled font-weight-light">
+					Recuerda: Podrás añadir y modificar los puestos de tu proyecto si accedes
+					a su panel de gestión desde "Mis proyectos", en tu menú de usuario.
+				</span>
+			</div>
+			<div class="form-group col-md-3"></div>
+		</div>
+		<div class="form-row d-flex justify-content-center">
+			<div class="col-md-7">
+				<div class="d-flex justify-content-end m-3">
+					<input type="submit" class="btn btn-outline-info btn-sm m-2" value="Continuar"/>
+					<button type="button" onclick="location.href='/'" class="btn btn-outline-danger btn-sm m-2">Cancelar</a>
+				</div>
+			</div>
+		</div>
 		
 	</form>
 	
 </div>
 
 <script src="/js/proyectoValidation.js"></script>
-

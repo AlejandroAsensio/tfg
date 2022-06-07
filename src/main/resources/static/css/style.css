@@ -160,6 +160,12 @@ html, body {
 	object-fit: cover;
 	object-position: center center;
 }
+.imgUsersView {
+    width: 45px;
+	height: 45px;
+	object-fit: cover;
+	object-position: center center;
+}
 .textoPerfilusuario {
     color: #f8f8fb;
 }
