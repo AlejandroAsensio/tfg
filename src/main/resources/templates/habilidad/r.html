@@ -1,54 +1,134 @@
 <div class="container">
-	<div class="row m-3">
-		<h2 class="display-4">Habilidades</h2>
+	
+	<div class="row d-flex justify-content-between mb-4">
+		<div class="col-xl-7 col-lg-6 col-md-12 col-sm-12 col-12">
+			<h1 class="font-weight-light">Habilidades</h1>
+		</div>
+		
+		<div class="d-flex justify-content-end align-self-center col-xl-5 col-lg-6 col-md-12 col-sm-12 col-12">
+			<button type="submit" class="btn btn-outline-info btn-sm border-0 mr-2" data-toggle="modal" data-target="#newHabilidadModal">
+				<i class="bi bi-plus-square"></i>
+				 Crear habilidad
+			</button>
+
+			<!--****************************Modal NUEVA HABILIDAD****************************-->
+			<div class="modal fade text-left" id="newHabilidadModal" tabindex="-1" role="dialog" aria-labelledby="newHabilidadModalLabel" aria-hidden="true">
+				<div class="modal-dialog modal-dialog-centered" role="document">
+					<div class="modal-content">
+						<div class="modal-header">
+							<h5 class="modal-title font-weight-bold" id="modalHabilidadLibreLabel">Crear nueva habilidad</h5>
+							<button type="button" class="close" data-dismiss="modal" aria-label="Close">
+								<span aria-hidden="true">&times;</span>
+							</button>
+						</div>
+						<form name="habilidadForm" action="/habilidad/c" method="POST">
+							<div class="modal-body">
+			
+								<div class="form-group">
+									<label for="recipient-name" class="col-form-label">Nombre de la habilidad:</label>
+									<input type="text" class="form-control" name="nombre" id="recipient-name" placeholder="Nombre">
+								</div>
+								<div class="form-group">
+									<label for="message-text" class="col-form-label">Descripción de la habilidad:</label>
+									<textarea class="form-control" name="descripcion" id="message-text"
+										text="Descripción" placeholder="Introduce una descripción para tu habilidad"></textarea>
+								</div>
+							</div>
+								
+							<div class="modal-footer">
+								<div>
+									<button type="button" class="btn btn-sm btn-outline-secondary border-0" data-dismiss="modal">Cancelar</button>
+									<button type="button" class="btn btn-sm btn-outline-success border-0" onclick="habilidadForm.submit()" value="añadir">Crear habilidad</button>
+								</div>
+							</div>
+						</form>
+					</div>
+			
+				</div>
+			</div>
+			<!--*************************Fin Modal NUEVA HABILIDAD*******************************-->
+
+			<span class="rounded tx-blanco bgc-bad align-self-center px-2">Admin</span>
+		</div>
 	</div>
+	
 </div>
 
-<div class="container rounded p-4">
-	
-	<div class="row m-3">
-		<h3 class="display-5">Lista de habilidades</h3>
-	</div>
-	
-	<table class="table table-hover">
-	<thead>
-	  
-		    <tr class="table-active">
-				<th scope="col">
-					Habilidad
-				</th>
-				<th scope="col">
-					Descripción
-				</th>
-				<th scope="col">
-					Acciones
-				</th>
-		    </tr>
-	  </thead>
-	  <tbody>
-	  
-		    <tr>
-		    	<!-- scope="row" en un th indica el indice de la fila -->
-				<tr th:each="habilidad:${habilidades}">
-					<td th:text="${habilidad.nombre}"/>
-					<td th:text="${habilidad.descripcion}"/>
-					<td class="row">
-						<form action="/habilidad/u">
-							<input type="hidden" name="idHabilidad" th:value="${habilidad.id}"/>
-							<input type="submit" value="Modificar"/>
-						</form>
-						<form action="/habilidad/d" method="POST">
-							<input type="hidden" name="idHabilidad" th:value="${habilidad.id}"/>
-							<input type="submit" value="Eliminar"/>
-						</form>
-					</td>
-				</tr>
-		    </tr>
-	    
+<div class="container p-4">
+	<table class="table align-middle mb-0 table-hover table-responsive-md">
+		<thead class="tx-off bgc-main-dark">
+			<tr>
+				<th class="text-nowrap">Nombre</th>
+				<th class="text-nowrap">Descripción</th>
+				<th class="text-nowrap">Estado</th>
+				<th class="text-nowrap">Acciones</th>
+			</tr>
+		</thead>
+		<tbody>
+			<tr th:each="habilidad:${habilidades}">
+				<td>
+					<div class="d-flex align-items-center">
+						<div class="ms-3">
+							<p th:text="${habilidad.nombre}" class="font-weight-bold mb-1"></p>
+						</div>
+					</div>
+				</td>
+				<td>
+					<p th:text="${habilidad.descripcion}" class="mb-1"></p>
+				</td>
+				<td>
+					<span th:if="${habilidad.requerida.size == 0 && habilidad.conocida.size == 0}" class="badge badge-warning bgc-atencion rounded-pill d-inline">No usada</span>
+					<span th:if="${habilidad.requerida.size != 0 || habilidad.conocida.size != 0}" class="badge badge-success bgc-good rounded-pill d-inline">En uso</span>
+				</td>
+				<td class="d-flex justify-content-center">
+					<button type="button" class="btn btn-link btn-sm btn-rounded" th:title="|Editar ${habilidad.nombre}|" data-toggle="modal" th:attr="data-target='#editHabilidadModal-'+${habilidad.id}">
+						<i class="bi bi-pencil tx-atencion"></i>
+					</button>
+					<!--***************************Modal EDITAR HABILIDAD*****************************-->
+					<div class="modal fade text-left" th:id="|editHabilidadModal-${habilidad.id}|" tabindex="-1" role="dialog" aria-labelledby="editHabilidadModalLabel" aria-hidden="true">
+						<div class="modal-dialog modal-dialog-centered" role="document">
+							<div class="modal-content">
+								<div class="modal-header">
+									<h5 class="modal-title font-weight-bold" id="modalHabilidadLibreLabel" th:text="|Editando ${habilidad.nombre}|"></h5>
+									<button type="button" class="close" data-dismiss="modal" aria-label="Close">
+										<span aria-hidden="true">&times;</span>
+									</button>
+								</div>
+								<form name="editHabilidadForm" action="/habilidad/u" method="POST" th:id="|editHabilidadForm-${habilidad.id}|">
+									<div class="modal-body">
+					
+										<div class="form-group">
+											<label for="recipient-name" class="col-form-label">Nuevo nombre:</label>
+											<input type="text" class="form-control" name="nombre" id="recipient-name" th:value="${habilidad.nombre}" th:placeholder="${habilidad.nombre}">
+										</div>
+										<div class="form-group">
+											<label for="message-text" class="col-form-label">Nueva descripción:</label>
+											<textarea class="form-control" name="descripcion" id="message-text"
+											th:text="${habilidad.descripcion}" th:placeholder="${habilidad.descripcion}"></textarea>
+										</div>
+									</div>
+										
+									<div class="modal-footer">
+										<div>
+											<button type="button" class="btn btn-sm btn-outline-secondary border-0" data-dismiss="modal">Cancelar</button>
+											<button type="button" class="btn btn-sm btn-outline-success border-0" th:onclick="|document.getElementById('editHabilidadForm-${habilidad.id}').submit()|" value="añadir">Guardar cambios</button>
+										</div>
+									</div>
+									<input type="hidden" name="idHabilidad" th:value="${habilidad.id}"/>
+								</form>
+							</div>
+					
+						</div>
+					</div>
+					<!--***************************Fin Modal EDITAR HABILIDAD*****************************-->
+					<form action="/habilidad/d" method="POST">
+						<input type="hidden" name="idHabilidad" th:value="${habilidad.id}"/>
+						<button type="submit" class="btn btn-link btn-sm btn-rounded" title="Eliminar">
+							<i class="bi bi-trash3 tx-bad"></i>
+						</button>
+					</form>
+				</td>
+			</tr>
 		</tbody>
 	</table>
-	<br/>
-	<form action="/habilidad/c">
-		<input type="submit" class="btn btn-success btn-sm" value="Nueva habilidad"/>
-	</form>
 </div>

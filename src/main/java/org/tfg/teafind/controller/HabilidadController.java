@@ -34,7 +34,7 @@ public class HabilidadController {
 	@Autowired
 	private PuestoRepository puestoRepository;
 	
-	@GetMapping("r")
+	@GetMapping()
 	public String r(
 			ModelMap m,
 			HttpSession s
@@ -44,7 +44,7 @@ public class HabilidadController {
 			u = (Usuario) s.getAttribute("usuario");
 		}
 		if(s.getAttribute("usuario")==null || !u.isAdmin()) {
-			PRG.error("No tienes permiso para acceder","/");
+			PRG.error("No tienes permiso para acceder","/habilidad");
 		}
 		List<Habilidad> habilidades = habilidadRepository.findAll();
 		
@@ -53,18 +53,18 @@ public class HabilidadController {
 		return "_t/frame";
 	}
 	
-	@GetMapping("c")
-	public String c(ModelMap m,HttpSession s) throws DangerException {
-		Usuario u = null;
-		if(s.getAttribute("usuario")!=null) {
-			u = (Usuario) s.getAttribute("usuario");
-		}
-		if(s.getAttribute("usuario")==null || !u.isAdmin()) {
-			PRG.error("No tienes permiso para acceder","/");
-		}
-		m.put("view", "/habilidad/c");
-		return "_t/frame";
-	}
+	// @GetMapping("c")
+	// public String c(ModelMap m,HttpSession s) throws DangerException {
+	// 	Usuario u = null;
+	// 	if(s.getAttribute("usuario")!=null) {
+	// 		u = (Usuario) s.getAttribute("usuario");
+	// 	}
+	// 	if(s.getAttribute("usuario")==null || !u.isAdmin()) {
+	// 		PRG.error("No tienes permiso para acceder","/");
+	// 	}
+	// 	m.put("view", "/habilidad/c");
+	// 	return "_t/frame";
+	// }
 	
 	
 	@PostMapping("c")
@@ -74,7 +74,7 @@ public class HabilidadController {
 			) throws DangerException, InfoException {
 		try {
 			if(nombre==null || nombre.equals("") || descripcion == null || descripcion.equals("")) {
-				PRG.error("Error al crear la habilidad");
+				PRG.error("Error al crear la habilidad.");
 			}
 			else {
 				
@@ -82,27 +82,28 @@ public class HabilidadController {
 			}
 				
 		} catch (Exception e) {
-			PRG.error("La habilidad " + nombre + " ya existe o tiene campos vacios", "/habilidad/c");
+			PRG.error("La habilidad " + nombre + " ya existe o tiene campos vacios", "/habilidad");
 		}
-		PRG.info(nombre + " creado correctamente.", "/habilidad/r");
+		PRG.info(nombre + " creado correctamente.", "/habilidad");
 //		return "redirect:r";
 	}
-	@GetMapping("u")
-	public String u(
-			@RequestParam("idHabilidad") Long idHabilidad,
-			ModelMap m,HttpSession s
-			) throws DangerException {
-		Usuario u = null;
-		if(s.getAttribute("usuario")!=null) {
-			u = (Usuario) s.getAttribute("usuario");
-		}
-		if(s.getAttribute("usuario")==null || !u.isAdmin()) {
-			PRG.error("No tienes permiso para acceder","/");
-		}
-		m.put("habilidad", habilidadRepository.getById(idHabilidad));
-		m.put("view", "habilidad/u");
-		return "_t/frame";
-	}
+
+	// @GetMapping("u")
+	// public String u(
+	// 		@RequestParam("idHabilidad") Long idHabilidad,
+	// 		ModelMap m,HttpSession s
+	// 		) throws DangerException {
+	// 	Usuario u = null;
+	// 	if(s.getAttribute("usuario")!=null) {
+	// 		u = (Usuario) s.getAttribute("usuario");
+	// 	}
+	// 	if(s.getAttribute("usuario")==null || !u.isAdmin()) {
+	// 		PRG.error("No tienes permiso para acceder","/");
+	// 	}
+	// 	m.put("habilidad", habilidadRepository.getById(idHabilidad));
+	// 	m.put("view", "habilidad/u");
+	// 	return "_t/frame";
+	// }
 
 	@PostMapping("u")
 	public String uPost(
@@ -116,10 +117,11 @@ public class HabilidadController {
 			habilidad.setDescripcion(descripcion);
 			habilidadRepository.save(habilidad);
 		} catch (Exception e) {
-			PRG.error("La habilidad "+nombre+" ya existe", "/habilidad/r");
+			PRG.error("La habilidad "+nombre+" ya existe", "/habilidad");
 		}
-		return "redirect:/habilidad/r";
+		return "redirect:/habilidad";
 	}
+
 	@PostMapping("d")
 	public String dPost(
 			@RequestParam("idHabilidad") Long idHabilidad
@@ -141,7 +143,7 @@ public class HabilidadController {
 		habilidadRepository.saveAndFlush(h);
 		habilidadRepository.deleteById(idHabilidad);
 
-		return "redirect:/habilidad/r";
+		return "redirect:/habilidad";
 	}
 	
 }

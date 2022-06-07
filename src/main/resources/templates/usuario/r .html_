@@ -1,0 +1,55 @@
+<div class="container">
+	<div class="row m-3">
+		<h2 class="display-4">Usuarios</h2>
+	</div>
+</div>
+
+<div class="container rounded p-4">
+	
+	<div class="row m-3">
+		<h3 class="display-5">Lista de usuarios</h3>
+	</div>
+	
+	<table class="table table-hover">
+	<thead>
+	  
+		    <tr class="table-active">
+				<th scope="col">
+					Nombre
+				</th>
+				<th scope="col">
+					Apellidos
+				</th>
+				<th scope="col">
+					Email
+				</th>
+				<th scope="col">
+					Teléfono
+				</th>
+				<th scope="col">
+					Habilidades
+				</th>
+		    </tr>
+	  </thead>
+	  <tbody>
+	  
+		    <tr>
+		    	<!-- scope="row" en un th indica el indice de la fila -->
+				<tr th:each="usuario:${usuarios}">
+					<td th:text="${usuario.nombre}"/>
+					<td th:text="|${usuario.apellido1} ${usuario.apellido2}|"/>
+					<td th:text="${usuario.email}"/>
+					<td th:text="${usuario.telefono}"/>
+					<td>
+						<th:block th:each="habilidadSabe:${usuario.sabe}" th:text="|${habilidadSabe.nombre} / |"/>
+					</td>
+				</tr>
+		    </tr>
+	    
+		</tbody>
+	</table>
+	<br/>
+	<form action="/usuario/c">
+		<input type="submit" class="btn btn-success btn-sm" value="Registrarse"/>
+	</form>
+</div>

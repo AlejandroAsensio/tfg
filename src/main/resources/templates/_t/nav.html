@@ -7,19 +7,12 @@
       		</li>
      	 	
      	 	<li class="nav-item" th:if="${session.usuario!=null && session.usuario?.admin}">
-        		<a class="nav-link" href="/usuario/r">Ver usuarios</a>
+        		<a class="nav-link" href="/usuario/r">Usuarios</a>
      	 	</li>
-    		
-    		<li class="nav-item dropdown" th:if="${session.usuario!=null && session.usuario?.admin}">
-    			<a class="nav-link dropdown-toggle" data-toggle="dropdown" href="#" aria-haspopup="true" aria-expanded="false" role="button">
-    				Habilidades
-    			</a>
-    
-    			<div class="dropdown-menu" aria-labelledby="navbarDropdown">
-    				<a class="dropdown-item" href="/habilidad/r">Ver todas</a>
-    				<a class="dropdown-item" href="/habilidad/c">Crear nueva</a>
-    			</div>
-    		</li>
+
+			<li class="nav-item" th:if="${session.usuario!=null && session.usuario?.admin}">
+        		<a class="nav-link" href="/habilidad">Habilidades</a>
+     	 	</li>
 		</ul>
 	</div>
 	
