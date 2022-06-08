@@ -39,7 +39,7 @@
 				<td th:text="|${usuario.creados.size} proyectos|"></td>
 				<td th:text="|${usuario.ocupa.size} proyectos|"></td>
 				<td>
-					<form action="" method="POST">
+					<form action="/usuario/d" method="POST">
 						<input type="hidden" name="idUsuario" th:value="${usuario.id}"/>
 						<button type="submit" class="btn btn-link btn-sm btn-rounded" title="Eliminar">
 							<i class="bi bi-trash3 tx-bad"></i>

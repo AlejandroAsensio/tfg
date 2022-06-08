@@ -97,6 +97,12 @@ public class Proyecto {
 	public void setPuestos(Collection<Puesto> puestos) {
 		this.puestos = puestos;
 	}
+	
+	public void quitarLeader(Usuario us) {
+		this.leader = null;
+		
+	}
+	
 	public boolean isEnded() {
 		return (this.getFin().isBefore(LocalDate.now()) || this.getFin().isEqual(LocalDate.now()));
 	}

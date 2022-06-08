@@ -42,7 +42,7 @@
 				<th:block th:each="proyecto : ${proyectos}">
 					<div th:class="${proyecto.isEnded ? 'proyectoFinalizado card m-3 mb-4' : 'card escalar m-3 mb-4'}" style="width: 18rem;" data-label="Finalizado">
 						<div class="card-body">
-							<img class="imagenNavbar float-right" th:src="|/img/profile/${proyecto.leader.imagen}|" th:alt="${proyecto.leader.nick}" th:title="${proyecto.leader.nick}">
+							<img class="imagenNavbar float-right" th:src="|/img/profile/${proyecto.leader?.imagen}|" th:alt="${proyecto.leader?.nick}" th:title="${proyecto.leader?.nick}">
 							<h5 class="card-title" th:text="${proyecto.nombre}"></h5>
 							<p class="card-text" th:text="${proyecto.descripcion}"></p>
 							<div class="d-flex justify-content-between">
@@ -63,8 +63,8 @@
 				<div th:class="${proyecto.isEnded ? 'proyectoFinalizado card m-3 mb-4' : 'card escalar m-3' }" id="cardsList">
 					<div class="card-body">
 						<label class="float-right">
-							<th:block th:text="${proyecto.leader.nick}"></th:block>
-							<img class="imagenNavbar ml-2" th:src="|/img/profile/${proyecto.leader.imagen}|" th:alt="${proyecto.leader.nick}" th:title="${proyecto.leader.nick}">
+							<th:block th:text="${proyecto.leader?.nick}"></th:block>
+							<img class="imagenNavbar ml-2" th:src="|/img/profile/${proyecto.leader?.imagen}|" th:alt="${proyecto.leader?.nick}" th:title="${proyecto.leader?.nick}">
 						</label>
 						<h5 class="card-title" th:text="${proyecto.nombre}"></h5>
 						<p class="card-text" th:text="${proyecto.descripcion}"></p>
