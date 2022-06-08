@@ -14,158 +14,189 @@
 	
 </div>
 
-<div class="container">
-	<ul class="nav nav-pills nav-justified px-3">
-		<li class="nav-item">
-			<a class="nav-link active" id="home-tab" data-toggle="tab" href="#home" role="tab" aria-controls="home"
-				aria-selected="true">Datos personales</a>
-		</li>
-		<li class="nav-item">
-			<a class="nav-link" id="profile-tab" data-toggle="tab" href="#profile" role="tab" aria-controls="profile"
-				aria-selected="false">Habilidades</a>
-		</li>
-		<li class="nav-item">
-			<a class="nav-link" id="contact-tab" data-toggle="tab" href="#contact" role="tab" aria-controls="contact"
-				aria-selected="false">Tu cuenta</a>
-		</li>
-	</ul>
-	<hr>
+<div class="container" th:if="${!session.usuario.isVerified}">	
+
+	<div class="form-row mt-3">
+		<div class="form-group col-md-1"></div>
+		<div class="form-group col-md-3">
+			<form class="text-right" action="/usuario/u/mail" method="POST">
+				<div class="form-group">
+					<h5 class="text-left">¿Necesitas cambiar tu email?</h5>
+					<input type="text" class="form-control" name="email" id="idEmail" th:value="${usuario.email}" th:placeholder="${usuario.email}">
+				</div>
+				<input class="text-right btn btn-outline-info btn-sm" type="submit" value="Cambiar email">	
+			</form>
+		</div>
+		<div class="form-group col-md-1"></div>
+		<div class="form-group col-md-6">
+			<div class="list-group-item-warning rounded px-3 py-2  mb-3">
+				<span for="message-text" class="col-form-label disabled font-weight-light">
+					Por favor, verifica tu cuenta de Teafind para poder cambiar los datos de tu perfil, 
+					ocupar puestos de proyectos activos o para crear tus propios proyectos.
+				</span>
+			</div>
+			<form class="text-right" action="/usuario/verificar" method="get">
+				<button type="submit" class="btn btn-outline-info btn-lg">Verificar cuenta</button>	
+			</form>
+		</div>
+		<div class="form-group col-md-1"></div>
+	</div>
 </div>
 
+<div th:if="${session.usuario.isVerified}">
+	<div class="container">
+		<ul class="nav nav-pills nav-justified px-3">
+			<li class="nav-item">
+				<a class="nav-link active" id="home-tab" data-toggle="tab" href="#home" role="tab" aria-controls="home"
+					aria-selected="true">Datos personales</a>
+			</li>
+			<li class="nav-item">
+				<a class="nav-link" id="profile-tab" data-toggle="tab" href="#profile" role="tab" aria-controls="profile"
+					aria-selected="false">Habilidades</a>
+			</li>
+			<li class="nav-item">
+				<a class="nav-link" id="contact-tab" data-toggle="tab" href="#contact" role="tab" aria-controls="contact"
+					aria-selected="false">Tu cuenta</a>
+			</li>
+		</ul>
+		<hr>
+	</div>
 
-<div class="container px-4 pb-4">
-	<form action="/usuario/u" method="POST" enctype="multipart/form-data">
-		<div class="tab-content" id="myTabContent">
-			<!--***CONTENEDOR1 - Datos personales *********************-->
-			<div class="tab-pane fade show active" id="home" role="tabpanel" aria-labelledby="home-tab">
-				<h4 class="mb-3">Modifica tus datos personales:</h4 >
-				<div class="form-row">
-					<div class="col-md-2"></div>
-					<div class="col-md-3">
-						<div class="form-group mb-3">
-							<label id="01" for="idNombre" class="form-label disabled is-valid" value="Mark">Nombre</label>
-							<input type="text" class="form-control" name="nombre" id="idNombre" th:value="${usuario.nombre}" th:placeholder="${usuario.nombre}" required="required">
-						</div>
-						
-						<div class="form-group mb-3">
-							<label for="idApe1" class="form-label disabled">Primer apellido</label>
-							<input type="text" class="form-control" name="apellido1" id="idApe1" th:value="${usuario.apellido1}" th:placeholder="${usuario.apellido1}" required="required">
-						</div>
-						<div class="form-group mb-3">
-							<label for="idApe2" class="form-label disabled">Segundo apellido</label>
-							<input type="text" class="form-control" name="apellido2" id="idApe2" th:value="${usuario.apellido2}" th:placeholder="${usuario.apellido2}" required="required">
-						</div>
-					</div>
-					<div class="col-md-1"></div>
-					<div class="col-md-3">
-						<div class="form-group mb-3">
-							<label for="idTlf" class="form-label disabled">Teléfono (móvil)</label>
-							<input type="text" class="form-control" name="telefono" id="idTlf" th:value="${usuario.telefono}" th:placeholder="${usuario.telefono}" required="required">
-						</div>
-						<div class="form-group mb-3">
-							<label id="01" for="idDescripcion" class="form-label disabled is-valid" value="Mark">Descripción e intereses</label>
-							<textarea type="text" class="form-control" name="descripcion" id="idDescripcion" th:text="${usuario.descripcion}" th:placeholder="${usuario.descripcion}"></textarea>
-						</div>
-					</div>
-					<div class="col-md-3"></div>
-				</div>
-	 			
-			</div>
-			<!--***FIN - CONTENEDOR1 - Datos personales *********************-->
-			
-			<!--***CONTENEDOR2 - Edición de habilidades *********************-->
-			<div class="tab-pane fade" id="profile" role="tabpanel" aria-labelledby="profile-tab">
-				<h4 class="mb-3">Amplía tus conocimientos:</h4>
-				<div class="row mx-2 mt-0 pt-0">
-					<th:block th:each="habilidad : ${habilidades}">
-						<div class="col-2" data-toggle="buttons">
-							<label class="btn btn-info btn-sm">
-								<input type="checkbox" class="custom-control-input" 
-									name="idsHabilidades[]"
-									th:value="${habilidad.id}" 
-									th:id="|id-${habilidad.id}-habilidad|" 
-									th:checked="${usuario.sabe.contains(habilidad)}"/>
-								<th:block th:text="${habilidad.nombre}" />
-							</label>
-						</div>
-					</th:block>
-				</div>
-			</div>
-			<!--***FIN - CONTENEDOR2 - Edición de habilidades *********************-->
-			
-			<!--***CONTENEDOR3 - Cuenta (Nick, correo, cambio contraseña,...) *********************-->
-			<div class="tab-pane fade" id="contact" role="tabpanel" aria-labelledby="contact-tab">
-				<h4 class="mb-3">Ajustes de tu cuenta:</h4>
-				<div class="form-row">
-					<div class="col-md-4"></div>
-					<div class="col-md-5">
-						<h5>Cambia tu contraseña:</h5>
-					</div>
-					<div class="col-md-3">
-						<h5>Cambia tu foto:</h5>
-					</div>
-				</div>
-				<div class="form-row">
-					<div class="col-md-3">
-						<div class="form-group mb-3">
-							<label id="01" for="nick" class="form-label disabled is-valid" value="Mark">Cambia tu nick:</label>
-							<label class="sr-only" for="inlineFormInputGroup"></label>
-							<div class="input-group mb-2">
-								<div class="input-group-prepend">
-									<div class="input-group-text">@</div>
-								</div>
-								<input type="text" class="form-control" name="nick" required="required" id="inlineFormInputGroup" th:value="${usuario.nick}" th:placeholder="${usuario.nick}">
+
+	<div class="container px-4 pb-4">
+		<form action="/usuario/u" method="POST" enctype="multipart/form-data">
+			<div class="tab-content" id="myTabContent">
+				<!--***CONTENEDOR1 - Datos personales *********************-->
+				<div class="tab-pane fade show active" id="home" role="tabpanel" aria-labelledby="home-tab">
+					<h4 class="mb-3">Modifica tus datos personales:</h4 >
+					<div class="form-row">
+						<div class="col-md-2"></div>
+						<div class="col-md-3">
+							<div class="form-group mb-3">
+								<label id="01" for="idNombre" class="form-label disabled is-valid" value="Mark">Nombre</label>
+								<input type="text" class="form-control" name="nombre" id="idNombre" th:value="${usuario.nombre}" th:placeholder="${usuario.nombre}" required="required">
+							</div>
+							
+							<div class="form-group mb-3">
+								<label for="idApe1" class="form-label disabled">Primer apellido</label>
+								<input type="text" class="form-control" name="apellido1" id="idApe1" th:value="${usuario.apellido1}" th:placeholder="${usuario.apellido1}" required="required">
+							</div>
+							<div class="form-group mb-3">
+								<label for="idApe2" class="form-label disabled">Segundo apellido</label>
+								<input type="text" class="form-control" name="apellido2" id="idApe2" th:value="${usuario.apellido2}" th:placeholder="${usuario.apellido2}" required="required">
 							</div>
 						</div>
-						<div class="form-group mb-3">
-							<label for="idEmail" class="form-label disabled">Email</label>
-							<input type="text" class="form-control" name="email" id="idEmail" th:value="${usuario.email}" th:placeholder="${usuario.email}">
-						</div>	
-					</div>
-					<div class="col-md-1"></div>
-					<div class="col-md-2">
-						<div class="form-group mb-3">
-							<label for="idPass" class="form-label disabled">Contraseña antigua</label>
-							<input type="password" class="form-control" name="password" id="idPass">
+						<div class="col-md-1"></div>
+						<div class="col-md-3">
+							<div class="form-group mb-3">
+								<label for="idTlf" class="form-label disabled">Teléfono (móvil)</label>
+								<input type="text" class="form-control" name="telefono" id="idTlf" th:value="${usuario.telefono}" th:placeholder="${usuario.telefono}" required="required">
+							</div>
+							<div class="form-group mb-3">
+								<label id="01" for="idDescripcion" class="form-label disabled is-valid" value="Mark">Descripción e intereses</label>
+								<textarea type="text" class="form-control" name="descripcion" id="idDescripcion" th:text="${usuario.descripcion}" th:placeholder="${usuario.descripcion}"></textarea>
+							</div>
 						</div>
-					</div>
-					<div class="col-md-2">
-						<div class="form-group mb-3">
-							<label for="idPass" class="form-label disabled">Nueva contraseña</label>
-							<input type="password" class="form-control" id="idPass" name="newPassword">
-						</div>
-						<div class="form-group mb-3">
-							<label for="idPassConfirm" class="form-label disabled">Confirma la Contraseña</label>
-							<input type="password" class="form-control" name="passwordConfirm" id="idPassConfirm">
-						</div>
-					</div>
-					<div class="col-md-1"></div>
-					<div class="col-md-3">
-						<div id="contenedorImagenSubida" class="d-flex justify-content-center">
-							<img th:src="|/img/profile/${usuario.imagen}|" id="imagenSubida" class="img-thumbnail rounded imagenSubida img-responsive" alt="Imagen de usuario"></img>
-						</div>
-						<div class="pt-4">
-							<p class="form-label text-right mb-2">Elige tu foto de perfil</p>
-							<div class="custom-file mb-3">
-			      				<input type="file" class="custom-file-input" id="subirFoto" onchange="readURL(this);" name="imagen" accept="image/png, image/jpeg" lang="es">
-			      				<label class="custom-file-label" for="customFile">Elije tu foto</label>
-			    			</div>
-						</div>	
-						
+						<div class="col-md-3"></div>
 					</div>
 					
 				</div>
+				<!--***FIN - CONTENEDOR1 - Datos personales *********************-->
+				
+				<!--***CONTENEDOR2 - Edición de habilidades *********************-->
+				<div class="tab-pane fade" id="profile" role="tabpanel" aria-labelledby="profile-tab">
+					<h4 class="mb-3">Amplía tus conocimientos:</h4>
+					<div class="row mx-2 mt-0 pt-0">
+						<th:block th:each="habilidad : ${habilidades}">
+							<div class="col-2" data-toggle="buttons">
+								<label class="btn btn-info btn-sm">
+									<input type="checkbox" class="custom-control-input" 
+										name="idsHabilidades[]"
+										th:value="${habilidad.id}" 
+										th:id="|id-${habilidad.id}-habilidad|" 
+										th:checked="${usuario.sabe.contains(habilidad)}"/>
+									<th:block th:text="${habilidad.nombre}" />
+								</label>
+							</div>
+						</th:block>
+					</div>
+				</div>
+				<!--***FIN - CONTENEDOR2 - Edición de habilidades *********************-->
+				
+				<!--***CONTENEDOR3 - Cuenta (Nick, correo, cambio contraseña,...) *********************-->
+				<div class="tab-pane fade" id="contact" role="tabpanel" aria-labelledby="contact-tab">
+					<h4 class="mb-3">Ajustes de tu cuenta:</h4>
+					<div class="form-row">
+						<div class="col-md-4"></div>
+						<div class="col-md-5">
+							<h5>Cambia tu contraseña:</h5>
+						</div>
+						<div class="col-md-3">
+							<h5>Cambia tu foto:</h5>
+						</div>
+					</div>
+					<div class="form-row">
+						<div class="col-md-3">
+							<div class="form-group mb-3">
+								<label id="01" for="nick" class="form-label disabled is-valid" value="Mark">Cambia tu nick:</label>
+								<label class="sr-only" for="inlineFormInputGroup"></label>
+								<div class="input-group mb-2">
+									<div class="input-group-prepend">
+										<div class="input-group-text">@</div>
+									</div>
+									<input type="text" class="form-control" name="nick" required="required" id="inlineFormInputGroup" th:value="${usuario.nick}" th:placeholder="${usuario.nick}">
+								</div>
+							</div>
+							<div class="form-group mb-3">
+								<label for="idEmail" class="form-label disabled">Email</label>
+								<input type="text" class="form-control" name="email" id="idEmail" th:value="${usuario.email}" th:placeholder="${usuario.email}">
+							</div>	
+						</div>
+						<div class="col-md-1"></div>
+						<div class="col-md-2">
+							<div class="form-group mb-3">
+								<label for="idPass" class="form-label disabled">Contraseña antigua</label>
+								<input type="password" class="form-control" name="password" id="idPass">
+							</div>
+						</div>
+						<div class="col-md-2">
+							<div class="form-group mb-3">
+								<label for="idPass" class="form-label disabled">Nueva contraseña</label>
+								<input type="password" class="form-control" id="idPass" name="newPassword">
+							</div>
+							<div class="form-group mb-3">
+								<label for="idPassConfirm" class="form-label disabled">Confirma la Contraseña</label>
+								<input type="password" class="form-control" name="passwordConfirm" id="idPassConfirm">
+							</div>
+						</div>
+						<div class="col-md-1"></div>
+						<div class="col-md-3">
+							<div id="contenedorImagenSubida" class="d-flex justify-content-center">
+								<img th:src="|/img/profile/${usuario.imagen}|" id="imagenSubida" class="img-thumbnail rounded imagenSubida img-responsive" alt="Imagen de usuario"></img>
+							</div>
+							<div class="pt-4">
+								<p class="form-label text-right mb-2">Elige tu foto de perfil</p>
+								<div class="custom-file mb-3">
+									<input type="file" class="custom-file-input" id="subirFoto" onchange="readURL(this);" name="imagen" accept="image/png, image/jpeg" lang="es">
+									<label class="custom-file-label" for="customFile">Elije tu foto</label>
+								</div>
+							</div>	
+							
+						</div>
+						
+					</div>
+				</div>
+				<!--***FIN - CONTENEDOR3 - Cuenta (Nick, correo, cambio contraseña,...) *********************-->
 			</div>
-			<!--***FIN - CONTENEDOR3 - Cuenta (Nick, correo, cambio contraseña,...) *********************-->
-		</div>
-		<div class="col-12 mt-4">
-			<div class="d-flex justify-content-end">
-				<button type="submit"  class="btn btn-outline-success btn-sm m-2">
-					<i class="bi bi-save"></i> Guardar cambios
-				</button>		
+			<div class="col-12 mt-4">
+				<div class="d-flex justify-content-end">
+					<button type="submit"  class="btn btn-outline-success btn-sm m-2">
+						<i class="bi bi-save"></i> Guardar cambios
+					</button>		
+				</div>
 			</div>
-		</div>
-	</form>
+		</form>
+	</div>
 </div>
 
 <script>

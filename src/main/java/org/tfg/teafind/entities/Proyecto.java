@@ -98,8 +98,7 @@ public class Proyecto {
 		this.puestos = puestos;
 	}
 	public boolean isEnded() {
-		
-		return this.getFin().isBefore(LocalDate.now());
+		return (this.getFin().isBefore(LocalDate.now()) || this.getFin().isEqual(LocalDate.now()));
 	}
 	
  

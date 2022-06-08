@@ -226,9 +226,6 @@ public class UsuarioController {
 		if (usuario == null) {
 			PRG.error("Por favor, inicia sesión para acceder a tu perfil.", "/login");
 		}
-		if (!usuario.isVerified()) {
-			PRG.info("Debes verificar tu cuenta para acceder a tu perfil", "/usuario/verificar");
-		}
 		Usuario u = usuarioRepository.getById(usuario.getId());
 		List<Habilidad> habilidades = habilidadRepository.findAll();
 		m.put("usuario", u);
@@ -272,6 +269,7 @@ public class UsuarioController {
 		}
 		if (!email.isBlank()) {
 			usuario.setEmail(email);
+			usuario.setVerified(false);
 		}
 		if (!telefono.isBlank()) {
 			usuario.setTelefono(telefono);
@@ -336,6 +334,25 @@ public class UsuarioController {
 			}
 		}
 		
+		usuarioRepository.save(usuario);
+		return "redirect:/usuario/u";
+	}
+
+	@PostMapping("u/mail")
+	public String uMail(HttpSession s, @RequestParam("email") String email) throws DangerException {
+		Usuario u = (Usuario) s.getAttribute("usuario");
+		Usuario usuario = usuarioRepository.getById(u.getId());
+
+		if (!email.isBlank()) {
+			if (email.compareTo(usuario.getEmail()) != 0) {
+				usuario.setEmail(email);
+				usuario.setVerified(false);
+			} else {
+				PRG.error("El email introducido es el mismo que el actual.", "/usuario/u");
+			}
+		} else {
+			PRG.error("Por favor, introduce un email válido.", "/usuario/u");
+		}
 		usuarioRepository.save(usuario);
 		return "redirect:/usuario/u";
 	}
