@@ -14,6 +14,7 @@ import javax.servlet.http.HttpSession;
 
 import org.jboss.logging.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.config.web.server.ServerHttpSecurity.HttpsRedirectSpec;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.ModelMap;
@@ -144,15 +145,22 @@ public class UsuarioController {
 	}
 
 	@PostMapping("d")
-	public String dPost(@RequestParam("idUsuario") Long idUsuario) {
+	public String dPost(HttpSession s, @RequestParam("idUsuario") Long idUsuario) {
+		Usuario u = (Usuario) s.getAttribute("usuario");
 		Usuario usuario = usuarioRepository.getById(idUsuario);
+		String ruta = "redirect:/usuario/r";
+
+		if (u.getId().compareTo(idUsuario) == 0) {
+			s.invalidate();
+			ruta = "redirect:/";
+		}
 
 		for (Proyecto p : usuario.getCreados()) {
 			Proyecto pr = proyectoRepository.getById(p.getId());
 			pr.quitarLeader(null);
 			pr.setFin(LocalDate.now());
-			String desc = "El lider del proyecto, "+usuario.getNick()+" ("+usuario.getNombre()
-					+") ha sido eliminado, por lo que el proyecto pasa a estar finalizado.\n"+pr.getDescripcion();
+			String desc = pr.getDescripcion() + "\n-El lider del proyecto, " + usuario.getNick() + " (" + usuario.getNombre()
+					+ ") ha sido eliminado, por lo que el proyecto pasa a estar finalizado.";
 			pr.setDescripcion(desc);
 			proyectoRepository.saveAndFlush(pr);
 		}
@@ -168,7 +176,7 @@ public class UsuarioController {
 		
 		for(Habilidad h : usuario.getSabe()) {
 			Habilidad hab = habilidadRepository.getById(h.getId());
-			h.getConocida().remove(usuario);
+			hab.getConocida().remove(usuario);
 		}
 		
 		usuario.setSabe(null);
@@ -176,7 +184,7 @@ public class UsuarioController {
 		usuarioRepository.saveAndFlush(usuario);
 		usuarioRepository.deleteById(idUsuario);
 
-		return "redirect:/usuario/r";
+		return ruta;
 	}
 
 	@GetMapping("verificar")
@@ -215,14 +223,13 @@ public class UsuarioController {
 	}
 
 	@PostMapping("verificar")
-	public String verificarPost(@RequestParam("numero") int numero, HttpSession s) throws DangerException {
+	public void verificarPost(@RequestParam(value = "numero", required = false) int numero, HttpSession s) throws DangerException, InfoException {
 		if (s.getAttribute("usuario") == null) {
 			PRG.error("Por favor, inicia sesión para acceder aquí.", "/login");
 		}
 
 		Usuario u = (Usuario) s.getAttribute("usuario");
 		int nToken = (int) s.getAttribute("nToken");
-		String redirect = null;
 
 		if (u.isVerified()) {
 			PRG.error("Tu cuenta ya está verificada.", "/");
@@ -232,11 +239,11 @@ public class UsuarioController {
 			u.setVerified(true);
 			usuarioRepository.save(u);
 			s.invalidate();
-			redirect = "redirect:/login";
 		} else {
-			redirect = "redirect:/usuario/verificar";
+			PRG.error("La verificación de tu cuenta ha fallado.", "/usuario/verificar");
 		}
-		return redirect;
+		// return "redirect:/login";
+		PRG.info("¡Tu cuenta ha sido verificada! Por favor, vuelve a iniciar sesión.", "/login");
 	}
 
 	@GetMapping("u")
@@ -352,7 +359,7 @@ public class UsuarioController {
 	}
 
 	@PostMapping("u/mail")
-	public String uMail(HttpSession s, @RequestParam("email") String email) throws DangerException {
+	public void uMail(HttpSession s, @RequestParam("email") String email) throws DangerException, InfoException {
 		Usuario u = (Usuario) s.getAttribute("usuario");
 		Usuario usuario = usuarioRepository.getById(u.getId());
 
@@ -366,8 +373,14 @@ public class UsuarioController {
 		} else {
 			PRG.error("Por favor, introduce un email válido.", "/usuario/u");
 		}
-		usuarioRepository.save(usuario);
-		return "redirect:/usuario/u";
+		try {
+			usuarioRepository.save(usuario);
+		} catch (Exception e) {
+			PRG.error("Por favor, introduce un email válido.", "/usuario/u");
+		}
+		
+		s.invalidate();
+		PRG.info("Por favor, inicia sesión con tu nuevo email.", "/login");;
 	}
 
 	/**

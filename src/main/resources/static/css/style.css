@@ -180,7 +180,7 @@ html, body {
 }
 
 
-/*---------------------LOGIN---------------------
+/*-----------------MENU LOGIN---------------------
 ------------------------------------------------*/
 .texto-login {
     color: var(--main-light);
@@ -216,6 +216,32 @@ html, body {
 	100% {
 		background-position: 0% 50%;
 	}
+}
+
+/*----------------Vista LOGIN--------------------
+------------------------------------------------*/
+.imgVistaLogin {
+    height: 140px;
+}
+div.vistaLogin {
+    border-radius: 2rem;
+}
+.card.escalar.vistaLogin:hover{
+	/*-ms-transform: scale(1.01);
+	-webkit-transform: scale(1.01); */
+	transform: translate(-6px, -5px);
+	-webkit-box-shadow: -6px 5px 0px 0px var(--atencion); 
+	box-shadow: 6px 5px 0px 0px var(--atencion);
+    transition-duration: 150ms;
+}
+
+/*----------------Verificación--------------------
+------------------------------------------------*/
+input.inputCodigoVerificacion {
+    color: var(--main-dark);
+    text-align: center;
+    font-weight: bold;
+    letter-spacing: 5px;
 }
 
 /*--------------------Registro--------------------

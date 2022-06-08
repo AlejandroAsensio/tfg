@@ -68,12 +68,7 @@ public class Usuario {
 		this.sabe = new ArrayList<Habilidad>();
 		this.ocupa = new ArrayList<Puesto>();
 	}
-	public boolean isVerified() {
-		return verified;
-	}
-	public void setVerified(boolean verified) {
-		this.verified = verified;
-	}
+	
 	public Usuario(String nick, String nombre, String apellido1, String apellido2, String telefono, String email, String password, String imagen,
 			boolean admin) {
 		this.nick = nick;
@@ -175,7 +170,12 @@ public class Usuario {
 	public void setOcupa(Collection<Puesto> ocupa) {
 		this.ocupa = ocupa;
 	}
-	
+	public boolean isVerified() {
+		return verified;
+	}
+	public void setVerified(boolean verified) {
+		this.verified = verified;
+	}
 	
 	//=======================================0
 	

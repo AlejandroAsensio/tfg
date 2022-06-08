@@ -1,18 +1,56 @@
 <div class="container">
-	<div class="row m-3">
-		<h2 class="display-4">Verificar Cuenta</h2>
+	
+	<div class="row d-flex justify-content-between mb-4">
+		<div class="col-xl-7 col-lg-6 col-md-12 col-sm-12 col-12">
+			<h1 class="font-weight-light" th:text="|Verifica tu cuenta, ${session.usuario.nombre}|"></h1>
+		</div>
 	</div>
-</div>	
+	
+</div>
 
 <div class="container rounded p-4">
+
+	<form id="verificarCuentaForm" action="/usuario/verificar" method="POST">
 	
-	<form action="/usuario/verificar" method="POST">
-	<input type="number" name="numero"/> 
-	<input type="submit" value="Verificar Código"/>
+		<div class="form-row">
+			<div class="form-group col-md-3"></div>
+			<div class="form-group col-md-6">
+				<h5 for="idNombre" class="form-label disabled">Tu código de verificación</h5>
+				<input type="text" class="form-control inputCodigoVerificacion" name="numero" id="idNombre">
+			</div>
+			<div class="form-group col-md-3"></div>
+		</div>
+		<input type="hidden" name="idUsuario" th:value="${session.usuario.id}"/>
 	</form>
-	
-	<form action="/usuario/sendEmail" method="POST">
-	<input type="submit" value="Enviar Código"/>
-	</form>
+
+		<div class="form-row">
+			<div class="form-group col-md-3"></div>
+			<div class="form-group col-md-3">
+				<form action="/usuario/sendEmail" method="POST">
+					<button type="submit" class="btn btn-block btn-info">
+						<i class="bi bi-envelope mr-2"></i> 
+						Envíame el código al email
+					</button>
+				</form>
+			</div>
+			<div class="form-group col-md-3">
+				<button type="button" class="btn btn-block btn-success" onclick="document.getElementById('verificarCuentaForm').submit();">
+					<i class="bi bi-person-check mr-2"></i>
+					Verificar cuenta
+				</button>
+			</div>
+			<div class="form-group col-md-3"></div>
+		</div>
+		<div class="form-row mt-2">
+			<div class="form-group col-md-3"></div>
+			<div class="form-group col-md-6 list-group-item-warning rounded px-3 py-2">
+				<span for="message-text" class="col-form-label disabled font-weight-light text-center">
+					Es posible que tengas que buscar en tu carpeta de spam.
+				</span>
+			</div>
+			<div class="form-group col-md-3"></div>
+		</div>
 		
+	</form>
+	
 </div>
