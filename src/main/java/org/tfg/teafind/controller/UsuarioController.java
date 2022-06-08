@@ -221,10 +221,13 @@ public class UsuarioController {
 	}
 
 	@GetMapping("u")
-	public String perfil(ModelMap m, HttpSession s) throws DangerException {
+	public String perfil(ModelMap m, HttpSession s) throws DangerException, InfoException {
 		Usuario usuario = (Usuario) s.getAttribute("usuario");
 		if (usuario == null) {
-			PRG.error("Por favor, inicia sesión para acceder a tu perfil.", "/");
+			PRG.error("Por favor, inicia sesión para acceder a tu perfil.", "/login");
+		}
+		if (!usuario.isVerified()) {
+			PRG.info("Debes verificar tu cuenta para acceder a tu perfil", "/usuario/verificar");
 		}
 		Usuario u = usuarioRepository.getById(usuario.getId());
 		List<Habilidad> habilidades = habilidadRepository.findAll();
@@ -365,12 +368,19 @@ public class UsuarioController {
 	public String unir(ModelMap m,HttpSession s,
 			@RequestParam("idPuesto") Long idPuesto,
 			@RequestParam("idProyecto") Long idProyecto
-			) throws DangerException {
+			) throws DangerException, InfoException {
 		Puesto puesto = puestoRepository.getById(idPuesto);
 		
 		Usuario u = (Usuario) s.getAttribute("usuario");
+		Usuario usuario = usuarioRepository.getById(u.getId());
 		
-		Usuario usuario = usuarioRepository.getById(u.getId()); 
+		if (usuario.getOcupa().contains(puesto)) {
+			PRG.error("Ya ocupas el puesto " + puesto.getNombre() + ".","javascript:history.back()");
+		}
+
+		if (!usuario.isVerified()) {
+			PRG.info("Debes verificar tu cuenta para ocupar este puesto.", "/usuario/verificar");
+		}
 		
 		for(Habilidad h: puesto.getRequiere()) {
 			if(!usuario.getSabe().contains(h)) {

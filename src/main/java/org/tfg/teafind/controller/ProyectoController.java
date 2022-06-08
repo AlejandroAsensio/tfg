@@ -54,9 +54,13 @@ public class ProyectoController {
 //	}
 
 	@GetMapping("c")
-	public String c(ModelMap m,HttpSession s) throws DangerException {
-		if(s.getAttribute("usuario") == null) {
-			PRG.error("Tienes que iniciar sesion para poder crear proyectos","/");
+	public String c(ModelMap m,HttpSession s) throws DangerException, InfoException {
+		Usuario usuario = (Usuario) s.getAttribute("usuario");
+		if(usuario == null) {
+			PRG.error("Debes iniciar sesion para poder crear proyectos.","/login");
+		}
+		if (!usuario.isVerified()) {
+			PRG.info("Debes verificar tu cuenta para poder crear proyectos.", "/usuario/verificar");
 		}
 		m.put("view", "/proyecto/c");
 		return "_t/frame";
