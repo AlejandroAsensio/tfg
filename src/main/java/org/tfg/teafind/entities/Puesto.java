@@ -110,5 +110,8 @@ public class Puesto {
 	public void setRequiere(Collection<Habilidad> requiere) {
 		this.requiere = requiere;
 	}	
+	public void quitarProyecto(Puesto p) {
+		this.proyecto = null;
+	}
 	
 }

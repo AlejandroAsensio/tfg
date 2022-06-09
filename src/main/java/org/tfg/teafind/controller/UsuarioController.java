@@ -227,15 +227,18 @@ public class UsuarioController {
 		}
 
 		Usuario u = (Usuario) s.getAttribute("usuario");
+		
+		Usuario usuario = usuarioRepository.getById(u.getId());
+		
 		int nToken = (int) s.getAttribute("nToken");
 
-		if (u.isVerified()) {
+		if (usuario.isVerified()) {
 			PRG.error("Tu cuenta ya está verificada.", "/");
 		}
 
 		if (numero == nToken) {
-			u.setVerified(true);
-			usuarioRepository.save(u);
+			usuario.setVerified(true);
+			usuarioRepository.save(usuario);
 			s.invalidate();
 		} else {
 			PRG.error("La verificación de tu cuenta ha fallado.", "/usuario/verificar");
@@ -286,7 +289,7 @@ public class UsuarioController {
 		if (!apellido2.isBlank()) {
 			usuario.setApellido2(apellido2);
 		}
-		if (!email.isBlank()) {
+		if (!email.isBlank() && !email.equals(usuario.getEmail())) {
 			usuario.setEmail(email);
 			usuario.setVerified(false);
 		}
