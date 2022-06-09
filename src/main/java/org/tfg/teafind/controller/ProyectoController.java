@@ -44,15 +44,6 @@ public class ProyectoController {
 	@Autowired
 	private PuestoRepository puestoRepository;
 
-//	@GetMapping("/")
-//	public String r(ModelMap m) {
-//		List<Proyecto> proyectos = proyectoRepository.findAll();
-//
-//		m.put("proyectos", proyectos);
-//		m.put("view", "/proyecto/rHome");
-//		return "_t/frame";
-//	}
-
 	@GetMapping("c")
 	public String c(ModelMap m,HttpSession s) throws DangerException, InfoException {
 		Usuario usuario = (Usuario) s.getAttribute("usuario");
@@ -83,36 +74,34 @@ public class ProyectoController {
 		}
 		// PRG.info( "El proyecto "+ nombre + "se ha creado correctamente.",
 		// "/proyecto/r");
-		return "redirect:/puesto/c?nombreProyecto=" + nombre;
+		return "redirect:/usuario/mis_proyectos";
 
 	}
 	
 	@PostMapping("d")
 	public String dPost(HttpSession s, @RequestParam(value="idProyecto",required=false) Long idProyecto) throws DangerException {
 		
-		
-		if(idProyecto==null) {
+		if (idProyecto == null) {
 			PRG.error("Error al borrar proyecto","/");
-		}
-		else {
-		Proyecto proyecto = proyectoRepository.getById(idProyecto);
-		
-		proyecto.quitarLeader(null);
-		
-		for(Puesto p : proyecto.getPuestos()) {
-			p.quitarProyecto(null);
-			for(Habilidad h : p.getRequiere()) {
-				h.getRequerida().remove(h);
+		} else {
+			Proyecto proyecto = proyectoRepository.getById(idProyecto);
+			
+			proyecto.quitarLeader(null);
+			
+			for (Puesto p : proyecto.getPuestos()) {
+				p.quitarProyecto(null);
+				for(Habilidad h : p.getRequiere()) {
+					h.getRequerida().remove(h);
+				}
+				p.setRequiere(null);
+				p.setOcupante(null);
+				puestoRepository.saveAndFlush(p);
+				puestoRepository.deleteById(p.getId());
 			}
-			p.setRequiere(null);
-			p.setOcupante(null);
-			puestoRepository.saveAndFlush(p);
-			puestoRepository.deleteById(p.getId());
-		}
-		proyecto.setPuestos(null);
-		
-		proyectoRepository.saveAndFlush(proyecto);
-		proyectoRepository.deleteById(idProyecto);
+			proyecto.setPuestos(null);
+			
+			proyectoRepository.saveAndFlush(proyecto);
+			proyectoRepository.deleteById(idProyecto);
 		}
 
 		return "redirect:/";

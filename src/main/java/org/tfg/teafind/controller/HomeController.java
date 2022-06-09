@@ -6,12 +6,6 @@ import javax.servlet.http.HttpSession;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
-
-//import javax.servlet.http.HttpSession;
-
-
-//import org.springframework.beans.factory.annotation.Autowired;
-//import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.ModelMap;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -19,8 +13,6 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.tfg.teafind.entities.Proyecto;
 import org.tfg.teafind.entities.Usuario;
-//import org.springframework.web.bind.annotation.PostMapping;
-//import org.springframework.web.bind.annotation.RequestParam;
 import org.tfg.teafind.exception.DangerException;
 import org.tfg.teafind.exception.PRG;
 import org.tfg.teafind.helper.H;
@@ -40,13 +32,11 @@ public class HomeController {
 	public String index(ModelMap m, @RequestParam(value="nombre",required=false) String nombre) {
 		List<Proyecto> proyectos = null;
 		
-		if(nombre!=null) {
+		if(nombre != null) {
 			proyectos = proyectoRepository.findByNombreContainingIgnoreCase(nombre);
-		}
-		else {
+		} else {
 			proyectos = proyectoRepository.findAll();	
 		}
-		
 		
 		m.put("proyectos", proyectos);
 		m.put("view", "home/rHome");
@@ -80,6 +70,11 @@ public class HomeController {
 			ModelMap m,
 			HttpSession s) throws DangerException {
 		H.isRolOK("anon", s);
+		
+		if (s.getAttribute("usuario") != null) {
+			PRG.error("Ya has iniciado sesión." ,"/");
+		}
+
 		m.put("view", "home/login");
 		return "_t/frame";
 	}
