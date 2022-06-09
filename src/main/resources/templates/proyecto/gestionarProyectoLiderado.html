@@ -353,10 +353,10 @@
 				</th:block>
 			</div>
 			<div class="row d-flex justify-content-end mt-3 mr-3">
-				<a type="button" class="btn btn-outline-danger btn-sm mr-2 botonEdicion"  href="" hidden="hidden">
-					<i class="bi bi-exclamation-lg"></i>
-					 Eliminar proyecto
-				</a>
+				<form action="/proyecto/d" method="POST">
+					<input type="submit" class="btn btn-outline-danger btn-sm mr-2 botonEdicion"  value="Eliminar Proyecto" hidden="hidden">
+					<input type="hidden" name="idProyecto" th:value="${proyecto.id}"/>
+				</form>
 			</div>
 		</div>
 	</div>

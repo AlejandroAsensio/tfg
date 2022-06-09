@@ -86,7 +86,38 @@ public class ProyectoController {
 		return "redirect:/puesto/c?nombreProyecto=" + nombre;
 
 	}
+	
+	@PostMapping("d")
+	public String dPost(HttpSession s, @RequestParam(value="idProyecto",required=false) Long idProyecto) throws DangerException {
+		
+		
+		if(idProyecto==null) {
+			PRG.error("Error al borrar proyecto","/");
+		}
+		else {
+		Proyecto proyecto = proyectoRepository.getById(idProyecto);
+		
+		proyecto.quitarLeader(null);
+		
+		for(Puesto p : proyecto.getPuestos()) {
+			p.quitarProyecto(null);
+			for(Habilidad h : p.getRequiere()) {
+				h.getRequerida().remove(h);
+			}
+			p.setRequiere(null);
+			p.setOcupante(null);
+			puestoRepository.saveAndFlush(p);
+			puestoRepository.deleteById(p.getId());
+		}
+		proyecto.setPuestos(null);
+		
+		proyectoRepository.saveAndFlush(proyecto);
+		proyectoRepository.deleteById(idProyecto);
+		}
 
+		return "redirect:/";
+	}
+	
 	@GetMapping("verProyecto")
 	public String verProyecto(ModelMap m, @RequestParam("idProyecto") Long idProyecto, HttpSession s) {
 		boolean pertenece = false;
