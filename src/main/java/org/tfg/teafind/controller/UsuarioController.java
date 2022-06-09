@@ -14,7 +14,6 @@ import javax.servlet.http.HttpSession;
 
 import org.jboss.logging.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.security.config.web.server.ServerHttpSecurity.HttpsRedirectSpec;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.ModelMap;
@@ -159,8 +158,7 @@ public class UsuarioController {
 			Proyecto pr = proyectoRepository.getById(p.getId());
 			pr.quitarLeader(null);
 			pr.setFin(LocalDate.now());
-			String desc = pr.getDescripcion() + "\n-El lider del proyecto, " + usuario.getNick() + " (" + usuario.getNombre()
-					+ ") ha sido eliminado, por lo que el proyecto pasa a estar finalizado.";
+			String desc = pr.getDescripcion() + "\n- " + pr.getNombre() + " fue creado por " + usuario.getNick() + " (" + usuario.getNombre() + ").";
 			pr.setDescripcion(desc);
 			proyectoRepository.saveAndFlush(pr);
 		}

@@ -89,10 +89,13 @@ public class ProyectoController {
 
 	@GetMapping("verProyecto")
 	public String verProyecto(ModelMap m, @RequestParam("idProyecto") Long idProyecto, HttpSession s) {
-		boolean pertenece = false;
 		Proyecto proyecto = proyectoRepository.getById(idProyecto);
 		Usuario usuario = (Usuario) s.getAttribute("usuario");
+		boolean pertenece = false;
+		int puestosOcupados = 0;
+		boolean ocupadoUnicoLibre = false;
 		
+		//Para saber si el usuario pertenece al proyecto
 		if (usuario != null) {
 			for (Puesto p : proyecto.getPuestos()) {
 				if (p.getOcupante() != null) {
@@ -104,12 +107,16 @@ public class ProyectoController {
 		}
 		
 		//Para saber el número de puestos OCUPADOS del proyecto
-		int puestosOcupados = 0;
 		for (Puesto p : proyecto.getPuestos()) {
 			if (p.getOcupante() != null) {
 				puestosOcupados++;
 			}
 		}
+
+		//Habiendo un solo puesto, averiguar si el usuario activo es el que lo ocupa
+		ocupadoUnicoLibre = (puestosOcupados == 1 && pertenece) ? true : false;
+
+
 
 		
 		
@@ -118,6 +125,7 @@ public class ProyectoController {
 		m.put("ocupados", puestosOcupados);
 		//Número de puestos libres del proyecto
 		m.put("libres", proyecto.getPuestos().size() - puestosOcupados);
+		m.put("ocupadoUnicoLibre", ocupadoUnicoLibre);
 		m.put("view", "/proyecto/verProyecto");
 		return "_t/frame";
 	}
@@ -128,6 +136,10 @@ public class ProyectoController {
 
 		Proyecto proyecto = proyectoRepository.getById(idProyecto);
 		Usuario leader = (Usuario) s.getAttribute("usuario");
+
+		if (proyecto.getLeader() == null) {
+			PRG.error("No se puede acceder a la gestión de este proyecto.", "/");
+		}
 
 		//Se comprueba si el usuario es el lider o no para permitir el acceso
 		if ((leader == null) || (!leader.getId().equals(proyecto.getLeader().getId()))) {
