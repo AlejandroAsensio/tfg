@@ -68,7 +68,7 @@
 			<!--******************************* END Modal para creación de puesto *******************************-->
 			
 			<div>
-				<button type="submit" class="btn btn-outline-warning btn-sm border-0 mr-2 botonModoEdicion" onclick="edicionGestionProyecto();">
+				<button type="submit" th:if="${!proyecto.isEnded()}" class="btn btn-outline-warning btn-sm border-0 mr-2 botonModoEdicion" onclick="edicionGestionProyecto();">
 					<i class="bi bi-pencil"></i>
 					 Editar proyecto
 				</button>

@@ -111,7 +111,11 @@ public class HabilidadController {
 			@RequestParam("nombre") String nombre,
 			@RequestParam("descripcion") String descripcion
 			) throws DangerException {
+		if(nombre == null || nombre.equals("") || descripcion == null || descripcion.equals("")) {
+			PRG.error("La habilidad ya existe o tiene campos vacíos","/habilidad");
+		}
 		try {
+			
 			Habilidad habilidad= habilidadRepository.getById(idHabilidad);
 			habilidad.setNombre(nombre);
 			habilidad.setDescripcion(descripcion);

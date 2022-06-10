@@ -74,13 +74,17 @@ public class PuestoController {
 	@PostMapping("/puesto/c")
 	public String cPost(
 			HttpSession s,
-			@RequestParam("nombre") String nombre,
-			@RequestParam("descripcion") String descripcion,
-			@RequestParam("idsHabilidadesRequire[]")List<Long> idsHabilidadesRequire,
-			@RequestParam("idProyecto") Long idProyecto,
-			@RequestParam("destino") boolean seguir,
-			@RequestParam("nombreProyecto") String nombreProyecto
+			@RequestParam(value="nombre",required=false) String nombre,
+			@RequestParam(value="descripcion",required=false) String descripcion,
+			@RequestParam(value="idsHabilidadesRequire[]",required=false)List<Long> idsHabilidadesRequire,
+			@RequestParam(value="idProyecto",required=false) Long idProyecto,
+			@RequestParam(value="destino",required=false) boolean seguir,
+			@RequestParam(value="nombreProyecto",required=false) String nombreProyecto
 			) throws DangerException, InfoException {
+		
+		if(nombre == null || descripcion == null || idsHabilidadesRequire == null || idProyecto == null || nombreProyecto == null) {
+			PRG.error("Error al crear puesto","javascript:history.back()");
+		}
 		String ruta = "";
 		List<Habilidad> habilidadesRequeridas = new ArrayList<Habilidad>();
 		for(Long id: idsHabilidadesRequire) {
@@ -112,10 +116,10 @@ public class PuestoController {
 	
 	@PostMapping("/puesto/u")
 	public String uPost(
-			@RequestParam("idProyecto") Long idProyecto,
-			@RequestParam("idPuesto") Long idPuesto,
-			@RequestParam("nombre") String nombre,
-			@RequestParam("descripcion") String descripcion,
+			@RequestParam(value="idProyecto",required=false) Long idProyecto,
+			@RequestParam(value="idPuesto",required=false) Long idPuesto,
+			@RequestParam(value="nombre",required=false) String nombre,
+			@RequestParam(value="descripcion",required=false) String descripcion,
 			@RequestParam(value="idsHabilidadesRequiere[]", required=false) List<Long> idsHabilidades
 			) throws DangerException {
 		try {
@@ -139,10 +143,15 @@ public class PuestoController {
 	
 	@PostMapping("/puesto/d")
 	public String dPost(
-			@RequestParam("idPuesto") Long idPuesto,
-			@RequestParam("idProyecto") Long idProyecto
-			) {
+			@RequestParam(value="idPuesto",required=false) Long idPuesto,
+			@RequestParam(value="idProyecto",required=false) Long idProyecto
+			) throws DangerException {
+		try {
 		puestoRepository.deleteById(idPuesto);
+		}
+		catch (Exception e) {
+			PRG.error("Error al eliminar puesto","javascript:history.back()");
+		}
 		return "redirect:/proyecto/tuProyecto?idProyecto=" + idProyecto;
 	}
 }
