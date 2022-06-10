@@ -69,9 +69,11 @@ html, body {
 ------------------------------------------------*/
 .logoNavbar {
 	height: 30px;
+    transition-duration: 0.4s;
 }
-.logoNavbar :hover {
-	box-shadow: #fff 0px 0px 8px;
+.logoNavbar:hover {
+    transform: rotate(7deg) scale(1.2);
+    transition-duration: 0.4s;
 }
 .dropdown-menu {
     width: 250px !important;
@@ -384,7 +386,15 @@ input.inputCodigoVerificacion {
 .teamPic{
 	height: 320px;
 	width: 320px;
+    transition-duration: 0.6s;
 }
+.teamPic:hover {
+    -moz-transform: scale(1.1,1.1);
+    -webkit-transform: scale(1.1,1.1);
+    -o-transform: scale(1.1,1.1);
+    -ms-transform: scale(1.1,1.1);
+    transition-duration: 0.4s;
+}  
 .team h5 {
     line-height: 22px;
     font-size: 18px;
@@ -406,18 +416,35 @@ input.inputCodigoVerificacion {
 	transform: translate3d(0px, -5px, 0px);
 	color: #316ce8;
 }
-.logoTeam {
+img.logoTeam {
 	height: 120px;
+    transition-duration: 1.4s;
 }
+img.logoTeam:hover {
+    transform: scale(1.3);
+    transition-duration: 0.4s;
+}
+
 
 /*-----------------About View-----------------
 ------------------------------------------------*/
 .logoAbout {
 	height: 220px;
+    transition-duration: 0.6s;
 }
+.logoAbout:hover {
+	transform: rotate(10deg) scale(1.1);
+    transition-duration: 0.4s;
+}
+
 
 /*-------------------Footer-------------------
 ------------------------------------------------*/
 .logoFooter {
 	height: 24px;
+    transition-duration: 0.8s;
+}
+a.enlaceIconoFooter:hover .logoFooter {
+    transform: rotate(10deg) scale(1.1);
+    transition-duration: 0.4s;
 }
