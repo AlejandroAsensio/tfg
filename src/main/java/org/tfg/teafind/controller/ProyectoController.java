@@ -58,10 +58,10 @@ public class ProyectoController {
 	}
 
 	@PostMapping("c")
-	public String cPost(@RequestParam("nombre") String nombre, @RequestParam("descripcion") String descripcion,
-			@DateTimeFormat(iso = DateTimeFormat.ISO.DATE) @RequestParam("fIni") LocalDate fIni,
-			@DateTimeFormat(iso = DateTimeFormat.ISO.DATE) @RequestParam("fFin") LocalDate fFin,
-			@RequestParam("idUsuario") Long idUsuario
+	public String cPost(@RequestParam(value="nombre",required=false) String nombre, @RequestParam(value="descripcion",required=false) String descripcion,
+			@DateTimeFormat(iso = DateTimeFormat.ISO.DATE) @RequestParam(value="fIni",required=false) LocalDate fIni,
+			@DateTimeFormat(iso = DateTimeFormat.ISO.DATE) @RequestParam(value="fFin",required=false) LocalDate fFin,
+			@RequestParam(value="idUsuario",required=false) Long idUsuario
 	// falta el tipo de dato usuario
 
 	) throws DangerException, InfoException {
@@ -91,7 +91,7 @@ public class ProyectoController {
 			for (Puesto p : proyecto.getPuestos()) {
 				p.quitarProyecto(null);
 				for(Habilidad h : p.getRequiere()) {
-					h.getRequerida().remove(h);
+					h.getRequerida().remove(p);
 				}
 				p.setRequiere(null);
 				p.setOcupante(null);
@@ -108,7 +108,12 @@ public class ProyectoController {
 	}
 	
 	@GetMapping("verProyecto")
-	public String verProyecto(ModelMap m, @RequestParam("idProyecto") Long idProyecto, HttpSession s) {
+	public String verProyecto(ModelMap m, @RequestParam(value="idProyecto",required=false) Long idProyecto, HttpSession s) throws DangerException {
+		
+		if(idProyecto==null) {
+			PRG.error("Error al acceder al proyecto","/");
+		}
+		
 		Proyecto proyecto = proyectoRepository.getById(idProyecto);
 		Usuario usuario = (Usuario) s.getAttribute("usuario");
 		boolean pertenece = false;
@@ -187,11 +192,17 @@ public class ProyectoController {
 	}
 
 	@PostMapping("tuProyecto")
-	public String uProyectoLideradoPost(@RequestParam("nombre") String nombre,
-			@RequestParam("descripcion") String descripcion,
-			@DateTimeFormat(iso = DateTimeFormat.ISO.DATE) @RequestParam("fIni") LocalDate fIni,
-			@DateTimeFormat(iso = DateTimeFormat.ISO.DATE) @RequestParam("fFin") LocalDate fFin,
-			@RequestParam("idProyecto") Long idProyecto, HttpSession s) throws DangerException {
+	public String uProyectoLideradoPost(@RequestParam(value="nombre",required=false) String nombre,
+			@RequestParam(value="descripcion",required=false) String descripcion,
+			@DateTimeFormat(iso = DateTimeFormat.ISO.DATE) @RequestParam(value="fIni",required=false) LocalDate fIni,
+			@DateTimeFormat(iso = DateTimeFormat.ISO.DATE) @RequestParam(value="fFin",required=false) LocalDate fFin,
+			@RequestParam(value="idProyecto",required=false) Long idProyecto, HttpSession s) throws DangerException {
+		
+		
+		if(nombre == null || descripcion == null || fFin == null || fFin == null || idProyecto == null) {
+			PRG.error("Error al gestionar proyecto","javascript:history.back()");
+		}
+		
 		Proyecto proyecto = proyectoRepository.getById(idProyecto);
 		Usuario leader = (Usuario) s.getAttribute("usuario");
 
@@ -210,8 +221,11 @@ public class ProyectoController {
 	}
 	@PostMapping("despedir")
 	public String despedir(
-			@RequestParam("idPuesto") Long idPuesto 
-			) {
+			@RequestParam(value="idPuesto",required=false) Long idPuesto 
+			) throws DangerException {
+		if(idPuesto == null) {
+			PRG.error("Error al despedir al usuario");
+		}
 		Puesto puesto = puestoRepository.getById(idPuesto);
 		
 		puesto.setOcupante(null);
