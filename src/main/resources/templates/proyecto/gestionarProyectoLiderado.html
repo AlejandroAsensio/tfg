@@ -77,6 +77,12 @@
 					 Cancelar edición
 				</button>
 			</div>
+			<form th:if="${proyecto.isEnded()}" action="/proyecto/d" method="POST">
+				<input type="hidden" name="idProyecto" th:value="${proyecto.id}"/>
+				<button type="submit" class="btn btn-outline-danger btn-sm border-0 mr-2">
+					<i class="bi bi-radioactive"></i> Eliminar proyecto
+				</button>
+			</form>
 			<form action="/proyecto/verProyecto">
 				<input type="hidden" name="idProyecto" th:value="${proyecto.id}"/>
 				<button type="submit" class="btn btn-outline-success btn-sm border-0 mr-2">

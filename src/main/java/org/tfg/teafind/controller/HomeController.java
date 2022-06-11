@@ -1,5 +1,6 @@
 package org.tfg.teafind.controller;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import javax.servlet.http.HttpSession;
@@ -31,12 +32,23 @@ public class HomeController {
 	@GetMapping("/")
 	public String index(ModelMap m, @RequestParam(value="nombre",required=false) String nombre) {
 		List<Proyecto> proyectos = null;
+		List<Proyecto> activos = null;
 		
 		if(nombre != null) {
 			proyectos = proyectoRepository.findByNombreContainingIgnoreCase(nombre);
 		} else {
 			proyectos = proyectoRepository.findAll();	
 		}
+
+		// for (Proyecto proyecto : proyectos) {
+		// 	if (!proyecto.isEnded()) {
+		// 		activos.add(proyecto);
+		// 	}
+		// }
+		
+		// for (int i = 0; i < 3; i++) {
+		// 	int numero = (int)(Math.random()*activos.size());
+		// }
 		
 		m.put("proyectos", proyectos);
 		m.put("view", "home/rHome");

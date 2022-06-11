@@ -1,17 +1,19 @@
 <div class="container">
-	<div class="row m-3 mt-4">
-		<h1 class="font-weight-light">Proyectos</h1>
-	</div>
-	<form action="/">
-	<input type="text" placeholder="Nombre del proyecto" name="nombre"/>
-	<input type="submit" value="Buscar"/>
-	</form>
+	<div class="row justify-content-center mb-3">
+		<div class="col-md-7 text-center">
+			<img class="img-fluid logoHome mb-4" src="/img/logo.png"/>
+	  	</div>
+  </div>
 </div>
 
 <div th:if="${proyectos.size > 0}" class="container p-4">
 	
 	<div class="row ml-3 d-flex justify-content-between">
-		<h3 class="font-weight-light align-self-center">Lista de Proyectos</h3>
+		<form class="search-container" action="/">
+			<input id="search-box" type="text" class="search-box" placeholder="Nombre del proyecto" name="nombre" title="Buscar proyectos por nombre"/>
+			<label for="search-box"><span class="search-icon"><i class="bi bi-search"></i></span></label>
+			<input type="submit" id="search-submit" />
+		</form>
 
 		<div class="d-flex justify-content-end">
 			<div id="finalizadosSwitch" class="custom-control custom-switch finalizados align-self-center mr-3">

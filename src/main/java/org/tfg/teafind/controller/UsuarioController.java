@@ -289,10 +289,6 @@ public class UsuarioController {
 		if (!apellido2.isBlank()) {
 			usuario.setApellido2(apellido2);
 		}
-		if (!email.isBlank() && !email.equals(usuario.getEmail())) {
-			usuario.setEmail(email);
-			usuario.setVerified(false);
-		}
 		if (!telefono.isBlank()) {
 			usuario.setTelefono(telefono);
 		}
@@ -355,6 +351,11 @@ public class UsuarioController {
 			}
 		}
 
+		if (!email.isBlank() && !email.equals(usuario.getEmail())) {
+			usuario.setEmail(email);
+			usuario.setVerified(false);
+			s.invalidate();
+		}
 		usuarioRepository.save(usuario);
 		return "redirect:/usuario/u";
 	}

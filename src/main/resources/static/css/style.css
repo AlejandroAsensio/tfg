@@ -239,6 +239,14 @@ div.vistaLogin {
 
 /*--------------------HOME------------------------
 ------------------------------------------------*/
+.logoHome {
+    height: 150px;
+    transition-duration: 0.6s;
+}
+.logoHome:hover {
+	transform: rotate(10deg) scale(1.1);
+    transition-duration: 0.4s;
+}
 .search-box {
     transition: width 0.6s, border-radius 0.6s, background 0.6s, box-shadow 0.6s;
     width: 40px;
@@ -248,6 +256,7 @@ div.vistaLogin {
     cursor: pointer;
     background: var(--gris);
 }
+/* *** Barra de búsqueda *** */
 .search-box+label .search-icon {
     color: var(--blanco);
 }
@@ -286,6 +295,19 @@ div.vistaLogin {
     left: -30px;
     color: white;
     cursor: pointer;
+}
+/* *** Carrusel *** */
+.carousel {
+    position: relative;
+}
+.carousel-caption {
+    position: absolute;
+    background: rgba(0, 0, 0, 0.4);
+    padding: 15px 10px;
+}
+.carousel-control-prev,
+.carousel-control-next {
+    width: 5%;
 }
 
 /*----------------Verificación--------------------

@@ -54,8 +54,8 @@
 	<section class="row">
 		<th:block class="contenedorCards" th:each="proyectoCreado : ${proyectosCreados}">
 			<div class="d-flex align-items-stretch col-xl-6 col-lg-6 col-md-6 col-sm-12 col-12">
-				<div class="card escalar border-0 my-4 mx-3 cartaJumboPropios w-100">
-					<div th:class="card-body" th:classappend="${proyectoCreado.isEnded() ? 'proyectoFinalizado' : ''}">
+				<div th:class="${proyectoCreado.isEnded()} ? 'card escalar border-0 my-4 mx-3 proyectoFinalizado w-100' : 'card escalar border-0 my-4 mx-3 w-100 cartaJumboPropios'">
+					<div th:class="card-body">
 						<h3 class="font-weight-light" th:text="${proyectoCreado.nombre}" />
 							
 						<hr class="mb-4">
@@ -119,8 +119,9 @@
 	<section class="row">
 		<th:block class="contenedorCards" th:each="proyectoPertenece : ${proyectosPertenece}">
 			<div class="d-flex align-items-stretch col-xl-6 col-lg-6 col-md-6 col-sm-12 col-12">
-				<div class="card escalar border-0 my-4 mx-3 cartaJumbo w-100">
-					<div th:class="card-body" th:classappend="${proyectoPertenece.proyecto.isEnded() ? 'proyectoFinalizado' : ''}">
+				<div th:class="${proyectoPertenece.proyecto.isEnded()} ? 'card escalar border-0 my-4 mx-3 proyectoFinalizado w-100' : 'card escalar border-0 my-4 mx-3 w-100 cartaJumbo'">
+
+					<div th:class="card-body" >
 						<h3 class="font-weight-light" th:text="${proyectoPertenece.proyecto.nombre}" />
 							
 						<hr class="mb-4">
@@ -140,31 +141,6 @@
 		</th:block>
 	</section>
 </div>
-<!--***********************************************************************************************-->
-
-
-
-				<!--PUEDE SERVIR PARA EL NÚMERO DE PUESTOS LIBRES / OCUPADOS EN LAS CARDS DE LIDERADOS
-				<th:block th:if="${proyectoCreado.puestos.size != 0}">
-					<td>
-						<ul th:each="puesto : ${proyectoCreado.puestos}">
-							<li th:text="${puesto.nombre}" />
-						</ul>
-					</td>
-					<td>
-						<ul th:each="puesto : ${proyectoCreado.puestos}">
-						 	<li
-								th:if="${puesto.ocupante?.nombre != null}" 
-								th:text="${puesto.ocupante.nombre}">
-							</li>
-							<li th:unless="${puesto.ocupante?.nombre != null}">Libre</li>
-						</ul>
-					</td>
-				</th:block>
-				<th:block th:unless="${proyectoCreado.puestos.size != 0}">
-					<td  colspan="2" class="text-center">Sin puestos creados</th>
-				</th:block>
-				**************************************************************************************-->
 	    
 
 <script src="/js/misProyectos.js"></script>
