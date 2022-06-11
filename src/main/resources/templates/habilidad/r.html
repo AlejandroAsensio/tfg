@@ -21,7 +21,7 @@
 								<span aria-hidden="true">&times;</span>
 							</button>
 						</div>
-						<form name="habilidadForm" action="/habilidad/c" method="POST">
+						<form name="habilidadForm" action="/hability/new" method="POST">
 							<div class="modal-body">
 			
 								<div class="form-group">
@@ -94,7 +94,7 @@
 										<span aria-hidden="true">&times;</span>
 									</button>
 								</div>
-								<form name="editHabilidadForm" action="/habilidad/u" method="POST" th:id="|editHabilidadForm-${habilidad.id}|">
+								<form name="editHabilidadForm" action="/hability/edit" method="POST" th:id="|editHabilidadForm-${habilidad.id}|">
 									<div class="modal-body">
 					
 										<div class="form-group">
@@ -121,7 +121,7 @@
 						</div>
 					</div>
 					<!--***************************Fin Modal EDITAR HABILIDAD*****************************-->
-					<form action="/habilidad/d" method="POST">
+					<form action="/hability/delete" method="POST">
 						<input type="hidden" name="idHabilidad" th:value="${habilidad.id}"/>
 						<button type="submit" class="btn btn-link btn-sm btn-rounded" title="Eliminar">
 							<i class="bi bi-trash3 tx-bad"></i>

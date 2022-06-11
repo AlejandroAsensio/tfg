@@ -3,19 +3,6 @@ var okemail=false;
 var okpass=false;
 var okpassConfirm=false;
 $(document).ready(function(){
-
-
-    $('#plantilla').on("click",function(){
-        var x=Math.floor(Math.random()*99);
-        $('#idNombre').val("Dolores"+x);
-        $('#idApe1').val("Crotales");
-        $('#idApe2').val("Fuertes");
-        $('#idTlf').val("654607766");
-        $('#idEmail').val("dolores"+x+"@gmail.com");
-        $('#idPass').val("Contraseña");
-        $('#idPassConfirm').val("Contraseña");
-        $('#divpass').text("La pass es: Contraseña");
-    })
         
     
     

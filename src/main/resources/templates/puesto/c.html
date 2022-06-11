@@ -8,7 +8,7 @@
 
 <div class="container p-4">
 	
-	<form name="puestoForm" action="/puesto/c" method="POST">
+	<form name="puestoForm" action="/work/new" method="POST">
 	
 		<div class="row">
 			<div class="col-xl-4 col-lg-4 col-md-3 col-sm-12 col-12">
@@ -54,7 +54,7 @@
 					
 					<div class="d-flex justify-content-between">
 						<div>
-							<a th:href="|/proyecto/tuProyecto?idProyecto=${proyecto.id}|" role="button" class="btn btn-outline-danger btn-sm border-0 m-2">
+							<a th:href="|/project/manage?idProyecto=${proyecto.id}|" role="button" class="btn btn-outline-danger btn-sm border-0 m-2">
 								<i class="bi bi-x"></i> Cancelar
 							</a>
 						</div>

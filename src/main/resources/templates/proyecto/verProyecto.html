@@ -6,14 +6,14 @@
 		</div>
 		
 		<div class="d-flex justify-content-end align-self-center col-xl-5 col-lg-6 col-md-12 col-sm-12 col-12">
-			<form action="/proyecto/tuProyecto" th:if="${proyecto.leader?.id != null && proyecto.leader?.id == session.usuario?.id}">
+			<form action="/project/manage" th:if="${proyecto.leader?.id != null && proyecto.leader?.id == session.usuario?.id}">
 				<input type="hidden" name="idProyecto" th:value="${proyecto.id}"/>
 				<button type="submit" class="btn btn-outline-warning btn-sm border-0 mr-2">
 					<i class="bi bi-gear"></i>
 					 Gestionar proyecto
 				</button>
 			</form>
-			<form action="/usuario/mis_proyectos">
+			<form action="/user/projects">
 				<button type="submit" class="btn btn-outline-info btn-sm border-0" th:unless="${session.usuario == null}">
 					<i class="bi bi-arrow-left"></i>
 					 Mis Proyectos
@@ -103,7 +103,7 @@
 						</div>
 					</div>
 					
-					<form name="abandonarProyecto" action="/usuario/salir" method="POST">
+					<form name="abandonarProyecto" action="/project/user/exit" method="POST">
 						<div class="mx-3 mb-3 d-flex justify-content-end">
 							<input type="hidden" name="idPuesto" th:value="${puesto.id}"/>
 							<button type="button" class="btn btn-outline-danger btn-sm border-0" onclick="salir(this.form)">
@@ -229,7 +229,7 @@
 						    <div class="d-inline justify-content-end pb-2 px-2">
 							    <span th:each="habilidad : ${puesto.requiere}" th:text="${habilidad.nombre}" class="badge badge-pill badge-primary mx-1"></span>
 							</div>
-					    	<form th:name="|unir${puesto.id}|" th:if="${puesto.ocupante==null && !pertenece && session.usuario!=null && proyecto.leader.id != session.usuario.id && !proyecto.isEnded()} " action="/usuario/unir" method="POST">
+					    	<form th:name="|unir${puesto.id}|" th:if="${puesto.ocupante==null && !pertenece && session.usuario!=null && proyecto.leader.id != session.usuario.id && !proyecto.isEnded()} " action="/project/user/join" method="POST">
 					    		<div class="d-flex justify-content-end">
 									<input type="hidden" name="idPuesto" th:value="${puesto.id}"/>
 									<input type="hidden" name="idProyecto" th:value="${proyecto.id}"/>

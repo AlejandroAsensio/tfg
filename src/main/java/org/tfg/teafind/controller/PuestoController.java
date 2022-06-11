@@ -24,7 +24,6 @@ import org.tfg.teafind.repository.PuestoRepository;
 
 
 @Controller
-//@RequestMapping("/puesto")
 public class PuestoController {
 
 	@Autowired
@@ -38,7 +37,7 @@ public class PuestoController {
 	
 	
 	
-	@GetMapping("/puesto/r")
+	@GetMapping("puesto/r")
 	public String r(
 			ModelMap m
 			) {
@@ -47,7 +46,7 @@ public class PuestoController {
 		return "_t/frame";
 	}
 	
-	@GetMapping("/puesto/c")
+	@GetMapping("work/new")
 	public String c(
 			ModelMap m,
 			HttpSession s,
@@ -66,12 +65,12 @@ public class PuestoController {
 		List<Habilidad> habilidades = habilidadRepository.findAll();
 		m.put("habilidades", habilidades);
 		m.put("proyecto", proyecto);
-		m.put("view", "/puesto/c");
+		m.put("view", "puesto/c");
 		return "_t/frame";
 	}
 	
 	
-	@PostMapping("/puesto/c")
+	@PostMapping("work/new")
 	public String cPost(
 			HttpSession s,
 			@RequestParam(value="nombre",required=false) String nombre,
@@ -100,21 +99,21 @@ public class PuestoController {
 			puestoRepository.save(new Puesto(nombre,descripcion,proyecto,habilidadesRequeridas));
 			
 		} catch (Exception e) {
-			PRG.error("La habilidad " + nombre + " ya existe ", "/usuario/c");
+			PRG.error("La habilidad " + nombre + " ya existe ", "/user/profile");
 		}
 		if(seguir) {
-			ruta="redirect:/puesto/c?nombreProyecto="+nombreProyecto;
+			ruta="redirect:/work/new?nombreProyecto="+nombreProyecto;
 		}
 		
 		
 		else if(!seguir) {
-			ruta="redirect:/proyecto/tuProyecto?idProyecto="+idProyecto;
+			ruta="redirect:/project/manage?idProyecto="+idProyecto;
 		}
 //		PRG.info(nombre + " creado correctamente.", "/usuario/r");
 		return ruta;
 	}
 	
-	@PostMapping("/puesto/u")
+	@PostMapping("work/edit")
 	public String uPost(
 			@RequestParam(value="idProyecto",required=false) Long idProyecto,
 			@RequestParam(value="idPuesto",required=false) Long idPuesto,
@@ -136,12 +135,12 @@ public class PuestoController {
 			puesto.setDescripcion(descripcion);
 			puestoRepository.save(puesto);
 		} catch (Exception e) {
-			PRG.error("El puesto "+nombre+" ya existe", "/proyecto/tuProyecto?idProyecto="+idProyecto);
+			PRG.error("El puesto "+nombre+" ya existe", "/project/manage?idProyecto="+idProyecto);
 		}
-		return "redirect:/proyecto/tuProyecto?idProyecto="+idProyecto;
+		return "redirect:/project/manage?idProyecto="+idProyecto;
 	}
 	
-	@PostMapping("/puesto/d")
+	@PostMapping("work/delete")
 	public String dPost(
 			@RequestParam(value="idPuesto",required=false) Long idPuesto,
 			@RequestParam(value="idProyecto",required=false) Long idProyecto
@@ -152,6 +151,6 @@ public class PuestoController {
 		catch (Exception e) {
 			PRG.error("Error al eliminar puesto","javascript:history.back()");
 		}
-		return "redirect:/proyecto/tuProyecto?idProyecto=" + idProyecto;
+		return "redirect:/project/manage?idProyecto=" + idProyecto;
 	}
 }

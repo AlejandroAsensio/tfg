@@ -1,6 +1,5 @@
 package org.tfg.teafind.controller;
 
-import java.util.ArrayList;
 import java.util.List;
 
 import javax.servlet.http.HttpSession;
@@ -17,6 +16,7 @@ import org.tfg.teafind.entities.Usuario;
 import org.tfg.teafind.exception.DangerException;
 import org.tfg.teafind.exception.PRG;
 import org.tfg.teafind.helper.H;
+import org.tfg.teafind.repository.HabilidadRepository;
 import org.tfg.teafind.repository.ProyectoRepository;
 import org.tfg.teafind.repository.UsuarioRepository;
 
@@ -28,6 +28,9 @@ public class HomeController {
 	
 	@Autowired
 	private UsuarioRepository usuarioRepository;
+
+	@Autowired
+	private HabilidadRepository habilidadRepository;
 	
 	@GetMapping("/")
 	public String index(ModelMap m, @RequestParam(value="nombre",required=false) String nombre) {
@@ -73,8 +76,8 @@ public class HomeController {
 		m.put("severity", severity);
 		m.put("link", link);
 
-		m.put("view", "/_t/info");
-		return "/_t/frame";
+		m.put("view", "_t/info");
+		return "_t/frame";
 	}
 	
 	@GetMapping("/login")

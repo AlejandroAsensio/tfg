@@ -29,7 +29,6 @@ import org.tfg.teafind.repository.PuestoRepository;
 import org.tfg.teafind.repository.UsuarioRepository;
 
 @Controller
-@RequestMapping("/proyecto")
 public class ProyectoController {
 
 	@Autowired
@@ -44,7 +43,7 @@ public class ProyectoController {
 	@Autowired
 	private PuestoRepository puestoRepository;
 
-	@GetMapping("c")
+	@GetMapping("project/new")
 	public String c(ModelMap m,HttpSession s) throws DangerException, InfoException {
 		Usuario usuario = (Usuario) s.getAttribute("usuario");
 		if(usuario == null) {
@@ -53,11 +52,11 @@ public class ProyectoController {
 		if (!usuario.isVerified()) {
 			PRG.info("Debes verificar tu cuenta para poder crear proyectos.", "/usuario/verificar");
 		}
-		m.put("view", "/proyecto/c");
+		m.put("view", "proyecto/c");
 		return "_t/frame";
 	}
 
-	@PostMapping("c")
+	@PostMapping("project/new")
 	public String cPost(@RequestParam(value="nombre",required=false) String nombre, @RequestParam(value="descripcion",required=false) String descripcion,
 			@DateTimeFormat(iso = DateTimeFormat.ISO.DATE) @RequestParam(value="fIni",required=false) LocalDate fIni,
 			@DateTimeFormat(iso = DateTimeFormat.ISO.DATE) @RequestParam(value="fFin",required=false) LocalDate fFin,
@@ -70,15 +69,15 @@ public class ProyectoController {
 			Usuario usuario = usuarioRepository.getById(idUsuario);
 			proyectoRepository.save(new Proyecto(nombre, descripcion, fIni, fFin, usuario));
 		} catch (Exception e) {
-			PRG.error("El proyecto " + nombre + " ya existe.", "/proyecto/c");
+			PRG.error("El proyecto " + nombre + " ya existe.", "/project/new");
 		}
 		// PRG.info( "El proyecto "+ nombre + "se ha creado correctamente.",
 		// "/proyecto/r");
-		return "redirect:/usuario/mis_proyectos";
+		return "redirect:/user/projects";
 
 	}
 	
-	@PostMapping("d")
+	@PostMapping("project/delete")
 	public String dPost(HttpSession s, @RequestParam(value="idProyecto",required=false) Long idProyecto) throws DangerException {
 		
 		if (idProyecto == null) {
@@ -107,7 +106,7 @@ public class ProyectoController {
 		return "redirect:/";
 	}
 	
-	@GetMapping("verProyecto")
+	@GetMapping("project/view")
 	public String verProyecto(ModelMap m, @RequestParam(value="idProyecto",required=false) Long idProyecto, HttpSession s) throws DangerException {
 		
 		if(idProyecto==null) {
@@ -151,11 +150,11 @@ public class ProyectoController {
 		//Número de puestos libres del proyecto
 		m.put("libres", proyecto.getPuestos().size() - puestosOcupados);
 		m.put("ocupadoUnicoLibre", ocupadoUnicoLibre);
-		m.put("view", "/proyecto/verProyecto");
+		m.put("view", "proyecto/verProyecto");
 		return "_t/frame";
 	}
 
-	@GetMapping("tuProyecto")
+	@GetMapping("project/manage")
 	public String uProyectoLiderado(ModelMap m, HttpSession s, @RequestParam("idProyecto") Long idProyecto)
 			throws DangerException {
 
@@ -187,11 +186,11 @@ public class ProyectoController {
 		m.put("ocupados", puestosOcupados);
 		//Número de puestos libres del proyecto
 		m.put("libres", proyecto.getPuestos().size() - puestosOcupados);
-		m.put("view", "/proyecto/gestionarProyectoLiderado");
+		m.put("view", "proyecto/gestionarProyectoLiderado");
 		return "_t/frame";
 	}
 
-	@PostMapping("tuProyecto")
+	@PostMapping("project/manage")
 	public String uProyectoLideradoPost(@RequestParam(value="nombre",required=false) String nombre,
 			@RequestParam(value="descripcion",required=false) String descripcion,
 			@DateTimeFormat(iso = DateTimeFormat.ISO.DATE) @RequestParam(value="fIni",required=false) LocalDate fIni,
@@ -217,9 +216,9 @@ public class ProyectoController {
 
 		proyectoRepository.save(proyecto);
 
-		return "redirect:/proyecto/tuProyecto?idProyecto=" + idProyecto;
+		return "redirect:/project/manage?idProyecto=" + idProyecto;
 	}
-	@PostMapping("despedir")
+	@PostMapping("project/user/dismiss")
 	public String despedir(
 			@RequestParam(value="idPuesto",required=false) Long idPuesto 
 			) throws DangerException {
@@ -230,6 +229,6 @@ public class ProyectoController {
 		
 		puesto.setOcupante(null);
 		puestoRepository.save(puesto);
-		return "redirect:/proyecto/verProyecto?idProyecto="+puesto.getProyecto().getId();
+		return "redirect:/project/view?idProyecto="+puesto.getProyecto().getId();
 	}
 }

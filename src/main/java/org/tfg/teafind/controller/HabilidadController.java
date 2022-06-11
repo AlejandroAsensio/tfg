@@ -9,7 +9,6 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.ModelMap;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.tfg.teafind.entities.Habilidad;
 import org.tfg.teafind.entities.Puesto;
@@ -22,7 +21,6 @@ import org.tfg.teafind.repository.PuestoRepository;
 import org.tfg.teafind.repository.UsuarioRepository;
 
 @Controller
-@RequestMapping("/habilidad")
 public class HabilidadController {
 	
 	@Autowired
@@ -34,7 +32,7 @@ public class HabilidadController {
 	@Autowired
 	private PuestoRepository puestoRepository;
 	
-	@GetMapping()
+	@GetMapping("admin/habilities")
 	public String r(
 			ModelMap m,
 			HttpSession s
@@ -44,12 +42,12 @@ public class HabilidadController {
 			u = (Usuario) s.getAttribute("usuario");
 		}
 		if(s.getAttribute("usuario")==null || !u.isAdmin()) {
-			PRG.error("No tienes permiso para acceder","/habilidad");
+			PRG.error("No tienes permiso para acceder","/");
 		}
 		List<Habilidad> habilidades = habilidadRepository.findAll();
 		
 		m.put("habilidades", habilidades);
-		m.put("view", "/habilidad/r");
+		m.put("view", "habilidad/r");
 		return "_t/frame";
 	}
 	
@@ -67,14 +65,14 @@ public class HabilidadController {
 	// }
 	
 	
-	@PostMapping("c")
+	@PostMapping("hability/new")
 	public void cPost(
 			@RequestParam("nombre") String nombre, 
 			@RequestParam("descripcion") String descripcion
 			) throws DangerException, InfoException {
 		try {
 			if(nombre==null || nombre.equals("") || descripcion == null || descripcion.equals("")) {
-				PRG.error("Error al crear la habilidad.");
+				PRG.error("Error al crear la habilidad.", "admin/habilities");
 			}
 			else {
 				
@@ -82,9 +80,9 @@ public class HabilidadController {
 			}
 				
 		} catch (Exception e) {
-			PRG.error("La habilidad " + nombre + " ya existe o tiene campos vacios", "/habilidad");
+			PRG.error("La habilidad " + nombre + " ya existe o tiene campos vacios", "admin/habilities");
 		}
-		PRG.info(nombre + " creado correctamente.", "/habilidad");
+		PRG.info(nombre + " creado correctamente.", "admin/habilities");
 //		return "redirect:r";
 	}
 
@@ -105,14 +103,14 @@ public class HabilidadController {
 	// 	return "_t/frame";
 	// }
 
-	@PostMapping("u")
+	@PostMapping("hability/edit")
 	public String uPost(
 			@RequestParam("idHabilidad") Long idHabilidad,
 			@RequestParam("nombre") String nombre,
 			@RequestParam("descripcion") String descripcion
 			) throws DangerException {
 		if(nombre == null || nombre.equals("") || descripcion == null || descripcion.equals("")) {
-			PRG.error("La habilidad ya existe o tiene campos vacíos","/habilidad");
+			PRG.error("La habilidad ya existe o tiene campos vacíos","admin/habilities");
 		}
 		try {
 			
@@ -121,12 +119,12 @@ public class HabilidadController {
 			habilidad.setDescripcion(descripcion);
 			habilidadRepository.save(habilidad);
 		} catch (Exception e) {
-			PRG.error("La habilidad "+nombre+" ya existe", "/habilidad");
+			PRG.error("La habilidad "+nombre+" ya existe", "admin/habilities");
 		}
-		return "redirect:/habilidad";
+		return "redirect:/admin/habilities";
 	}
 
-	@PostMapping("d")
+	@PostMapping("hability/delete")
 	public String dPost(
 			@RequestParam("idHabilidad") Long idHabilidad
 			) {
@@ -147,7 +145,7 @@ public class HabilidadController {
 		habilidadRepository.saveAndFlush(h);
 		habilidadRepository.deleteById(idHabilidad);
 
-		return "redirect:/habilidad";
+		return "redirect:/admin/habilities";
 	}
 	
 }

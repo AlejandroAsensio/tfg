@@ -117,7 +117,7 @@
 							<h5 class="card-title" th:text="${proyecto.nombre}"></h5>
 							<p class="card-text" th:text="${proyecto.descripcion}"></p>
 							<div class="d-flex justify-content-between">
-								<form action="/proyecto/verProyecto">
+								<form action="/project/view">
 									<input type="hidden" name="idProyecto" th:value="${proyecto.id}" />
 									<input class="btn btn-info text-right" type="submit" value="Más información" />
 								</form>
@@ -143,7 +143,7 @@
 						<h5 class="card-title" th:text="${proyecto.nombre}"></h5>
 						<p class="card-text" th:text="${proyecto.descripcion}"></p>
 						<div class="d-flex justify-content-between">
-							<form action="/proyecto/verProyecto">
+							<form action="/project/view">
 								<input type="hidden" name="idProyecto" th:value="${proyecto.id}" />
 								<input class="btn btn-info" type="submit" value="Más información" />
 							</form>

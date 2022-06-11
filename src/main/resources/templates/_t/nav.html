@@ -7,11 +7,11 @@
       		</li>
      	 	
      	 	<li class="nav-item" th:if="${session.usuario!=null && session.usuario?.admin}">
-        		<a class="nav-link" href="/usuario/r">Usuarios</a>
+        		<a class="nav-link" href="/admin/users">Usuarios</a>
      	 	</li>
 
 			<li class="nav-item" th:if="${session.usuario!=null && session.usuario?.admin}">
-        		<a class="nav-link" href="/habilidad">Habilidades</a>
+        		<a class="nav-link" href="/admin/habilities">Habilidades</a>
      	 	</li>
 		</ul>
 	</div>
@@ -25,7 +25,7 @@
         
         	<li th:if="${session.usuario != null}" class="nav-item mr-auto align-self-center mr-4">
         		<div class="wrapper">
-	        		<a class="button" href="/proyecto/c">
+	        		<a class="button" href="/project/new">
 						<div class="icon"><i class="bi bi-plus-lg"></i></div>
 						<span>Crear proyecto</span>
 					</a>
@@ -53,7 +53,7 @@
 					</form>
 					<div class="mb-2 mx-3">
 						<span class="d-block text-center text-light">¿Todavía no tienes cuenta?</span>
-						<a class="d-block text-center tx-atencion" href="/usuario/c">¡Regístrate!</a>
+						<a class="d-block text-center tx-atencion" href="/register">¡Regístrate!</a>
 					</div>
 				</div>
 			
@@ -67,7 +67,7 @@
 					<img th:src="|/img/profile/${session.usuario?.imagen}|" class="imagenNavbar p-0 m-0 ml-2"></img>
 				</a>
 				<div class="dropdown-menu dropdown-menu-right" aria-labelledby="navbarDropdownMenuLink">
-					<a class="dropdown-item d-flex justify-content-between py-2 bg-info enlacePerfilUsuario" href="/usuario/u">
+					<a class="dropdown-item d-flex justify-content-between py-2 bg-info enlacePerfilUsuario" href="/user/profile">
 						<img th:src="|/img/profile/${session.usuario?.imagen}|" class="imgPerfilMenu p-0 m-0"></img>
 						<!--<i class="bi bi-person-circle text-white display-4 p-0 align-self-center"></i>-->
 						<div class="align-self-center text-right">
@@ -75,7 +75,7 @@
 							<span class="d-block textoPerfilUsuario nombrePerfil" th:text="${session.usuario?.nick}"></span>
 						</div>
 					</a>
-					<a class="dropdown-item d-flex justify-content-between py-2 mt-2" href="/usuario/mis_proyectos">
+					<a class="dropdown-item d-flex justify-content-between py-2 mt-2" href="/user/projects">
 						<span> Mis proyectos </span>
 						<i class="bi bi-briefcase tx-main"></i>
 					</a>

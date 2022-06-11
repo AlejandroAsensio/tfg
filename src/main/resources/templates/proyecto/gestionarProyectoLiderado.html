@@ -22,7 +22,7 @@
 								<span aria-hidden="true">&times;</span>
 							</button>
 						</div>
-						<form name="puestoForm" action="/puesto/c" method="POST">
+						<form name="puestoForm" action="/work/new" method="POST">
 							<div class="modal-body">
 			
 								<div class="form-group">
@@ -77,20 +77,20 @@
 					 Cancelar edición
 				</button>
 			</div>
-			<form th:if="${proyecto.isEnded()}" action="/proyecto/d" method="POST">
+			<form th:if="${proyecto.isEnded()}" action="/project/delete" method="POST">
 				<input type="hidden" name="idProyecto" th:value="${proyecto.id}"/>
 				<button type="submit" class="btn btn-outline-danger btn-sm border-0 mr-2">
 					<i class="bi bi-radioactive"></i> Eliminar proyecto
 				</button>
 			</form>
-			<form action="/proyecto/verProyecto">
+			<form action="/project/view">
 				<input type="hidden" name="idProyecto" th:value="${proyecto.id}"/>
 				<button type="submit" class="btn btn-outline-success btn-sm border-0 mr-2">
 					<i class="bi bi-eye"></i>
 					 Ver proyecto
 				</button>
 			</form>
-			<form action="/usuario/mis_proyectos">
+			<form action="/user/projects">
 				<button type="submit" class="btn btn-outline-info btn-sm border-0">
 					<i class="bi bi-arrow-left"></i>
 					 Mis Proyectos
@@ -103,7 +103,7 @@
 
 <div class="container pt-4 px-4">
 
-	<form action="/proyecto/tuProyecto" method="POST">
+	<form action="/project/manage" method="POST">
 		<!--************** Información general del proyecto **************-->
 		<div class="row mb-3 px-3">
 			<div class="col-6">
@@ -145,8 +145,6 @@
 				<div class="form-row">
 					<div class="form-group col">
 						<div class="d-flex justify-content-between">
-							<span class="disabled font-weight-light font-italic botonModoEdicion" hidden="hidden"
-								th:text="|ID #${proyecto.id}|" />
 							<div>
 								<input type="hidden" name="idProyecto" th:value="${proyecto.id}" />
 								<input type="submit" value="Guardar cambios"
@@ -171,7 +169,7 @@
 	                <p class="fs-4" th:text="|Para que se una gente a ${proyecto.nombre} debes crear, al menos, uno nuevo.|"></p>
 	                <p class="lead">Habilita más arriba el modo de edición y pulsa en crear puesto o pulsa el siguiente botón para empezar a ampliar tu proyecto ahora mismo.</p>
 	                <div class="d-flex justify-content-center">
-		                <a class="btn btn-info m-3 col-4" th:href="|/puesto/c?nombreProyecto=${proyecto.nombre}|">Crea ahora un nuevo puesto</a>
+		                <a class="btn btn-info m-3 col-4" th:href="|/work/new?nombreProyecto=${proyecto.nombre}|">Crea ahora un nuevo puesto</a>
 	                </div>
 	            </div>
 	        </div>
@@ -218,7 +216,7 @@
 											</button>
 										</div>
 										<div class="modal-body">
-											<form action="/puesto/u" method="POST" th:id="|puestoOcupadoForm-${puesto.id}|">
+											<form action="/work/edit" method="POST" th:id="|puestoOcupadoForm-${puesto.id}|">
 												<input type="hidden" name="idPuesto" th:value="${puesto.id}"/>
 												<input type="hidden" name="idProyecto" th:value="${proyecto.id}"/>
 												<div class="form-group">
@@ -239,7 +237,7 @@
 											</form>
 										</div>
 										<div class="modal-footer d-flex justify-content-between">
-											<form method="POST" action="/proyecto/despedir"> 
+											<form method="POST" action="/project/user/dismiss"> 
 												<input type="hidden" name="idPuesto" th:value="${puesto.id}"/>
 												<button type="button" class="btn btn-sm btn-outline-danger border-0" data-dismiss="modal" th:text="|Despedir a ${puesto.ocupante.nombre}|" onclick="despedir(this.form)"></button>
 											</form>
@@ -298,7 +296,7 @@
 									
 									<div class="modal-dialog modal-dialog-centered" role="document">
 										<div class="modal-content">
-											<form method="post" action="/puesto/u" th:id="|puestoLibreForm-${puesto.id}|">
+											<form method="post" action="/work/edit" th:id="|puestoLibreForm-${puesto.id}|">
 												<div class="modal-header">
 									        		<h5 class="modal-title font-weight-bold" id="modalPuestoLibreLabel" th:text="${puesto.nombre}"></h5>
 									        		<button type="button" class="close" data-dismiss="modal" aria-label="Close">
@@ -333,7 +331,7 @@
 												<input type="hidden" name="idPuesto" th:value="${puesto.id}"/>
 											</form>
 								      		<div class="modal-footer d-flex justify-content-between">
-								      			<form action="/puesto/d" method="post">
+								      			<form action="/work/delete" method="post">
 								      				<input type="hidden" name="idProyecto" th:value="${proyecto.id}"/>
 								      				<input type="hidden" name="idPuesto" th:value="${puesto.id}"/>
 							      					<button type="submit" class="btn btn-sm btn-outline-danger border-0" >Eliminar puesto</button>
@@ -361,7 +359,7 @@
 		</div>
 	</div>
 	<div class="row d-flex justify-content-end mt-3 mr-3">
-		<form action="/proyecto/d" method="POST">
+		<form action="/project/delete" method="POST">
 			<input type="submit" class="btn btn-outline-danger btn-sm mr-2 botonEdicion"  value="Eliminar Proyecto" hidden="hidden">
 			<input type="hidden" name="idProyecto" th:value="${proyecto.id}"/>
 		</form>

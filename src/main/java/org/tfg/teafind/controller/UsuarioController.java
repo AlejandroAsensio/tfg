@@ -19,7 +19,6 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.ModelMap;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.multipart.MultipartFile;
 import org.tfg.teafind.entities.Habilidad;
@@ -37,7 +36,6 @@ import org.tfg.teafind.service.MailService;
 import org.tfg.teafind.utils.NombreImagenUtils;
 
 @Controller
-@RequestMapping("/usuario")
 public class UsuarioController {
 
 	@Autowired
@@ -57,7 +55,7 @@ public class UsuarioController {
 
 	Logger logger = Logger.getLogger(UsuarioController.class);
 
-	@GetMapping("r")
+	@GetMapping("admin/users")
 	public String r(ModelMap m, HttpSession s) throws DangerException {
 		Usuario u = null;
 		if (s.getAttribute("usuario") != null) {
@@ -69,18 +67,18 @@ public class UsuarioController {
 		List<Usuario> usuarios = usuarioRepository.findAll();
 
 		m.put("usuarios", usuarios);
-		m.put("view", "/usuario/r");
+		m.put("view", "usuario/r");
 		return "_t/frame";
 	}
 
-	@GetMapping("c")
+	@GetMapping("register")
 	public String c(ModelMap m, HttpSession s) throws DangerException {
 		if (s.getAttribute("usuario") != null) {
 			PRG.error("No puedes registrar un usuario nuevo con la sesión iniciada", "/");
 		}
 		List<Habilidad> habilidades = habilidadRepository.findAll();
 		m.put("habilidades", habilidades);
-		m.put("view", "/usuario/c");
+		m.put("view", "usuario/c");
 		return "_t/frame";
 	}
 
@@ -89,7 +87,7 @@ public class UsuarioController {
 	 * crea Más adelante se habrá de tener en cuenta si ya hay un admin o no para
 	 * crear o no con un nuevo usuario
 	 */
-	@PostMapping("c")
+	@PostMapping("register")
 	public String cPost(@RequestParam("nick") String nick, @RequestParam("nombre") String nombre,
 			@RequestParam("apellido1") String apellido1, @RequestParam("apellido2") String apellido2,
 			@RequestParam("telefono") String telefono, @RequestParam("email") String email,
@@ -103,7 +101,7 @@ public class UsuarioController {
 		try {
 			usuario = new Usuario(nick, nombre, apellido1, apellido2, telefono, email, password, false, false);
 
-			// Ruta relativa de almacenamiento
+			//Ruta relativa de almacenamiento
 			Path directorioImagenes = Paths.get("src//main//resources//static//img//profile//");
 			File f = new File(directorioImagenes.toString());
 			f.mkdir();
@@ -111,16 +109,16 @@ public class UsuarioController {
 			if (!imagen.isEmpty()) {
 				nombreImagen = nick + "-" + NombreImagenUtils.getFileName(imagen.getOriginalFilename());
 
-				// Ruta absoluta
+				//Ruta absoluta
 				String rutaAbsoluta = directorioImagenes.toFile().getAbsolutePath();
 
-				// Bytes de la imagen
+				//Bytes de la imagen
 				byte[] bytesImg = imagen.getBytes();
 
-				// Ruta completa que ocupará la imagen, con su nombre
+				//Ruta completa que ocupará la imagen, con su nombre
 				Path rutaCompleta = Paths.get(rutaAbsoluta + "/" + nombreImagen);
 
-				// Escritura del fichero
+				//Escritura del fichero
 				Files.write(rutaCompleta, bytesImg);
 
 				usuario.setImagen(nombreImagen);
@@ -137,17 +135,17 @@ public class UsuarioController {
 			usuarioRepository.save(usuario);
 			mailService.enviarEmailBienvenida(email, nick, nombre);
 		} catch (Exception e) {
-			PRG.error("El número de móvil/email ya están registrados.", "/usuario/c");
+			PRG.error("El número de móvil/email ya están registrados.", "/register");
 		}
 //		PRG.info(nombre + " creado correctamente.", "/usuario/r");
 		return "redirect:/";
 	}
 
-	@PostMapping("d")
+	@PostMapping("user/delete")
 	public String dPost(HttpSession s, @RequestParam("idUsuario") Long idUsuario) {
 		Usuario u = (Usuario) s.getAttribute("usuario");
 		Usuario usuario = usuarioRepository.getById(idUsuario);
-		String ruta = "redirect:/usuario/r";
+		String ruta = "redirect:/admin/users";
 
 		if (u.getId().compareTo(idUsuario) == 0) {
 			s.invalidate();
@@ -185,7 +183,7 @@ public class UsuarioController {
 		return ruta;
 	}
 
-	@GetMapping("verificar")
+	@GetMapping("user/verify")
 	public String verificar(ModelMap m, HttpSession s) throws DangerException {
 
 		if (s.getAttribute("usuario") == null) {
@@ -196,11 +194,11 @@ public class UsuarioController {
 			PRG.error("Tu cuenta ya está verificada.", "/");
 		}
 
-		m.put("view", "/usuario/verificar");
+		m.put("view", "usuario/verificar");
 		return "_t/frame";
 	}
 
-	@PostMapping("sendEmail")
+	@PostMapping("user/sendEmail")
 	public String enviarEmail(HttpSession s) throws DangerException, MessagingException {
 
 		Usuario usuario = (Usuario) s.getAttribute("usuario");
@@ -217,10 +215,10 @@ public class UsuarioController {
 		s.setAttribute("nToken", nToken);
 
 		mailService.enviarEmailVerificacion(usuario.getEmail(), nToken);
-		return "redirect:/usuario/verificar";
+		return "redirect:/user/verify";
 	}
 
-	@PostMapping("verificar")
+	@PostMapping("user/verify")
 	public void verificarPost(@RequestParam(value = "numero", required = false) int numero, HttpSession s) throws DangerException, InfoException {
 		if (s.getAttribute("usuario") == null) {
 			PRG.error("Por favor, inicia sesión para acceder aquí.", "/login");
@@ -241,13 +239,12 @@ public class UsuarioController {
 			usuarioRepository.save(usuario);
 			s.invalidate();
 		} else {
-			PRG.error("La verificación de tu cuenta ha fallado.", "/usuario/verificar");
+			PRG.error("La verificación de tu cuenta ha fallado.", "/user/verify");
 		}
-		// return "redirect:/login";
 		PRG.info("¡Tu cuenta ha sido verificada! Por favor, vuelve a iniciar sesión.", "/login");
 	}
 
-	@GetMapping("u")
+	@GetMapping("user/profile")
 	public String perfil(ModelMap m, HttpSession s) throws DangerException, InfoException {
 		Usuario usuario = (Usuario) s.getAttribute("usuario");
 		if (usuario == null) {
@@ -257,12 +254,12 @@ public class UsuarioController {
 		List<Habilidad> habilidades = habilidadRepository.findAll();
 		m.put("usuario", u);
 		m.put("habilidades", habilidades);
-		m.put("view", "/usuario/perfil");
+		m.put("view", "usuario/perfil");
 
 		return "_t/frame";
 	}
 
-	@PostMapping("u")
+	@PostMapping("user/profile")
 	public String perfilPost(@RequestParam("nick") String nick, @RequestParam("nombre") String nombre,
 			@RequestParam("apellido1") String apellido1, @RequestParam("apellido2") String apellido2,
 			@RequestParam("telefono") String telefono, @RequestParam("email") String email,
@@ -300,7 +297,7 @@ public class UsuarioController {
 			usuario.setDescripcion("Acerca de " + nick);
 		}
 
-		// Ruta relativa de almacenamiento
+		//* Ruta relativa de almacenamiento
 		Path directorioImagenes = Paths.get("src//main//resources//static//img//profile//");
 		File f = new File(directorioImagenes.toString());
 		f.mkdir();
@@ -308,7 +305,7 @@ public class UsuarioController {
 		String nombreImagen;
 
 		if (!imagen.isEmpty()) {
-			// Si el usuario tiene la imagen default, se cogerá el nombre de la nueva subida
+			//* Si el usuario tiene la imagen default, se cogerá el nombre de la nueva subida
 			if (usuario.getImagen().compareTo("default.png") == 0) {
 				nombreImagen = nick + "-" + NombreImagenUtils.getFileName(imagen.getOriginalFilename());
 			} else if (usuario.getImagen() == null || usuario.getImagen().isEmpty()
@@ -318,16 +315,16 @@ public class UsuarioController {
 				nombreImagen = usuario.getImagen();
 			}
 
-			// Ruta absoluta
+			//* Ruta absoluta
 			String rutaAbsoluta = directorioImagenes.toFile().getAbsolutePath();
 
-			// Bytes de la imagen
+			//* Bytes de la imagen
 			byte[] bytesImg = imagen.getBytes();
 
-			// Ruta completa que ocupará la imagen, con su nombre
+			//* Ruta completa que ocupará la imagen, con su nombre
 			Path rutaCompleta = Paths.get(rutaAbsoluta + "/" + nombreImagen);
 
-			// Escritura del fichero
+			//* Escritura del fichero
 			Files.write(rutaCompleta, bytesImg);
 
 			usuario.setImagen(nombreImagen);
@@ -344,10 +341,10 @@ public class UsuarioController {
 				if (newPassword.equals(passwordConfirm)) {
 					usuario.setPassword(newPassword);
 				} else {
-					PRG.error("Las contraseñas no coinciden", "/usuario/u");
+					PRG.error("Las contraseñas no coinciden", "/user/profile/" + nick);
 				}
 			} else {
-				PRG.error("Contraseña incorrecta", "/usuario/u");
+				PRG.error("Contraseña incorrecta", "/user/profile/" + nick);
 			}
 		}
 
@@ -357,10 +354,10 @@ public class UsuarioController {
 			s.invalidate();
 		}
 		usuarioRepository.save(usuario);
-		return "redirect:/usuario/u";
+		return "redirect:/user/profile";
 	}
 
-	@PostMapping("u/mail")
+	@PostMapping("user/profile/mail")
 	public void uMail(HttpSession s, @RequestParam("email") String email) throws DangerException, InfoException {
 		Usuario u = (Usuario) s.getAttribute("usuario");
 		Usuario usuario = usuarioRepository.getById(u.getId());
@@ -391,7 +388,7 @@ public class UsuarioController {
 	 * 
 	 * @throws DangerException
 	 */
-	@GetMapping("mis_proyectos")
+	@GetMapping("user/projects")
 	public String rOP(ModelMap m, HttpSession s) throws DangerException {
 		Usuario usuario = (Usuario) s.getAttribute("usuario");
 		if (usuario == null) {
@@ -405,11 +402,11 @@ public class UsuarioController {
 		m.put("proyectosCreados", creados);
 		m.put("proyectosPertenece", ocupa);
 
-		m.put("view", "/usuario/ownProjects");
+		m.put("view", "usuario/ownProjects");
 		return "_t/frame";
 	}
 
-	@PostMapping("unir")
+	@PostMapping("project/user/join")
 	public String unir(ModelMap m, HttpSession s, @RequestParam("idPuesto") Long idPuesto,
 			@RequestParam("idProyecto") Long idProyecto) throws DangerException, InfoException {
 		Puesto puesto = puestoRepository.getById(idPuesto);
@@ -422,7 +419,7 @@ public class UsuarioController {
 		}
 
 		if (!usuario.isVerified()) {
-			PRG.info("Debes verificar tu cuenta para ocupar este puesto.", "/usuario/verificar");
+			PRG.info("Debes verificar tu cuenta para ocupar este puesto.", "/verify");
 		}
 
 		for (Habilidad h : puesto.getRequiere()) {
@@ -434,17 +431,17 @@ public class UsuarioController {
 
 		puesto.setOcupante(usuario);
 		puestoRepository.save(puesto);
-		return "redirect:/proyecto/verProyecto?idProyecto=" + puesto.getProyecto().getId();
+		return "redirect:/project/view?idProyecto=" + puesto.getProyecto().getId();
 	}
 
-	@PostMapping("salir")
+	@PostMapping("project/user/exit")
 	public String salir(ModelMap m, HttpSession s, @RequestParam("idPuesto") Long idPuesto) {
 
 		Puesto puesto = puestoRepository.getById(idPuesto);
 
 		puesto.setOcupante(null);
 		puestoRepository.save(puesto);
-		return "redirect:/proyecto/verProyecto?idProyecto=" + puesto.getProyecto().getId();
+		return "redirect:/project/view?idProyecto=" + puesto.getProyecto().getId();
 	}
 
 }
