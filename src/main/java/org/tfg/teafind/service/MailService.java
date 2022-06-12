@@ -173,7 +173,7 @@ public class MailService {
     			+ "                        <br/>\r\n"
     			+ "                        ¡Acabarás reuniendo un gran equipo con el que desarrollar algo grandioso!.\r\n"
     			+ "                    </p>\r\n"
-    			+ "                    <p style=ºmargin:0;\"><a href=\"https://localhost:8080/proyecto/c\" style=\"background: #ff3884; text-decoration: none; padding: 10px 25px; color: #38fff5; border-radius: 4px; display:inline-block; mso-padding-alt:0;text-underline-color:#ff3884\"><!--[if mso]><i style=\"letter-spacing: 25px;mso-font-width:-100%;mso-text-raise:20pt\">&nbsp;</i><![endif]--><span style=\"mso-text-raise:10pt;font-weight:bold;\">Crea tu primer proyecto</span><!--[if mso]><i style=\"letter-spacing: 25px;mso-font-width:-100%\">&nbsp;</i><![endif]--></a></p>\r\n"
+    			+ "                    <p style=ºmargin:0;\"><a href=\"https://teafind.es\" style=\"background: #ff3884; text-decoration: none; padding: 10px 25px; color: #97dce4; border-radius: 4px; display:inline-block; mso-padding-alt:0;text-underline-color:#ff3884\"><!--[if mso]><i style=\"letter-spacing: 25px;mso-font-width:-100%;mso-text-raise:20pt\">&nbsp;</i><![endif]--><span style=\"mso-text-raise:10pt;font-weight:bold;\">Entra ahora en Teafind</span><!--[if mso]><i style=\"letter-spacing: 25px;mso-font-width:-100%\">&nbsp;</i><![endif]--></a></p>\r\n"
     			+ "                </div>\r\n"
     			+ "                <!--[if mso]>\r\n"
     			+ "                </td>\r\n"

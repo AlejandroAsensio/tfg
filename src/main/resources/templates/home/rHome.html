@@ -13,7 +13,7 @@
 			<!--    Carousel Slider    -->
 			<div class="carousel-inner" role="listbox">
 				<div class="carousel-item active">
-					<img src="/img/teafindHome.jpg" class="d-block w-100 rounded">
+					<img src="/img/teafindHomes.jpg" class="d-block w-100 rounded">
 					<div class="carousel-caption rounded">
 						<h3>Bienvenidos a Teafind</h3>
 						<p>¡Explora entre todos los proyectos que nuestra comunidad publica y únete! Eso o saca adelante tu
@@ -23,29 +23,26 @@
 				</div>
 		
 				<div class="carousel-item">
-					<img src="/img/pr1.jpg" class="d-block w-100 rounded">
+					<img src="/img/pr1s.jpg" class="d-block w-100 rounded">
 					<div class="carousel-caption rounded">
-						<a href="#"><h3>Slide 02</h3></a>
-						<p>Lorem ipsum dolor sit amet consectetur adipisicing elit. Quia vel in placeat corrupti. Velit quidem
-							eos, accusantium vitae nostrum reiciendis ratione libero? Aperiam, recusandae culpa.</p>
+						<a th:href="|project/view?idProyecto=${listaProyectosRandom.get(0).id}|" class="card-link tx-blanco"><h3 th:text="${listaProyectosRandom.get(0).nombre}"></h3></a>
+						<p th:text="${listaProyectosRandom.get(0).descripcion}"></p>
 					</div>
 				</div>
 		
 				<div class="carousel-item">
-					<img src="/img/pr2.jpg" class="d-block w-100 rounded">
+					<img src="/img/pr2s.jpg" class="d-block w-100 rounded">
 					<div class="carousel-caption rounded">
-						<h3>Slide 03</h3>
-						<p>Lorem ipsum dolor sit amet consectetur adipisicing elit. Totam, ut beatae porro ullam quidem officia
-							dignissimos facilis? Blanditiis nesciunt labore pariatur quaerat exercitationem quibusdam modi!</p>
+						<a th:href="|project/view?idProyecto=${listaProyectosRandom.get(1).id}|" class="card-link tx-blanco"><h3 th:text="${listaProyectosRandom.get(1).nombre}"></h3></a>
+						<p th:text="${listaProyectosRandom.get(1).descripcion}"></p>
 					</div>
 				</div>
 		
 				<div class="carousel-item">
-					<img src="/img/pr3.jpg" class="d-block w-100 rounded">
+					<img src="/img/pr3s.jpg" class="d-block w-100 rounded">
 					<div class="carousel-caption rounded">
-						<h3>Slide 04</h3>
-						<p>Lorem ipsum dolor sit amet consectetur adipisicing elit. Perferendis soluta accusamus sequi eos
-							consectetur! Animi minima modi ad at similique velit quibusdam veritatis sequi placeat?</p>
+						<a th:href="|project/view?idProyecto=${listaProyectosRandom.get(2).id}|" class="card-link tx-blanco"><h3 th:text="${listaProyectosRandom.get(2).nombre}"></h3></a>
+						<p th:text="${listaProyectosRandom.get(2).descripcion}"></p>
 					</div>
 				</div>
 		

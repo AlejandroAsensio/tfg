@@ -19,7 +19,7 @@
 	<div class="form-row mt-3">
 		<div class="form-group col-md-1"></div>
 		<div class="form-group col-md-3">
-			<form class="text-right" action="user/profile/mail" method="POST">
+			<form class="text-right" action="/user/profile/mail" method="POST">
 				<div class="form-group">
 					<h5 class="text-left">¿Necesitas cambiar tu email?</h5>
 					<input type="text" class="form-control" name="email" id="idEmail" th:value="${usuario.email}" th:placeholder="${usuario.email}">
@@ -197,14 +197,45 @@
 				</div>
 			</div>
 		</form>
-		<form class="text-right" action="/user/delete" method="POST">
-			<input type="hidden" name="idUsuario" th:value="${usuario.id}"/>
-			<button type="submit"  class="btn btn-outline-danger btn-sm mt-2 mr-3">
-				<i class="bi bi-radioactive"></i> Eliminar tu cuenta de Teafind
-			</button>	
-		</form>
+
+		<a href="#modalEliminarUser" class="trigger-btn btn btn-outline-danger btn-sm mt-2 mr-3" data-toggle="modal">
+			<i class="bi bi-radioactive"></i> Eliminar tu cuenta de Teafind
+		</a>
+
 	</div>
 </div>
+
+<div class="container">
+	<!-- Modal para ELIMINAR USUARIO -->
+	<div id="modalEliminarUser" class="modal fade">
+		<div class="modal-dialog modal-confirm">
+			<div class="modal-content">
+				<div class="modal-header">
+					<div class="icon-box align-self-center tx-bad mr-2">
+						<i class="bi bi-exclamation-octagon"></i>
+					</div>						
+					<h4 class="modal-title w-100">Estás a punto de borrar tu cuenta</h4>	
+					<button type="button" class="close" data-dismiss="modal" aria-label="Close">
+						<span aria-hidden="true">&times;</span>
+					</button>
+				</div>
+				<div class="modal-body">
+					<p>¿Estás seguro de que quieres eliminar tu cuenta de Teafind? No podrás volver a acceder y tus proyectos se cerrarán y no podrán ser gestionados. </p>
+				</div>
+				<div class="modal-footer justify-content-center">
+					<button type="button" class="btn btn-outline-info btn-sm mr-3" data-dismiss="modal">No, cancelar</button>
+					<form class="text-right" action="/user/delete" method="POST">
+						<input type="hidden" name="idUsuario" th:value="${usuario.id}"/>
+						<button type="submit"  class="btn btn-outline-danger btn-sm">
+							<i class="bi bi-radioactive"></i> Sí, estoy seguro
+						</button>	
+					</form>
+				</div>
+			</div>
+		</div>
+	</div> 
+</div>
+
 <script src="/js/userModify.js"></script>
 <script>
 //Cambio de "tab"

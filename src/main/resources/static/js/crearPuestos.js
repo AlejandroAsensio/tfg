@@ -1,34 +1,25 @@
-function crearMasPuestos(seguir){
+function crearMasPuestos(seguir) {
 	var nombre = document.getElementById("recipient-name").value;
 	var desc = document.getElementById("message-text").value;
-	var ok = true;
-	var okH = false;
-	
-	
-	if ($('input[name^=idsHabilidadesRequire]:checked').length <= 0) {
-       
-    }else{
-        okH = true;
-    }
-	
-	if(nombre == null || nombre == "" || desc == null || desc == ""){
-		ok = false;
-	
-		
+	var campos = true;
+	var habilidades = false;
+
+	if ($("input[name^=idsHabilidadesRequire]:checked").length >= 0) {
+		habilidades = true;
 	}
-	
-	if(ok && okH){
-	if(seguir){
-		puestoForm.destino.value=seguir;
+
+	if (nombre == null || nombre == "" || desc == null || desc == "") {
+		campos = false;
 	}
-	else if(!seguir){
-		puestoForm.destino.value=seguir;
+
+	if (campos && habilidades) {
+		if (seguir) {
+			puestoForm.destino.value = seguir;
+		} else if (!seguir) {
+			puestoForm.destino.value = !seguir;
+		}
+			puestoForm.submit();
+	} else {
+		alert("Completa todos los campos, por favor.");
 	}
-	
-	puestoForm.submit();	
-	}
-	else{
-		alert("Campos vacios");
-	}
-	
 }

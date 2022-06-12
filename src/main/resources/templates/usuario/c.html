@@ -49,31 +49,31 @@
 			<div class="col-xl-5 col-lg-5 col-md-5 col-sm-12 col-12 px-4 mt-3">
 				<div class="mb-3">
 					<label id="01" for="idNombre" class="form-label disabled is-valid" value="Mark">Nombre</label>
-					<input type="text" class="form-control" name="nombre" id="idNombre" required="required">
+					<input type="text" class="form-control" name="nombre" id="idNombre" required="required" placeholder="Nombre">
 				</div>
 				
 				<div class="mb-3">
 					<label for="idApe1" class="form-label disabled">Primer apellido</label>
-					<input type="text" class="form-control" name="apellido1" id="idApe1" required="required">
+					<input type="text" class="form-control" name="apellido1" id="idApe1" required="required" placeholder="Primer apellido">
 				</div>
 				
 				<div class="mb-3">
 					<label for="idApe2" class="form-label disabled">Segundo apellido</label>
-					<input type="text" class="form-control" name="apellido2" id="idApe2">
+					<input type="text" class="form-control" name="apellido2" id="idApe2" placeholder="Segundo apellido">
 				</div>
 			</div>
  			<div class="col-xl-5 col-lg-5 col-md-5 col-sm-12 col-12 px-4 mt-3">
 				<div class="mb-3">
 					
 					<label for="idTlf" class="form-label disabled">Teléfono (móvil)</label>
-					<input type="text" class="form-control" name="telefono" id="idTlf" required="required">
+					<input type="text" class="form-control" name="telefono" id="idTlf" required="required" placeholder="6XXXXXXXX / 7XXXXXXXX">
 					<div style="color:red" id="divtlf"></div>
 					
 				</div>
 				
 				<div class="mb-3">
 					<label for="idEmail" class="form-label disabled">Email</label>
-					<input type="text" class="form-control" name="email" id="idEmail">
+					<input type="text" class="form-control" name="email" id="idEmail" placeholder="xxx@xxx.xx">
 					<div style="color:red" id="divemail"></div>
 					
 				</div>
@@ -111,12 +111,12 @@
 			</div>
 			
 			<div class="col-12 mt-4">
+				<div class="tx-bad text-right" id="divValidate"></div>
 				<div class="d-flex justify-content-end">
 					<div>
 						<button type="reset" role="button" class="btn btn-outline-danger btn-sm border-0 m-2">
 							<i class="bi bi-stars"></i> Borrar campos
 						</button>
-						<div style="color : red;" id="divValidate"></div>
 					</div>
 					<div>
 						<button type="submit"  class="btn btn-outline-success btn-sm m-2">
@@ -154,4 +154,4 @@ $(document).ready(function() {
 	}
 </script>
 
-<script src="/js/userValidation.js"></script>
+<script src="/js/userValidate.js"></script>

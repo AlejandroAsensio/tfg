@@ -1,9 +1,10 @@
 package org.tfg.teafind.controller;
 
+import java.util.ArrayList;
 import java.util.List;
+import java.util.Random;
 
 import javax.servlet.http.HttpSession;
-
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Controller;
@@ -16,7 +17,6 @@ import org.tfg.teafind.entities.Usuario;
 import org.tfg.teafind.exception.DangerException;
 import org.tfg.teafind.exception.PRG;
 import org.tfg.teafind.helper.H;
-import org.tfg.teafind.repository.HabilidadRepository;
 import org.tfg.teafind.repository.ProyectoRepository;
 import org.tfg.teafind.repository.UsuarioRepository;
 
@@ -28,31 +28,38 @@ public class HomeController {
 	
 	@Autowired
 	private UsuarioRepository usuarioRepository;
-
-	@Autowired
-	private HabilidadRepository habilidadRepository;
 	
 	@GetMapping("/")
 	public String index(ModelMap m, @RequestParam(value="nombre",required=false) String nombre) {
-		List<Proyecto> proyectos = null;
-		List<Proyecto> activos = null;
+		List<Proyecto> proyectos = new ArrayList<Proyecto>();
+		List<Proyecto> activos = new ArrayList<Proyecto>();
+		List<Proyecto> listaRandom = new ArrayList<Proyecto>();
 		
+		/**
+		 * Busqueda de proyecto por nombre
+		 */
 		if(nombre != null) {
 			proyectos = proyectoRepository.findByNombreContainingIgnoreCase(nombre);
 		} else {
 			proyectos = proyectoRepository.findAll();	
 		}
 
-		// for (Proyecto proyecto : proyectos) {
-		// 	if (!proyecto.isEnded()) {
-		// 		activos.add(proyecto);
-		// 	}
-		// }
-		
-		// for (int i = 0; i < 3; i++) {
-		// 	int numero = (int)(Math.random()*activos.size());
-		// }
-		
+		/**
+		 * Añadimos a una lista nueva los proyectos activos
+		 */
+		for (Proyecto proyecto : proyectos) {
+			if (!proyecto.isEnded()) {
+				activos.add(proyecto);
+			}
+		}
+
+		for (int i = 0; i < 3; i++) {
+			Proyecto prnd = getRandomProyectoFromList(activos);
+			activos.remove(prnd);
+			listaRandom.add(prnd);
+		}
+
+		m.put("listaProyectosRandom", listaRandom);
 		m.put("proyectos", proyectos);
 		m.put("view", "home/rHome");
 		return "_t/frame";
@@ -130,6 +137,17 @@ public class HomeController {
 		
 		m.put("view", "home/about");
 		return "_t/frame";
+	}
+
+
+	/**
+	 * Devuelve un proyecto aleatorio de una lista de proyectos dada.
+	 * @param listaProyectos	Lista de Proyecto.
+	 * @return					Proyecto aleatorio de listaProyectos.
+	 */
+	public Proyecto getRandomProyectoFromList(List<Proyecto> listaProyectos) {
+		Random rnd = new Random();
+		return listaProyectos.get(rnd.nextInt((listaProyectos.size())));
 	}
 	
 }

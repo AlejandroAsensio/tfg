@@ -39,12 +39,39 @@
 				<td th:text="|${usuario.creados.size} proyectos|"></td>
 				<td th:text="|${usuario.ocupa.size} proyectos|"></td>
 				<td>
-					<form action="/user/delete" method="POST">
-						<input type="hidden" name="idUsuario" th:value="${usuario.id}"/>
-						<button type="submit" class="btn btn-link btn-sm btn-rounded" title="Eliminar">
-							<i class="bi bi-trash3 tx-bad"></i>
-						</button>
-					</form>
+					<a th:href="|#modalEliminarUserAdmin-${usuario.id}|" class="trigger-btn btn btn-sm mt-2 mr-3" data-toggle="modal">
+						<i class="bi bi-trash3 tx-bad"></i>
+					</a>
+
+					<!-- Modal para ELIMINAR USUARIO -->
+					<div th:id="|modalEliminarUserAdmin-${usuario.id}|" class="modal fade">
+						<div class="modal-dialog modal-confirm">
+							<div class="modal-content">
+								<div class="modal-header">
+									<div class="icon-box align-self-center tx-bad mr-2">
+										<i class="bi bi-exclamation-octagon"></i>
+									</div>						
+									<h4 class="modal-title w-100">Estás a punto de borrar tu cuenta</h4>	
+									<button type="button" class="close" data-dismiss="modal" aria-label="Close">
+										<span aria-hidden="true">&times;</span>
+									</button>
+								</div>
+								<div class="modal-body">
+									<p>¿Estás seguro de que quieres eliminar la cuenta de Teafind de <span th:text="${usuario.nick}"></span>? No podrá volver a acceder y sus proyectos se cerrarán y no podrán ser gestionados. </p>
+								</div>
+								<div class="modal-footer justify-content-center">
+									<button type="button" class="btn btn-outline-info btn-sm mr-3" data-dismiss="modal">No, cancelar</button>
+									<form class="text-right" action="/user/delete" method="POST">
+										<input type="hidden" name="idUsuario" th:value="${usuario.id}"/>
+										<button type="submit"  class="btn btn-outline-danger btn-sm">
+											<i class="bi bi-radioactive"></i> Sí, eliminar
+										</button>	
+									</form>
+								</div>
+							</div>
+						</div>
+					</div> 
+
 				</td>
 			</tr>
 		</tbody>

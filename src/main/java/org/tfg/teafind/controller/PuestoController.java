@@ -46,7 +46,7 @@ public class PuestoController {
 		return "_t/frame";
 	}
 	
-	@GetMapping("work/new")
+	@GetMapping("project/work/new")
 	public String c(
 			ModelMap m,
 			HttpSession s,
@@ -70,7 +70,7 @@ public class PuestoController {
 	}
 	
 	
-	@PostMapping("work/new")
+	@PostMapping("project/work/new")
 	public String cPost(
 			HttpSession s,
 			@RequestParam(value="nombre",required=false) String nombre,
@@ -82,7 +82,7 @@ public class PuestoController {
 			) throws DangerException, InfoException {
 		
 		if(nombre == null || descripcion == null || idsHabilidadesRequire == null || idProyecto == null || nombreProyecto == null) {
-			PRG.error("Error al crear puesto","javascript:history.back()");
+			PRG.error("Error al crear puesto.","javascript:history.back()");
 		}
 		String ruta = "";
 		List<Habilidad> habilidadesRequeridas = new ArrayList<Habilidad>();
@@ -96,24 +96,22 @@ public class PuestoController {
 			if ((leader == null) || (!leader.getId().equals(proyecto.getLeader().getId()))) {
 				PRG.error("No tienes permiso para gestionar este proyecto", "/");
 			}
-			puestoRepository.save(new Puesto(nombre,descripcion,proyecto,habilidadesRequeridas));
+			puestoRepository.save(new Puesto(nombre, descripcion, proyecto, habilidadesRequeridas));
 			
 		} catch (Exception e) {
 			PRG.error("La habilidad " + nombre + " ya existe ", "/user/profile");
 		}
-		if(seguir) {
-			ruta="redirect:/work/new?nombreProyecto="+nombreProyecto;
-		}
-		
-		
-		else if(!seguir) {
+
+		if (seguir) {
+			ruta="redirect:/project/work/new?nombreProyecto="+nombreProyecto;
+		} else {
 			ruta="redirect:/project/manage?idProyecto="+idProyecto;
 		}
 //		PRG.info(nombre + " creado correctamente.", "/usuario/r");
 		return ruta;
 	}
 	
-	@PostMapping("work/edit")
+	@PostMapping("project/work/edit")
 	public String uPost(
 			@RequestParam(value="idProyecto",required=false) Long idProyecto,
 			@RequestParam(value="idPuesto",required=false) Long idPuesto,
@@ -140,7 +138,7 @@ public class PuestoController {
 		return "redirect:/project/manage?idProyecto="+idProyecto;
 	}
 	
-	@PostMapping("work/delete")
+	@PostMapping("project/work/delete")
 	public String dPost(
 			@RequestParam(value="idPuesto",required=false) Long idPuesto,
 			@RequestParam(value="idProyecto",required=false) Long idProyecto

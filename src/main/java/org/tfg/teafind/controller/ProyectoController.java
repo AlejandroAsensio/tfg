@@ -167,7 +167,7 @@ public class ProyectoController {
 
 		//Se comprueba si el usuario es el lider o no para permitir el acceso
 		if ((leader == null) || (!leader.getId().equals(proyecto.getLeader().getId()))) {
-			PRG.error("No tienes permiso para gestionar este proyecto", "/");
+			PRG.error("No tienes permiso para gestionar este proyecto.", "/");
 		}
 		
 		//Para saber el número de puestos OCUPADOS del proyecto
