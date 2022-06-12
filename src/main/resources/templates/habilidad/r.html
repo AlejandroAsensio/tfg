@@ -121,12 +121,42 @@
 						</div>
 					</div>
 					<!--***************************Fin Modal EDITAR HABILIDAD*****************************-->
-					<form action="/hability/delete" method="POST">
-						<input type="hidden" name="idHabilidad" th:value="${habilidad.id}"/>
-						<button type="submit" class="btn btn-link btn-sm btn-rounded" title="Eliminar">
-							<i class="bi bi-trash3 tx-bad"></i>
-						</button>
-					</form>
+
+					<a th:href="|#modalEliminarHabilidad-${habilidad.id}|" class="trigger-btn btn btn-link btn-sm btn-rounded" title="Eliminar" data-toggle="modal">
+						<i class="bi bi-trash3 tx-bad"></i>
+					</a>
+
+					<!-- Modal para ELIMINAR HABILIDAD -->
+					<div th:id="|modalEliminarHabilidad-${habilidad.id}|" class="modal fade">
+						<div class="modal-dialog modal-confirm">
+							<div class="modal-content">
+								<div class="modal-header">
+									<div class="icon-box align-self-center tx-bad mr-2">
+										<i class="bi bi-exclamation-octagon"></i>
+									</div>						
+									<h4 th:unless="${habilidad.requerida.size != 0 || habilidad.conocida.size != 0}" class="modal-title w-100">Estás a punto de eliminar una habilidad</h4>
+									<h4 th:if="${habilidad.requerida.size != 0 || habilidad.conocida.size != 0}" class="modal-title w-100">Vas a eliminar una habilidad EN USO</h4>	
+									<button type="button" class="close" data-dismiss="modal" aria-label="Close">
+										<span aria-hidden="true">&times;</span>
+									</button>
+								</div>
+								<div class="modal-body">
+									<p th:unless="${habilidad.requerida.size != 0 || habilidad.conocida.size != 0}">¿Estás seguro de que quieres eliminar la habilidad <span th:text="${habilidad.nombre}"></span>? Actualmente no se está usando y no causaría problemas.</p>
+									<p th:if="${habilidad.requerida.size != 0 || habilidad.conocida.size != 0}">¿Estás seguro de que quieres eliminar la habilidad <span th:text="${habilidad.nombre}"></span>? Los usuarios o proyectos que la estén usando dejarían de poseerla y podría causar problemas. Quizá prefieras editarla.</p>
+								</div>
+								<div class="modal-footer justify-content-center">
+									<button type="button" class="btn btn-outline-info btn-sm mr-3" data-dismiss="modal">No, cancelar</button>
+									<form class="text-right" action="/project/user/exit" method="POST">
+										<input type="hidden" name="idHabilidad" th:value="${habilidad.id}"/>
+										<button type="submit"  class="btn btn-outline-danger btn-sm">
+											<i class="bi bi-radioactive"></i> Sí, eliminar
+										</button>	
+									</form>
+								</div>
+							</div>
+						</div>
+					</div> 
+
 				</td>
 			</tr>
 		</tbody>

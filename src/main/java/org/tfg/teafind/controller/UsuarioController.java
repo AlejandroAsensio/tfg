@@ -62,7 +62,7 @@ public class UsuarioController {
 			u = (Usuario) s.getAttribute("usuario");
 		}
 		if (s.getAttribute("usuario") == null || !u.isAdmin()) {
-			PRG.error("No tienes permiso para acceder", "/");
+			PRG.error("No tienes permiso para acceder.", "/");
 		}
 		List<Usuario> usuarios = usuarioRepository.findAll();
 

@@ -42,14 +42,14 @@
 						<input type="text" name="nombre" id="nombreP" class="form-control disabled bg-light border-0" th:value="${proyecto.nombre}" disabled="disabled">
 					</div>
 					<div class="form-group col-md-6" th:unless="${proyecto.leader?.id == null || proyecto.leader?.id == session.usuario?.id}">
-						<label for="nombreP" class="font-weight-bold">Líder: </label>
+						<label for="nombreLider" class="font-weight-bold">Líder: </label>
 						<div class="d-flex justify-content-left">
 							<img class="imagenNavbar align-self-center" th:src="|/img/profile/${proyecto.leader?.imagen}|" th:alt="${proyecto.leader?.nombre}" th:title="${proyecto.leader?.nombre}">
-							<input type="text" name="nombre" id="nombreP" class="form-control disabled bg-light border-0" th:value="${proyecto.leader?.nombre}" disabled="disabled">
+							<input type="text" name="nombre" id="nombreLider" class="form-control disabled bg-light border-0" th:value="${proyecto.leader?.nombre}" disabled="disabled">
 						</div>
 					</div>
 					<div class="form-group" th:if="${proyecto.leader?.id != null && proyecto.leader?.id == session.usuario?.id && session.usuario!=null}">
-						<span for="nombreP" class="badge badge-pill badge-secondary border-1 pr-2 pl-0 ml-0 py-0">
+						<span class="badge badge-pill badge-secondary border-1 pr-2 pl-0 ml-0 py-0">
 							<img th:src="|/img/profile/${proyecto.leader?.imagen}|" height="auto" class="imagenNavbar align-self-center mr-1"> Eres lider
 						</span>
 					</div>
@@ -102,15 +102,41 @@
 						    <span th:each="habilidad : ${puesto.requiere}" th:text="${habilidad.nombre}" class="badge badge-pill badge-primary mx-1"></span>
 						</div>
 					</div>
-					
-					<form name="abandonarProyecto" action="/project/user/exit" method="POST">
-						<div class="mx-3 mb-3 d-flex justify-content-end">
-							<input type="hidden" name="idPuesto" th:value="${puesto.id}"/>
-							<button type="button" class="btn btn-outline-danger btn-sm border-0" onclick="salir(this.form)">
-								 <i class="bi bi-x-square"></i> Abandonar <span th:text="${proyecto.nombre}" />
-							</button>
+
+					<div class="mx-3 mb-3 d-flex justify-content-end">
+						<a href="#modalAbandonarPuesto" class="trigger-btn btn btn-outline-danger btn-sm border-0" data-toggle="modal">
+							<i class="bi bi-x-square"></i> Abandonar
+						</a>
+					</div>
+
+					<!-- Modal para ABANDONAR PUESTO -->
+					<div id="modalAbandonarPuesto" class="modal fade">
+						<div class="modal-dialog modal-confirm">
+							<div class="modal-content">
+								<div class="modal-header">
+									<div class="icon-box align-self-center tx-bad mr-2">
+										<i class="bi bi-exclamation-octagon"></i>
+									</div>						
+									<h4 class="modal-title w-100">Estás a punto de abandonar el proyecto</h4>	
+									<button type="button" class="close" data-dismiss="modal" aria-label="Close">
+										<span aria-hidden="true">&times;</span>
+									</button>
+								</div>
+								<div class="modal-body">
+									<p>¿Quieres abandonar tu puesto de <span th:text="${puesto.nombre}"></span>? Dejarás de formar parte de <span th:text="${proyecto.nombre}"></span> y ya no podrás contactar con tus compañeros.</p>
+								</div>
+								<div class="modal-footer justify-content-center">
+									<button type="button" class="btn btn-outline-info btn-sm mr-3" data-dismiss="modal">No, cancelar</button>
+									<form class="text-right" action="/project/user/exit" method="POST">
+										<input type="hidden" name="idPuesto" th:value="${puesto.id}"/>
+										<button type="submit"  class="btn btn-outline-danger btn-sm">
+											<i class="bi bi-radioactive"></i> Sí, abandonar
+										</button>	
+									</form>
+								</div>
+							</div>
 						</div>
-					</form>
+					</div> 
 					
 				</div>
 			</th:block>
@@ -229,13 +255,45 @@
 						    <div class="d-inline justify-content-end pb-2 px-2">
 							    <span th:each="habilidad : ${puesto.requiere}" th:text="${habilidad.nombre}" class="badge badge-pill badge-primary mx-1"></span>
 							</div>
-					    	<form th:name="|unir${puesto.id}|" th:if="${puesto.ocupante==null && !pertenece && session.usuario!=null && proyecto.leader.id != session.usuario.id && !proyecto.isEnded()} " action="/project/user/join" method="POST">
-					    		<div class="d-flex justify-content-end">
-									<input type="hidden" name="idPuesto" th:value="${puesto.id}"/>
-									<input type="hidden" name="idProyecto" th:value="${proyecto.id}"/>
-									<button type="button" class="btn btn-outline-primary btn-sm border-0" onclick="confirmar(this.form)">Unirme</button>
-								</div>	
-							</form>
+					    	<div class="d-flex justify-content-end">
+								<a th:if="${puesto.ocupante==null and !pertenece and session.usuario!=null and proyecto.leader.id != session.usuario.id and !proyecto.isEnded()}" 
+									th:href="|#modalUnirseAPuesto-${puesto.id}|" 
+									class="trigger-btn btn btn-outline-primary btn-sm border-0" data-toggle="modal"
+									onclick="escalarOff();">
+									<i class="bi bi-person-check mr-2"></i> Unirme
+								</a>
+							</div>
+							
+
+							<!-- Modal para UNIRSE a PUESTO -->
+							<div th:id="|modalUnirseAPuesto-${puesto.id}|" class="modal fade modalUnir">
+								<div class="modal-dialog modal-confirm">
+									<div class="modal-content">
+										<div class="modal-header">
+											<div class="icon-box align-self-center tx-bad mr-2">
+												<i class="bi bi-exclamation-octagon"></i>
+											</div>						
+											<h4 class="modal-title w-100">Estás a punto de unirte al proyecto</h4>	
+											<button type="button" class="close" data-dismiss="modal" aria-label="Close">
+												<span aria-hidden="true">&times;</span>
+											</button>
+										</div>
+										<div class="modal-body">
+											<p>¿Quieres unirte al proyecto ocupando el puesto de <span th:text="${puesto.nombre}"></span>? Pasarás a formar parte de <span th:text="${proyecto.nombre}"></span> y podrás contactar con el resto de miembros.</p>
+										</div>
+										<div class="modal-footer justify-content-center">
+											<button type="button" class="btn btn-outline-info btn-sm mr-3" data-dismiss="modal">No, cancelar</button>
+											<form class="text-right" action="/project/user/join" method="POST">
+												<input type="hidden" name="idPuesto" th:value="${puesto.id}"/>
+												<input type="hidden" name="idProyecto" th:value="${proyecto.id}"/>
+												<button type="submit"  class="btn btn-outline-success btn-sm">
+													<i class="bi bi-person-check mr-2"></i> Sí, unirme
+												</button>	
+											</form>
+										</div>
+									</div>
+								</div>
+							</div> 
 						</div>
 					</div>
 				</th:block>
@@ -250,18 +308,22 @@
 </div>
 
 <script>
-	function confirmar(formulario){
+	//Desactivar el scale de las cards para que no entre en conflicto con los modals
+	//al pulsar el botón de unirse
+	function escalarOff() {
+		$(".escalar").each(function() {
+			$(this).addClass("escalarOff").removeClass("escalar");
+		})
+	}
+
+	//Reactivar el scale de las cards al salir del modal
+	$(".modalUnir").on("hidden.bs.modal", function() {
+		console.log("Salir del modal")
+		$(".escalarOff").each(function() {
+			$(this).addClass("escalar").removeClass("escalarOff");
+		})
+	})
 		
-		var res = confirm("¿Estás seguro de que quieres unirte?");
-		if(res){
-			formulario.submit();
-		}
-	}
-	function salir(formulario) {
-		var res = confirm("¿Dejarás de formar parte del proyecto, estás seguro de que quieres abandonar tu puesto?");
-		if(res){
-			formulario.submit();
-		}
-	}
+	
 </script>
 <script src="/js/edicionGestionProyectos.js"></script>
