@@ -67,7 +67,7 @@ public class ProyectoController {
 			PRG.error("Debes iniciar sesion para poder crear proyectos.","/login");
 		}
 		if (!usuario.isVerified()) {
-			PRG.info("Debes verificar tu cuenta para poder crear proyectos.", "/usuario/verificar");
+			PRG.info("Debes verificar tu cuenta para poder crear proyectos.", "/verify");
 		}
 		m.put("view", "proyecto/c");
 		return "_t/frame";

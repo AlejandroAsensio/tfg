@@ -44,6 +44,9 @@
 					<div class="form-group col-md-6" th:unless="${proyecto.leader?.id == null || proyecto.leader?.id == session.usuario?.id}">
 						<label for="nombreLider" class="font-weight-bold">Líder: </label>
 						<div class="d-flex justify-content-left">
+							<a th:if="${session.usuario != null && (pertenece || proyecto.leader.id == session.usuario?.id)}" th:href="|mailto:${proyecto.leader.email}|" th:title="|Enviar mail a ${proyecto.leader.nombre} - ${proyecto.leader.email}|" class="btn btn-link btn-sm btn-rounded tx-main-darker align-self-center">
+								<i class="bi bi-envelope"></i>
+							</a>
 							<img class="imagenNavbar align-self-center" th:src="|/img/profile/${proyecto.leader?.imagen}|" th:alt="${proyecto.leader?.nombre}" th:title="${proyecto.leader?.nombre}">
 							<input type="text" name="nombre" id="nombreLider" class="form-control disabled bg-light border-0" th:value="${proyecto.leader?.nombre}" disabled="disabled">
 						</div>

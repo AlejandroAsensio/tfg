@@ -69,7 +69,8 @@
 								<span class="d-flex flex-nowrap disabled font-weight-light d-block" th:text="|Fin: ${proyectoCreado.fin}|" disabled />
 							</div>
 						</div>
-						<div class="d-flex justify-content-end">
+						<div class="d-flex justify-content-start">
+							<h6 th:if="${proyectoCreado.isEnded}" class="d-inline tx-bad">Proyecto finalizado</h6>
 							<form action="/project/view" class="d-inline">
 								<input type="hidden" name="idProyecto" th:value="${proyectoCreado.id}" />
 								<button type="submit" class="btn btn-outline-info btn-sm mr-2">
