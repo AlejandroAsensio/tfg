@@ -43,6 +43,23 @@ public class ProyectoController {
 	@Autowired
 	private PuestoRepository puestoRepository;
 
+
+	@GetMapping("admin/projects")
+	public String r(ModelMap m, HttpSession s) throws DangerException {
+		Usuario u = null;
+		if (s.getAttribute("usuario") != null) {
+			u = (Usuario) s.getAttribute("usuario");
+		}
+		if (s.getAttribute("usuario") == null || !u.isAdmin()) {
+			PRG.error("No tienes permiso para acceder.", "/");
+		}
+		List<Proyecto> proyectos = proyectoRepository.findAll();
+
+		m.put("proyectos", proyectos);
+		m.put("view", "proyecto/r");
+		return "_t/frame";
+	}
+
 	@GetMapping("project/new")
 	public String c(ModelMap m,HttpSession s) throws DangerException, InfoException {
 		Usuario usuario = (Usuario) s.getAttribute("usuario");
@@ -61,7 +78,6 @@ public class ProyectoController {
 			@DateTimeFormat(iso = DateTimeFormat.ISO.DATE) @RequestParam(value="fIni",required=false) LocalDate fIni,
 			@DateTimeFormat(iso = DateTimeFormat.ISO.DATE) @RequestParam(value="fFin",required=false) LocalDate fFin,
 			@RequestParam(value="idUsuario",required=false) Long idUsuario
-	// falta el tipo de dato usuario
 
 	) throws DangerException, InfoException {
 
@@ -71,10 +87,8 @@ public class ProyectoController {
 		} catch (Exception e) {
 			PRG.error("El proyecto " + nombre + " ya existe.", "/project/new");
 		}
-		// PRG.info( "El proyecto "+ nombre + "se ha creado correctamente.",
-		// "/proyecto/r");
+		
 		return "redirect:/user/projects";
-
 	}
 	
 	@PostMapping("project/delete")
@@ -139,10 +153,6 @@ public class ProyectoController {
 
 		//Habiendo un solo puesto, averiguar si el usuario activo es el que lo ocupa
 		ocupadoUnicoLibre = (puestosOcupados == 1 && pertenece) ? true : false;
-
-
-
-		
 		
 		m.put("pertenece", pertenece);
 		m.put("proyecto", proyecto);
@@ -218,6 +228,7 @@ public class ProyectoController {
 
 		return "redirect:/project/manage?idProyecto=" + idProyecto;
 	}
+
 	@PostMapping("project/user/dismiss")
 	public String despedir(
 			@RequestParam(value="idPuesto",required=false) Long idPuesto 

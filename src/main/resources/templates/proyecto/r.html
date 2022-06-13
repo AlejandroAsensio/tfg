@@ -1,63 +1,100 @@
 <div class="container">
-	<div class="row m-3">
-		<h2 class="display-4">Proyectos</h2>
+	
+	<div class="row d-flex justify-content-between mb-4">
+		<div class="col-xl-7 col-lg-6 col-md-12 col-sm-12 col-12">
+			<h1 class="font-weight-light">Proyectos de Teafind</h1>
+		</div>
+		
+		<div class="d-flex justify-content-end align-self-center col-xl-5 col-lg-6 col-md-12 col-sm-12 col-12">
+			<span class="rounded tx-blanco bgc-bad align-self-center px-2">Admin</span>
+		</div>
 	</div>
+	
 </div>
 
-<div class="container rounded p-4">
-	
-	<div class="row m-3">
-		<h3 class="display-5">Lista de Proyectos</h3>
-	</div>
-	
-	<table class="table table-hover">
-	<thead>
-	  
-		    <tr class="table-active">
-		    	<th scope="col">
-					Líder Proyecto
-				</th>
-				<th scope="col">
-					Nombre Proyecto
-				</th>
-				<th scope="col">
-					Descripción
-				</th>
-				<th scope="col">
-					Puestos disponibles
-				</th>
-				<th scope="col">
-					Fecha de Inicio
-				</th>
-				<th scope="col">
-					Fecha de Finalización
-				</th>
-		    </tr>
-	  </thead>
-	  <tbody>
-	  
-		    <tr>
-		    	<!-- scope="row" en un th indica el indice de la fila -->
-				<tr th:each="proyecto:${proyectos}">
-					<td th:text="|${proyecto.leader.nombre} ${proyecto.leader.apellido1} ${proyecto.leader.apellido2}|"/>
-					<td th:text="${proyecto.nombre}"/>
-					<td th:text="${proyecto.descripcion}"/>
-					<td th:text="${proyecto.puestos.size()}"/>
-					<td th:text="${proyecto.inicio}"/>
-					<td th:text="${proyecto.fin}"/>
-					<td>
-						<form action="/proyecto/verProyecto">
-						<input type="hidden" name="idProyecto" th:value="${proyecto.id}"/>
-						<input type="submit" value="Más info"/>
-						</form>
-					</td>
-				</tr>
-		    </tr>
-	    
+<div class="container p-4">
+	<table class="table align-middle mb-0 table-hover table-responsive-md">
+		<thead class="tx-off bgc-main-dark">
+			<tr>
+				<th class="text-nowrap">Nombre</th>
+				<th class="text-nowrap">Descripción</th>
+				<th class="text-nowrap">Fechas</th>
+				<th class="text-nowrap">Estado</th>
+				<th class="text-nowrap">Puestos</th>
+				<th class="text-nowrap">Acciones</th>
+			</tr>
+		</thead>
+		<tbody>
+			<tr th:each="proyecto:${proyectos}">
+				<td class="align-middle">
+					<div class="d-flex align-items-center">
+						<img th:unless="${proyecto.leader == null}" th:src="|/img/profile/${proyecto.leader?.imagen}|" alt="|Foto de ${proyecto.leader?.nick}|" class="rounded-circle imgUsersView mr-3" />
+						<div class="ms-3">
+							<p th:text="${proyecto.nombre}" class="font-weight-bold mb-1"></p>
+							<p th:unless="${proyecto.leader == null}" th:text="|${proyecto.leader?.nick} - ${proyecto.leader?.email}|" class="text-muted mb-0"></p>
+						</div>
+					</div>
+				</td>
+				<td class="align-middle">
+					<p th:text="${proyecto.descripcion}" class="mb-1"></p>
+				</td>
+				<td class="align-middle">
+					<p class="mb-0 pb-0"><span th:text="|ini. ${proyecto.inicio}|" class="badge badge-warning tx-blanco bgc-main rounded-pill d-inline" title="Fecha de inicio"></span></p>
+					<p class="mb-0 pb-0"><span th:text="|fin ${proyecto.fin}|" class="badge badge-warning bgc-enfasis-light rounded-pill d-inline" title="Fecha de finalización"></span></p>
+				</td>
+				<td class="align-middle">
+					<p class="mb-0 pb-0" th:if="${proyecto.isEnded()}"><span class="badge badge-warning tx-blanco bgc-enfasis rounded-pill d-inline">Finalizado</span></p>
+					<p class="mb-0 pb-0" th:if="${!proyecto.isEnded()}"><span class="badge badge-success bgc-good rounded-pill d-inline">Activo</span></p>
+				</td>
+				<td class="align-middle">
+					<p th:if="${proyecto.puestos.size == 0}" class="mb-0 pb-0"><span class="badge badge-warning tx-blanco bgc-enfasis rounded-pill d-inline">Sin puestos</span></p>
+					<p th:if="${proyecto.puestos.size != 0}" class="mb-0 pb-0">
+						<a th:href="|/project/view?idProyecto=${proyecto.id}|" target="_blank" title="Ver ficha" class="badge badge-success bgc-good rounded-pill d-inline">
+							<i class="bi bi-eye mr-1"></i><span th:text="${proyecto.puestos.size}"></span> puestos
+						</a>
+					</p>
+				</td>
+				<td class="d-flex justify-content-center align-middle">
+					<a th:href="|/project/view?idProyecto=${proyecto.id}|" title="Ver ficha" class="btn btn-link btn-sm btn-rounded">
+						<i class="bi bi-eye mr-1 tx-main"></i>
+					</a>
+					<a th:href="|#modalEliminarProyecto-${proyecto.id}|" class="trigger-btn btn btn-link btn-sm btn-rounded" title="Eliminar" data-toggle="modal">
+						<i class="bi bi-trash3 tx-bad"></i>
+					</a>
+
+					<!-- Modal para ELIMINAR PROYECTO -->
+					<div th:id="|modalEliminarProyecto-${proyecto.id}|" class="modal fade mt-5">
+						<div class="modal-dialog modal-confirm">
+							<div class="modal-content">
+								<div class="modal-header">
+									<div class="icon-box align-self-center tx-bad mr-2">
+										<i class="bi bi-exclamation-octagon"></i>
+									</div>						
+									<h4 th:if="${proyecto.isEnded()}" class="modal-title w-100">Estás a punto de eliminar un proyecto</h4>
+									<h4 th:if="${!proyecto.isEnded()}" class="modal-title w-100">Vas a eliminar un proyecto ACTIVO</h4>	
+									<button type="button" class="close" data-dismiss="modal" aria-label="Close">
+										<span aria-hidden="true">&times;</span>
+									</button>
+								</div>
+								<div class="modal-body">
+									<p th:if="${proyecto.isEnded()}">¿Estás seguro de que quieres eliminar el proyecto <span th:text="${proyecto.nombre}"></span>? Desaparecerá toda su información y sus componentes ya no podrían acceder a su ficha.</p>
+									<p th:if="${!proyecto.isEnded()}">¿Estás seguro de que quieres eliminar el proyecto <span th:text="${proyecto.nombre}"></span>? El líder (<span th:text="${proyecto.leader.nick}"></span>) perderá el proyecto y su información y sus componentes no podrán acceder a su ficha.</p>
+								</div>
+								<div class="modal-footer justify-content-center">
+									<button type="button" class="btn btn-outline-info btn-sm mr-3" data-dismiss="modal">No, cancelar</button>
+									<form class="text-right" action="/project/delete" method="POST">
+										<input type="hidden" name="idProyecto" th:value="${proyecto.id}"/>
+										<button type="submit"  class="btn btn-outline-danger btn-sm">
+											<i class="bi bi-radioactive"></i> Sí, eliminar
+										</button>	
+									</form>
+								</div>
+							</div>
+						</div>
+					</div> 
+
+				</td>
+			</tr>
 		</tbody>
 	</table>
-	<br/>
-	<form action="/proyecto/c">
-		<input type="submit" class="btn btn-success btn-sm" value="Nuevo Proyecto"/>
-	</form>
 </div>

@@ -66,21 +66,21 @@
 		</thead>
 		<tbody>
 			<tr th:each="habilidad:${habilidades}">
-				<td>
+				<td class="align-middle">
 					<div class="d-flex align-items-center">
 						<div class="ms-3">
 							<p th:text="${habilidad.nombre}" class="font-weight-bold mb-1"></p>
 						</div>
 					</div>
 				</td>
-				<td>
+				<td class="align-middle">
 					<p th:text="${habilidad.descripcion}" class="mb-1"></p>
 				</td>
-				<td>
+				<td class="align-middle">
 					<span th:if="${habilidad.requerida.size == 0 && habilidad.conocida.size == 0}" class="badge badge-warning bgc-atencion rounded-pill d-inline">No usada</span>
 					<span th:if="${habilidad.requerida.size != 0 || habilidad.conocida.size != 0}" class="badge badge-success bgc-good rounded-pill d-inline">En uso</span>
 				</td>
-				<td class="d-flex justify-content-center">
+				<td class="d-flex justify-content-center align-middle">
 					<button type="button" class="btn btn-link btn-sm btn-rounded" th:title="|Editar ${habilidad.nombre}|" data-toggle="modal" th:attr="data-target='#editHabilidadModal-'+${habilidad.id}">
 						<i class="bi bi-pencil tx-atencion"></i>
 					</button>

@@ -30,16 +30,16 @@
 						</div>
 					</div>
 				</td>
-				<td>
+				<td class="align-middle">
 					<p th:text="${usuario.descripcion}" class="mb-1"></p>
 				</td>
-				<td>
+				<td class="align-middle">
 					<span th:text="${usuario.verified ? 'Verificado' : 'No verificado'}" th:class="${usuario.verified ? 'badge badge-success bgc-good rounded-pill d-inline' : 'badge badge-alert tx-blanco bgc-bad rounded-pill d-inline'}"></span>
 				</td>
-				<td th:text="|${usuario.creados.size} proyectos|"></td>
-				<td th:text="|${usuario.ocupa.size} proyectos|"></td>
-				<td>
-					<a th:href="|#modalEliminarUserAdmin-${usuario.id}|" class="trigger-btn btn btn-sm mt-2 mr-3" data-toggle="modal">
+				<td class="align-middle" th:text="|${usuario.creados.size} proyectos|"></td>
+				<td class="align-middle" th:text="|${usuario.ocupa.size} proyectos|"></td>
+				<td class="align-middle">
+					<a th:href="|#modalEliminarUserAdmin-${usuario.id}|" class="trigger-btn btn btn-sm mr-3" data-toggle="modal">
 						<i class="bi bi-trash3 tx-bad"></i>
 					</a>
 
@@ -51,7 +51,7 @@
 									<div class="icon-box align-self-center tx-bad mr-2">
 										<i class="bi bi-exclamation-octagon"></i>
 									</div>						
-									<h4 class="modal-title w-100">Estás a punto de borrar tu cuenta</h4>	
+									<h4 class="modal-title w-100">Estás a punto de eliminar un usuario</h4>	
 									<button type="button" class="close" data-dismiss="modal" aria-label="Close">
 										<span aria-hidden="true">&times;</span>
 									</button>
