@@ -473,7 +473,6 @@ a.enlaceIconoFooter:hover .logoFooter {
 
 /*-------------------Utilities-------------------
 ------------------------------------------------*/
-
 .modal.fade {
     background: transparent;
     backdrop-filter: blur(3px);

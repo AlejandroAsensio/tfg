@@ -217,7 +217,13 @@
 				<th:block th:if="${ocupados > 0}" th:each="puesto : ${proyecto.puestos}" class="mx-3">
 					<div th:if="${puesto.ocupante != null && puesto.ocupante.id != session.usuario?.id}" class="card escalar text-center my-3 mx-3">
 		  				<div class="card-body">
-							<img class="imagenNavbar float-right" th:src="|/img/profile/${puesto.ocupante.imagen}|" th:alt="${puesto.ocupante.nombre}" th:title="${puesto.ocupante.nombre}">
+							<div class="float-right m-0 p-0">
+								<a th:if="${session.usuario != null && (pertenece || proyecto.leader.id == session.usuario?.id)}" th:href="|mailto:${puesto.ocupante.email}|" th:title="|Enviar mail a ${puesto.ocupante.nombre} - ${puesto.ocupante.email}|" class="btn btn-link btn-sm btn-rounded tx-main-darker">
+									<i class="bi bi-envelope"></i>
+								</a>
+								<img class="imagenNavbar float-right" th:src="|/img/profile/${puesto.ocupante.imagen}|" th:alt="${puesto.ocupante.nombre}" th:title="${puesto.ocupante.nombre}">
+							</div>
+							
 							<h5 class="card-title text-left font-weight-bold" th:text="${puesto.nombre}"></h5>
 							
 							<p class="card-text text-left" th:if="${session.usuario != null && (pertenece || proyecto.leader.id == session.usuario?.id)}" th:text="|${puesto.ocupante.nombre} ${puesto.ocupante.apellido1} ${puesto.ocupante.apellido2}|"></p>

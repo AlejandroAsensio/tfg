@@ -43,7 +43,8 @@
 					<p class="mb-0 pb-0"><span th:text="|fin ${proyecto.fin}|" class="badge badge-warning bgc-enfasis-light rounded-pill d-inline" title="Fecha de finalización"></span></p>
 				</td>
 				<td class="align-middle">
-					<p class="mb-0 pb-0" th:if="${proyecto.isEnded()}"><span class="badge badge-warning tx-blanco bgc-enfasis rounded-pill d-inline">Finalizado</span></p>
+					<p class="mb-0 pb-0" th:if="${proyecto.leader == null}"><span class="badge badge-warning tx-blanco bgc-enfasis rounded-pill d-inline">Sin líder</span></p>
+					<p class="mb-0 pb-0" th:if="${proyecto.isEnded()}"><span class="badge badge-warning bgc-enfasis-light rounded-pill d-inline">Finalizado</span></p>
 					<p class="mb-0 pb-0" th:if="${!proyecto.isEnded()}"><span class="badge badge-success bgc-good rounded-pill d-inline">Activo</span></p>
 				</td>
 				<td class="align-middle">

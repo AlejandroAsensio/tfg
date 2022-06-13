@@ -15,8 +15,8 @@ function crearMasPuestos(seguir) {
 	if (campos && habilidades) {
 		if (seguir) {
 			puestoForm.destino.value = seguir;
-		} else if (!seguir) {
-			puestoForm.destino.value = !seguir;
+		} else {
+			puestoForm.destino.value = seguir;
 		}
 			puestoForm.submit();
 	} else {

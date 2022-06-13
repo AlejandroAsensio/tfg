@@ -22,7 +22,7 @@
 					</div>
 				</div>
 		
-				<div th:if="${listaProyectosRandom.get(0).id != null}" class="carousel-item">
+				<div th:if="${listaProyectosRandom.get(0)?.id != null}" class="carousel-item">
 					<img src="/img/pr1s.jpg" class="d-block w-100 rounded">
 					<div class="carousel-caption rounded">
 						<a th:href="|project/view?idProyecto=${listaProyectosRandom.get(0).id}|" class="card-link tx-blanco"><h3 th:text="${listaProyectosRandom.get(0).nombre}"></h3></a>
@@ -30,7 +30,7 @@
 					</div>
 				</div>
 		
-				<div th:if="${listaProyectosRandom.get(1).id != null}" class="carousel-item">
+				<div th:if="${listaProyectosRandom.get(1)?.id != null}" class="carousel-item">
 					<img src="/img/pr2s.jpg" class="d-block w-100 rounded">
 					<div class="carousel-caption rounded">
 						<a th:href="|project/view?idProyecto=${listaProyectosRandom.get(1).id}|" class="card-link tx-blanco"><h3 th:text="${listaProyectosRandom.get(1).nombre}"></h3></a>
@@ -38,7 +38,7 @@
 					</div>
 				</div>
 		
-				<div th:if="${listaProyectosRandom.get(2).id != null}" class="carousel-item">
+				<div th:if="${listaProyectosRandom.get(2)?.id != null}" class="carousel-item">
 					<img src="/img/pr3s.jpg" class="d-block w-100 rounded">
 					<div class="carousel-caption rounded">
 						<a th:href="|project/view?idProyecto=${listaProyectosRandom.get(2).id}|" class="card-link tx-blanco"><h3 th:text="${listaProyectosRandom.get(2).nombre}"></h3></a>

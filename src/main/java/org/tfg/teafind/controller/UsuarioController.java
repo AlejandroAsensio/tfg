@@ -444,4 +444,19 @@ public class UsuarioController {
 		return "redirect:/project/view?idProyecto=" + puesto.getProyecto().getId();
 	}
 
+	@PostMapping("admin/users/user/makeAdmin")
+	public String makeAdmin(HttpSession s, @RequestParam("idUsuario") Long idUsuario) throws DangerException {
+		Usuario u = usuarioRepository.getById(idUsuario);
+		Usuario usuario = (Usuario) s.getAttribute("usuario");
+		if (usuario == null || !usuario.isAdmin()) {
+			PRG.error("No tienes permiso para acceder.", "/");
+		}
+		if (u.isAdmin()) {
+			u.setAdmin(false);
+		} else {
+			u.setAdmin(true);
+		}
+		usuarioRepository.save(u);
+		return "redirect:/admin/users";
+	}
 }
