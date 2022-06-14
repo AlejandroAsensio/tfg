@@ -91,7 +91,7 @@ public class UsuarioController {
 	public String cPost(@RequestParam("nick") String nick, @RequestParam("nombre") String nombre,
 			@RequestParam("apellido1") String apellido1, @RequestParam("apellido2") String apellido2,
 			@RequestParam("telefono") String telefono, @RequestParam("email") String email,
-			@RequestParam("imagen") MultipartFile imagen, @RequestParam("password") String password,
+			@RequestParam("imagen") String imagen, @RequestParam("password") String password,
 			@RequestParam(value = "idsHabilidadesSabe[]", required = false) List<Long> idsHabilidadesSabe
 
 	) throws DangerException, InfoException {
@@ -100,31 +100,6 @@ public class UsuarioController {
 
 		try {
 			usuario = new Usuario(nick, nombre, apellido1, apellido2, telefono, email, password, false, false);
-
-			//Ruta relativa de almacenamiento
-			Path directorioImagenes = Paths.get("src//main//resources//static//img//profile//");
-			File f = new File(directorioImagenes.toString());
-			f.mkdir();
-
-			if (!imagen.isEmpty()) {
-				nombreImagen = nick + "-" + NombreImagenUtils.getFileName(imagen.getOriginalFilename());
-
-				//Ruta absoluta
-				String rutaAbsoluta = directorioImagenes.toFile().getAbsolutePath();
-
-				//Bytes de la imagen
-				byte[] bytesImg = imagen.getBytes();
-
-				//Ruta completa que ocupará la imagen, con su nombre
-				Path rutaCompleta = Paths.get(rutaAbsoluta + "/" + nombreImagen);
-
-				//Escritura del fichero
-				Files.write(rutaCompleta, bytesImg);
-
-				usuario.setImagen(nombreImagen);
-			} else {
-				usuario.setImagen(nombreImagen);
-			}
 
 			if (idsHabilidadesSabe != null) {
 				for (Long idHabilidadSabe : idsHabilidadesSabe) {
@@ -264,7 +239,7 @@ public class UsuarioController {
 			@RequestParam("apellido1") String apellido1, @RequestParam("apellido2") String apellido2,
 			@RequestParam("telefono") String telefono, @RequestParam("email") String email,
 			@RequestParam(value = "descripcion", required = false) String descripcion,
-			@RequestParam(value = "imagen", required = false) MultipartFile imagen,
+			@RequestParam(value = "imagen", required = false) String imagen,
 			@RequestParam(value = "idsHabilidades[]", required = false) List<Long> idsHabilidades,
 			@RequestParam(value = "password", required = false) String password,
 			@RequestParam(value = "newPassword", required = false) String newPassword,
@@ -297,38 +272,6 @@ public class UsuarioController {
 			usuario.setDescripcion("Acerca de " + nick);
 		}
 
-		//* Ruta relativa de almacenamiento
-		Path directorioImagenes = Paths.get("src//main//resources//static//img//profile//");
-		File f = new File(directorioImagenes.toString());
-		f.mkdir();
-
-		String nombreImagen;
-
-		if (!imagen.isEmpty()) {
-			//* Si el usuario tiene la imagen default, se cogerá el nombre de la nueva subida
-			if (usuario.getImagen().compareTo("default.png") == 0) {
-				nombreImagen = nick + "-" + NombreImagenUtils.getFileName(imagen.getOriginalFilename());
-			} else if (usuario.getImagen() == null || usuario.getImagen().isEmpty()
-					|| usuario.getImagen().compareTo("null") == 0) {
-				nombreImagen = nick + "-" + NombreImagenUtils.getFileName(imagen.getOriginalFilename());
-			} else {
-				nombreImagen = usuario.getImagen();
-			}
-
-			//* Ruta absoluta
-			String rutaAbsoluta = directorioImagenes.toFile().getAbsolutePath();
-
-			//* Bytes de la imagen
-			byte[] bytesImg = imagen.getBytes();
-
-			//* Ruta completa que ocupará la imagen, con su nombre
-			Path rutaCompleta = Paths.get(rutaAbsoluta + "/" + nombreImagen);
-
-			//* Escritura del fichero
-			Files.write(rutaCompleta, bytesImg);
-
-			usuario.setImagen(nombreImagen);
-		}
 
 		if (idsHabilidades != null) {
 			for (Long idHabilidad : idsHabilidades) {
