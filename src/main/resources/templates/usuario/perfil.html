@@ -171,15 +171,202 @@
 							</div>
 						</div>
 						<div class="col-md-1"></div>
-						<div class="col-md-3">
-							<div id="contenedorImagenSubida" class="d-flex justify-content-center">
-								<img th:src="|/img/profile/${usuario.imagen}|" id="imagenSubida" class="img-thumbnail rounded imagenSubida img-responsive" alt="Imagen de usuario"></img>
-							</div>
-							<div class="pt-4">
-								<p class="form-label text-right mb-2">Elige tu foto de perfil</p>
-								<div class="custom-file mb-3">
-									<input type="file" class="custom-file-input" id="subirFoto" onchange="readURL(this);" name="imagen" accept="image/png, image/jpeg" lang="es">
-									<label class="custom-file-label" for="customFile">Elije tu foto</label>
+						<div class="col-md-3 row d-flex justify-content-center">
+							<span class="form-label text-right mr-2">Elige tu foto de perfil</span>
+
+							<!-- Button trigger modal -->
+							<button type="button" class="btn p-0" data-toggle="modal" data-target="#modalPickerImagen">
+								<img th:src="|/img/profile/${usuario.imagen}|" id="imagenSubida" class="img-thumbnail rounded imagenSubida img-responsive m-0" alt="Imagen de usuario"></img>
+							</button>
+
+							<!-- Modal -->
+							<div class="modal fade" id="modalPickerImagen" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+								<div class="modal-dialog modal-lg modal-dialog-scrollable">
+									<div class="modal-content">
+										<div class="modal-header">
+											<h5 class="modal-title" id="exampleModalLabel">Elige tu foto de perfil</h5>
+											<button type="button" class="close" data-dismiss="modal" aria-label="Close">
+												<span aria-hidden="true">&times;</span>
+											</button>
+										</div>
+										<div class="modal-body pl-4">
+											<div class="container-fluid">
+												<div class="row">
+													<div class="col-md-3">
+														<div class="custom-control custom-radio image-radio p-2 nuevaImagen">
+															<input type="radio" name="imagen" value="bear.png" class="custom-control-input" id="rd1"/>
+															<label class="custom-control-label" for="rd1">
+																<img src="/img/profile/bear.png" alt="#" class="img-fluid img-thumbnail">
+															</label>
+														</div>
+													</div>
+													<div class="col-md-3 ml-auto">
+														<div class="custom-control custom-radio image-radio p-2 nuevaImagen">
+															<input type="radio" name="imagen" value="bird.png" class="custom-control-input" id="rd2"/>
+															<label class="custom-control-label" for="rd2">
+																<img src="/img/profile/bird.png" alt="#" class="img-fluid img-thumbnail">
+															</label>
+														</div>
+													</div>
+													<div class="col-md-3 ml-auto">
+														<div class="custom-control custom-radio image-radio p-2 nuevaImagen">
+															<input type="radio" name="imagen" value="cat.png" class="custom-control-input" id="rd3"/>
+															<label class="custom-control-label" for="rd3">
+																<img src="/img/profile/cat.png" alt="#" class="img-fluid img-thumbnail">
+															</label>
+														</div>
+													</div>
+													<div class="col-md-3 ml-auto">
+														<div class="custom-control custom-radio image-radio p-2 nuevaImagen">
+															<input type="radio" name="imagen" value="dog.png" class="custom-control-input" id="rd4"/>
+															<label class="custom-control-label" for="rd4">
+																<img src="/img/profile/dog.png" alt="#" class="img-fluid img-thumbnail">
+															</label>
+														</div>
+													</div>
+												</div>
+												<div class="row">
+													<div class="col-md-3">
+														<div class="custom-control custom-radio image-radio p-2 nuevaImagen">
+															<input type="radio" name="imagen" value="fox.png" class="custom-control-input" id="rd5"/>
+															<label class="custom-control-label" for="rd5">
+																<img src="/img/profile/fox.png" alt="#" class="img-fluid img-thumbnail">
+															</label>
+														</div>
+													</div>
+													<div class="col-md-3 ml-auto">
+														<div class="custom-control custom-radio image-radio p-2 nuevaImagen">
+															<input type="radio" name="imagen" value="frog.png" class="custom-control-input" id="rd6"/>
+															<label class="custom-control-label" for="rd6">
+																<img src="/img/profile/frog.png" alt="#" class="img-fluid img-thumbnail">
+															</label>
+														</div>
+													</div>
+													<div class="col-md-3 ml-auto">
+														<div class="custom-control custom-radio image-radio p-2 nuevaImagen">
+															<input type="radio" name="imagen" value="gato.png" class="custom-control-input" id="rd7"/>
+															<label class="custom-control-label" for="rd7">
+																<img src="/img/profile/gato.png" alt="#" class="img-fluid img-thumbnail">
+															</label>
+														</div>
+													</div>
+													<div class="col-md-3 ml-auto">
+														<div class="custom-control custom-radio image-radio p-2 nuevaImagen">
+															<input type="radio" name="imagen" value="glasses.png" class="custom-control-input" id="rd8"/>
+															<label class="custom-control-label" for="rd8">
+																<img src="/img/profile/glasses.png" alt="#" class="img-fluid img-thumbnail">
+															</label>
+														</div>
+													</div>
+												</div>
+												<div class="row">
+													<div class="col-md-3">
+														<div class="custom-control custom-radio image-radio p-2 nuevaImagen">
+															<input type="radio" name="imagen" value="jiraf.png" class="custom-control-input" id="rd9"/>
+															<label class="custom-control-label" for="rd9">
+																<img src="/img/profile/jiraf.png" alt="#" class="img-fluid img-thumbnail">
+															</label>
+														</div>
+													</div>
+													<div class="col-md-3 ml-auto">
+														<div class="custom-control custom-radio image-radio p-2 nuevaImagen">
+															<input type="radio" name="imagen" value="leopard.png" class="custom-control-input" id="rd10"/>
+															<label class="custom-control-label" for="rd10">
+																<img src="/img/profile/leopard.png" alt="#" class="img-fluid img-thumbnail">
+															</label>
+														</div>
+													</div>
+													<div class="col-md-3 ml-auto">
+														<div class="custom-control custom-radio image-radio p-2 nuevaImagen">
+															<input type="radio" name="imagen" value="mapache.png" class="custom-control-input" id="rd11"/>
+															<label class="custom-control-label" for="rd11">
+																<img src="/img/profile/mapache.png" alt="#" class="img-fluid img-thumbnail">
+															</label>
+														</div>
+													</div>
+													<div class="col-md-3 ml-auto">
+														<div class="custom-control custom-radio image-radio p-2 nuevaImagen">
+															<input type="radio" name="imagen" value="oveja.png" class="custom-control-input" id="rd12"/>
+															<label class="custom-control-label" for="rd12">
+																<img src="/img/profile/oveja.png" alt="#" class="img-fluid img-thumbnail">
+															</label>
+														</div>
+													</div>
+												</div>
+												<div class="row">
+													<div class="col-md-3">
+														<div class="custom-control custom-radio image-radio p-2 nuevaImagen">
+															<input type="radio" name="imagen" value="parrot.png" class="custom-control-input" id="rd13"/>
+															<label class="custom-control-label" for="rd13">
+																<img src="/img/profile/parrot.png" alt="#" class="img-fluid img-thumbnail">
+															</label>
+														</div>
+													</div>
+													<div class="col-md-3 ml-auto">
+														<div class="custom-control custom-radio image-radio p-2 nuevaImagen">
+															<input type="radio" name="imagen" value="pavo.png" class="custom-control-input" id="rd14"/>
+															<label class="custom-control-label" for="rd14">
+																<img src="/img/profile/pavo.png" alt="#" class="img-fluid img-thumbnail">
+															</label>
+														</div>
+													</div>
+													<div class="col-md-3 ml-auto">
+														<div class="custom-control custom-radio image-radio p-2 nuevaImagen">
+															<input type="radio" name="imagen" value="person.png" class="custom-control-input" id="rd15"/>
+															<label class="custom-control-label" for="rd15">
+																<img src="/img/profile/person.png" alt="#" class="img-fluid img-thumbnail">
+															</label>
+														</div>
+													</div>
+													<div class="col-md-3 ml-auto">
+														<div class="custom-control custom-radio image-radio p-2 nuevaImagen">
+															<input type="radio" name="imagen" value="reno.png" class="custom-control-input" id="rd16"/>
+															<label class="custom-control-label" for="rd16">
+																<img src="/img/profile/reno.png" alt="#" class="img-fluid img-thumbnail">
+															</label>
+														</div>
+													</div>
+												</div>
+												<div class="row">
+													<div class="col-md-3">
+														<div class="custom-control custom-radio image-radio p-2 nuevaImagen">
+															<input type="radio" name="imagen" value="snake.png" class="custom-control-input" id="rd17"/>
+															<label class="custom-control-label" for="rd17">
+																<img src="/img/profile/snake.png" alt="#" class="img-fluid img-thumbnail">
+															</label>
+														</div>
+													</div>
+													<div class="col-md-3 ml-auto">
+														<div class="custom-control custom-radio image-radio p-2 nuevaImagen">
+															<input type="radio" name="imagen" value="squirrel.png" class="custom-control-input" id="rd18"/>
+															<label class="custom-control-label" for="rd18">
+																<img src="/img/profile/squirrel.png" alt="#" class="img-fluid img-thumbnail">
+															</label>
+														</div>
+													</div>
+													<div class="col-md-3 ml-auto">
+														<div class="custom-control custom-radio image-radio p-2 nuevaImagen">
+															<input type="radio" name="imagen" value="tucan.png" class="custom-control-input" id="rd19"/>
+															<label class="custom-control-label" for="rd19">
+																<img src="/img/profile/tucan.png" alt="#" class="img-fluid img-thumbnail">
+															</label>
+														</div>
+													</div>
+													<div class="col-md-3 ml-auto">
+														<div class="custom-control custom-radio image-radio p-2 nuevaImagen">
+															<input type="radio" name="imagen" value="turtle.png" class="custom-control-input" id="rd20"/>
+															<label class="custom-control-label" for="rd20">
+																<img src="/img/profile/turtle.png" alt="#" class="img-fluid img-thumbnail">
+															</label>
+														</div>
+													</div>
+												</div>
+											</div>
+										</div>
+										<div class="modal-footer">
+											<button type="button" class="btn btn-primary" data-dismiss="modal">Guardar</button>
+										</div>
+									</div>
 								</div>
 							</div>	
 							
@@ -254,16 +441,12 @@ $(document).ready(function() {
 })
 </script>
 <script>
-/*Script para sustituir la imagen por defecto con la imagen seleccionada en un input*/
-	function readURL(input) {
-		if (input.files && input.files[0]) {
-	    	var reader = new FileReader();
+	$(document).ready(function() {
 	
-	    	reader.onload = function (e) {
-	      		$('#imagenSubida').attr('src', "#").attr('src', e.target.result);
-	    	};
-	
-	    	reader.readAsDataURL(input.files[0]);
-	  	}
-	}
-</script>
+		$(".nuevaImagen").on("change", function() {
+			var nombreImagen = $("input:radio[name=imagen]:checked").val();
+			console.log("Nombre picked = " + nombreImagen);
+			$('#imagenSubida').attr('src', "/img/profile/" + nombreImagen);
+		});
+	})
+	</script>

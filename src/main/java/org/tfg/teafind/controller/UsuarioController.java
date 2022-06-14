@@ -2,9 +2,6 @@ package org.tfg.teafind.controller;
 
 import java.io.File;
 import java.io.IOException;
-import java.nio.file.Files;
-import java.nio.file.Path;
-import java.nio.file.Paths;
 import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.List;
@@ -20,7 +17,6 @@ import org.springframework.ui.ModelMap;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestParam;
-import org.springframework.web.multipart.MultipartFile;
 import org.tfg.teafind.entities.Habilidad;
 import org.tfg.teafind.entities.Proyecto;
 import org.tfg.teafind.entities.Puesto;
@@ -33,7 +29,6 @@ import org.tfg.teafind.repository.ProyectoRepository;
 import org.tfg.teafind.repository.PuestoRepository;
 import org.tfg.teafind.repository.UsuarioRepository;
 import org.tfg.teafind.service.MailService;
-import org.tfg.teafind.utils.NombreImagenUtils;
 
 @Controller
 public class UsuarioController {
@@ -91,7 +86,7 @@ public class UsuarioController {
 	public String cPost(@RequestParam("nick") String nick, @RequestParam("nombre") String nombre,
 			@RequestParam("apellido1") String apellido1, @RequestParam("apellido2") String apellido2,
 			@RequestParam("telefono") String telefono, @RequestParam("email") String email,
-			@RequestParam("imagen") MultipartFile imagen, @RequestParam("password") String password,
+			@RequestParam(value = "imagen", required = false) String imagen, @RequestParam("password") String password,
 			@RequestParam(value = "idsHabilidadesSabe[]", required = false) List<Long> idsHabilidadesSabe
 
 	) throws DangerException, InfoException {
@@ -101,30 +96,10 @@ public class UsuarioController {
 		try {
 			usuario = new Usuario(nick, nombre, apellido1, apellido2, telefono, email, password, false, false);
 
-			//Ruta relativa de almacenamiento
-			Path directorioImagenes = Paths.get("src//main//resources//static//img//profile//");
-			File f = new File(directorioImagenes.toString());
-			f.mkdir();
-
-			if (!imagen.isEmpty()) {
-				nombreImagen = nick + "-" + NombreImagenUtils.getFileName(imagen.getOriginalFilename());
-
-				//Ruta absoluta
-				String rutaAbsoluta = directorioImagenes.toFile().getAbsolutePath();
-
-				//Bytes de la imagen
-				byte[] bytesImg = imagen.getBytes();
-
-				//Ruta completa que ocupará la imagen, con su nombre
-				Path rutaCompleta = Paths.get(rutaAbsoluta + "/" + nombreImagen);
-
-				//Escritura del fichero
-				Files.write(rutaCompleta, bytesImg);
-
-				usuario.setImagen(nombreImagen);
-			} else {
-				usuario.setImagen(nombreImagen);
+			if (imagen != null && imagen.compareTo("") != 0) {
+				nombreImagen = imagen;
 			}
+			usuario.setImagen(nombreImagen);
 
 			if (idsHabilidadesSabe != null) {
 				for (Long idHabilidadSabe : idsHabilidadesSabe) {
@@ -264,7 +239,7 @@ public class UsuarioController {
 			@RequestParam("apellido1") String apellido1, @RequestParam("apellido2") String apellido2,
 			@RequestParam("telefono") String telefono, @RequestParam("email") String email,
 			@RequestParam(value = "descripcion", required = false) String descripcion,
-			@RequestParam(value = "imagen", required = false) MultipartFile imagen,
+			@RequestParam(value = "imagen", required = false) String imagen,
 			@RequestParam(value = "idsHabilidades[]", required = false) List<Long> idsHabilidades,
 			@RequestParam(value = "password", required = false) String password,
 			@RequestParam(value = "newPassword", required = false) String newPassword,
@@ -297,37 +272,9 @@ public class UsuarioController {
 			usuario.setDescripcion("Acerca de " + nick);
 		}
 
-		//* Ruta relativa de almacenamiento
-		Path directorioImagenes = Paths.get("src//main//resources//static//img//profile//");
-		File f = new File(directorioImagenes.toString());
-		f.mkdir();
-
-		String nombreImagen;
-
-		if (!imagen.isEmpty()) {
-			//* Si el usuario tiene la imagen default, se cogerá el nombre de la nueva subida
-			if (usuario.getImagen().compareTo("default.png") == 0) {
-				nombreImagen = nick + "-" + NombreImagenUtils.getFileName(imagen.getOriginalFilename());
-			} else if (usuario.getImagen() == null || usuario.getImagen().isEmpty()
-					|| usuario.getImagen().compareTo("null") == 0) {
-				nombreImagen = nick + "-" + NombreImagenUtils.getFileName(imagen.getOriginalFilename());
-			} else {
-				nombreImagen = usuario.getImagen();
-			}
-
-			//* Ruta absoluta
-			String rutaAbsoluta = directorioImagenes.toFile().getAbsolutePath();
-
-			//* Bytes de la imagen
-			byte[] bytesImg = imagen.getBytes();
-
-			//* Ruta completa que ocupará la imagen, con su nombre
-			Path rutaCompleta = Paths.get(rutaAbsoluta + "/" + nombreImagen);
-
-			//* Escritura del fichero
-			Files.write(rutaCompleta, bytesImg);
-
-			usuario.setImagen(nombreImagen);
+		
+		if (imagen != null && imagen.compareTo("") != 0) {
+			usuario.setImagen(imagen);
 		}
 
 		if (idsHabilidades != null) {
@@ -354,6 +301,7 @@ public class UsuarioController {
 			s.invalidate();
 		}
 		usuarioRepository.save(usuario);
+		s.setAttribute("usuario", usuario);
 		return "redirect:/user/profile";
 	}
 

@@ -1,65 +1,11 @@
 <div class="container">
-	<div class="row justify-content-center mb-3">
-		<div id="magicCarousel" class="carousel slide" data-ride="carousel">
-		
-			<!--    Carousel Indicators    -->
-			<ol class="carousel-indicators">
-				<li data-target="#magicCarousel" data-slide-to="0" class="active"></li>
-				<li data-target="#magicCarousel" data-slide-to="1"></li>
-				<li data-target="#magicCarousel" data-slide-to="2"></li>
-				<li data-target="#magicCarousel" data-slide-to="3"></li>
-			</ol>
-		
-			<!--    Carousel Slider    -->
-			<div class="carousel-inner" role="listbox">
-				<div class="carousel-item active">
-					<img src="/img/teafindHomes.jpg" class="d-block w-100 rounded">
-					<div class="carousel-caption rounded">
-						<h3>Bienvenidos a Teafind</h3>
-						<p>¡Explora entre todos los proyectos que nuestra comunidad publica y únete! Eso o saca adelante tu
-							genial idea publicando tu propio proyecto.
-						</p>
-					</div>
-				</div>
-		
-				<div th:if="${listaProyectosRandom.get(0)?.id != null}" class="carousel-item">
-					<img src="/img/pr1s.jpg" class="d-block w-100 rounded">
-					<div class="carousel-caption rounded">
-						<a th:href="|project/view?idProyecto=${listaProyectosRandom.get(0).id}|" class="card-link tx-blanco"><h3 th:text="${listaProyectosRandom.get(0).nombre}"></h3></a>
-						<p th:text="${listaProyectosRandom.get(0).descripcion}"></p>
-					</div>
-				</div>
-		
-				<div th:if="${listaProyectosRandom.get(1)?.id != null}" class="carousel-item">
-					<img src="/img/pr2s.jpg" class="d-block w-100 rounded">
-					<div class="carousel-caption rounded">
-						<a th:href="|project/view?idProyecto=${listaProyectosRandom.get(1).id}|" class="card-link tx-blanco"><h3 th:text="${listaProyectosRandom.get(1).nombre}"></h3></a>
-						<p th:text="${listaProyectosRandom.get(1).descripcion}"></p>
-					</div>
-				</div>
-		
-				<div th:if="${listaProyectosRandom.get(2)?.id != null}" class="carousel-item">
-					<img src="/img/pr3s.jpg" class="d-block w-100 rounded">
-					<div class="carousel-caption rounded">
-						<a th:href="|project/view?idProyecto=${listaProyectosRandom.get(2).id}|" class="card-link tx-blanco"><h3 th:text="${listaProyectosRandom.get(2).nombre}"></h3></a>
-						<p th:text="${listaProyectosRandom.get(2).descripcion}"></p>
-					</div>
-				</div>
-		
-				<!--     Carousel Controls     -->
-				<a href="#magicCarousel" class="carousel-control-prev" role="button" data-slide="prev">
-					<span class="carousel-control-prev-icon"></span>
-					<span class="sr-only">Previous</span>
-				</a>
-				<a href="#magicCarousel" class="carousel-control-next" role="button" data-slide="next">
-					<span class="carousel-control-next-icon"></span>
-					<span class="sr-only">Next</span>
-				</a>
-		
-			</div>
+	
+	<div class="row mb-4">
+		<div class="col-xl-7 col-lg-6 col-md-12 col-sm-12 col-12">
+			<h1 class="font-weight-light" th:text="|Buscar: '${busqueda}'|"></h1>
 		</div>
-
 	</div>
+	
 </div>
 
 <div th:if="${proyectos.size > 0}" class="container p-4">

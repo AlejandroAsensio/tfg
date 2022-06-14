@@ -30,19 +30,10 @@ public class HomeController {
 	private UsuarioRepository usuarioRepository;
 	
 	@GetMapping("/")
-	public String index(ModelMap m, @RequestParam(value="nombre",required=false) String nombre) {
-		List<Proyecto> proyectos = new ArrayList<Proyecto>();
+	public String index(ModelMap m) {
+		List<Proyecto> proyectos = proyectoRepository.findAll();
 		List<Proyecto> activos = new ArrayList<Proyecto>();
 		List<Proyecto> listaRandom = new ArrayList<Proyecto>();
-		
-		/**
-		 * Busqueda de proyecto por nombre
-		 */
-		if(nombre != null) {
-			proyectos = proyectoRepository.findByNombreContainingIgnoreCase(nombre);
-		} else {
-			proyectos = proyectoRepository.findAll();	
-		}
 
 		/**
 		 * Añadimos a una lista nueva los proyectos activos
@@ -62,6 +53,35 @@ public class HomeController {
 		m.put("listaProyectosRandom", listaRandom);
 		m.put("proyectos", proyectos);
 		m.put("view", "home/rHome");
+		return "_t/frame";
+	}
+
+	@GetMapping("/search")
+	public String search(ModelMap m, @RequestParam(value="nombre",required=false) String nombre) {
+		List<Proyecto> proyectos = new ArrayList<Proyecto>();
+		List<Proyecto> activos = new ArrayList<Proyecto>();
+		
+		/**
+		 * Busqueda de proyecto por nombre
+		 */
+		if (nombre != null) {
+			proyectos = proyectoRepository.findByNombreContainingIgnoreCase(nombre);
+		} else {
+			proyectos = proyectoRepository.findAll();	
+		}
+
+		/**
+		 * Añadimos a una lista nueva los proyectos activos
+		 */
+		for (Proyecto proyecto : proyectos) {
+			if (!proyecto.isEnded()) {
+				activos.add(proyecto);
+			}
+		}
+
+		m.put("busqueda", nombre);
+		m.put("proyectos", proyectos);
+		m.put("view", "home/search");
 		return "_t/frame";
 	}
 
