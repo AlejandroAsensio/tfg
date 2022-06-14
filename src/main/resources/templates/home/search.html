@@ -96,10 +96,8 @@
 </div>
 
 <div th:if="${proyectos.size == 0}" class="mb-4">
-	<h5 th:if="${session.usuario == null}" class="display-5 text-center m-5">No hay ningún proyecto todavía. ¡Regístrate
-		y crea el tuyo!</h5>
-	<h5 th:if="${session.usuario != null}" class="display-5 text-center m-5">No hay ningún proyecto todavía. ¡Crea el
-		tuyo ahora!</h5>
+	<h5 th:if="${session.usuario == null}" class="display-5 text-center m-5">Los criterios de búsqueda no coinciden con ningún proyecto de Teafind. ¡Puedes registrarte y crear el tuyo!</h5>
+	<h5 th:if="${session.usuario != null}" class="display-5 text-center m-5">Los criterios de búsqueda no coinciden con ningún proyecto de Teafind.</h5>
 </div>
 
 <script src="/js/efectos.js"></script>
