@@ -373,7 +373,7 @@ public class UsuarioController {
 		}
 
 		if (!usuario.isVerified()) {
-			PRG.info("Debes verificar tu cuenta para ocupar este puesto.", "/verify");
+			PRG.info("Debes verificar tu cuenta para ocupar este puesto.", "/user/verify");
 		}
 
 		for (Habilidad h : puesto.getRequiere()) {
