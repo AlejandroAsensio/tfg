@@ -50,16 +50,16 @@ public class PuestoController {
 	public String c(
 			ModelMap m,
 			HttpSession s,
-			@RequestParam (value="nombreProyecto",required=false) String nombreProyecto
+			@RequestParam (value="nombreProyecto") String nombreProyecto
 			) throws DangerException {
 		if (nombreProyecto == null || nombreProyecto.equals("")) {
-			PRG.error("Error","/");
+			PRG.error("Se ha producido un error.","/");
 		}
 		Proyecto proyecto = proyectoRepository.getByNombre(nombreProyecto);
 		Usuario leader = (Usuario) s.getAttribute("usuario");
 		
 		if ((leader == null) || (!leader.getId().equals(proyecto.getLeader().getId()))) {
-			PRG.error("No tienes permiso para gestionar este proyecto", "/");
+			PRG.error("No tienes permiso para gestionar este proyecto.", "/");
 		}
 		
 		List<Habilidad> habilidades = habilidadRepository.findAll();
@@ -86,26 +86,27 @@ public class PuestoController {
 		}
 		String ruta = "";
 		List<Habilidad> habilidadesRequeridas = new ArrayList<Habilidad>();
-		for(Long id: idsHabilidadesRequire) {
+		Proyecto proyecto = proyectoRepository.getById(idProyecto);
+		Usuario leader = (Usuario) s.getAttribute("usuario");
+		
+		for (Long id: idsHabilidadesRequire) {
 			habilidadesRequeridas.add(habilidadRepository.getById(id));
 		}
 		
-		Proyecto proyecto = proyectoRepository.getById(idProyecto);
-		Usuario leader = (Usuario) s.getAttribute("usuario");
+		if ((leader == null) || (!leader.getId().equals(proyecto.getLeader().getId()))) {
+			PRG.error("No tienes permiso para gestionar este proyecto.", "/");
+		}
+
 		try {
-			if ((leader == null) || (!leader.getId().equals(proyecto.getLeader().getId()))) {
-				PRG.error("No tienes permiso para gestionar este proyecto", "/");
-			}
 			puestoRepository.save(new Puesto(nombre, descripcion, proyecto, habilidadesRequeridas));
-			
 		} catch (Exception e) {
-			PRG.error("La habilidad " + nombre + " ya existe ", "/user/profile");
+			PRG.error("La habilidad " + nombre + " ya existe.", "/user/profile");
 		}
 
 		if (seguir) {
-			ruta="redirect:/project/work/new?nombreProyecto="+nombreProyecto;
+			ruta = "redirect:/project/work/new?nombreProyecto=" + nombreProyecto;
 		} else {
-			ruta="redirect:/project/manage?idProyecto="+idProyecto;
+			ruta = "redirect:/project/manage?idProyecto=" + idProyecto;
 		}
 //		PRG.info(nombre + " creado correctamente.", "/usuario/r");
 		return ruta;
@@ -147,7 +148,7 @@ public class PuestoController {
 		puestoRepository.deleteById(idPuesto);
 		}
 		catch (Exception e) {
-			PRG.error("Error al eliminar puesto","javascript:history.back()");
+			PRG.error("Error al eliminar puesto.","javascript:history.back()");
 		}
 		return "redirect:/project/manage?idProyecto=" + idProyecto;
 	}

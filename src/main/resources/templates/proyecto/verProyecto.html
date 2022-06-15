@@ -154,8 +154,8 @@
 		<div class="container px-lg-5">
 	    	<div class="jumbotron p-3 p-lg-3 text-center sinPuestos">
 	            <div class="m-3 m-lg-4">
-	                <h1 th:if="${proyecto.leader?.id != null}" class="display-5 fw-bold" th:text="|${proyecto.nombre} no ha publicado aún ningún puesto.|"></h1>
-					<h1 th:if="${proyecto.leader?.id == null}" class="display-5 fw-bold" th:text="|${proyecto.nombre} fue cerrado sin puestos creados.|"></h1>
+	                <h1 th:if="${proyecto.leader?.id != null and !proyecto.isEnded()}" class="display-5 fw-bold" th:text="|${proyecto.nombre} no ha publicado aún ningún puesto.|"></h1>
+					<h1 th:if="${proyecto.isEnded()}" class="display-5 fw-bold" th:text="|${proyecto.nombre} fue cerrado sin puestos creados.|"></h1>
 	                <p th:if="${proyecto.leader?.id != null}" class="lead">Vuelve a pasar de vez en cuando por aquí en busca de nuevas oportunidades. Nunca se sabe donde podría estar tu sitio <i class="bi bi-emoji-laughing"></i></p>
 					<p th:if="${proyecto.leader?.id == null}" class="lead">Si vas en busca de nuevas oportunidades, no dudes en consultar el resto de proyectos activos <i class="bi bi-emoji-laughing"></i></p>
 					<div class="d-flex justify-content-center">
@@ -179,7 +179,7 @@
 		<hr class="mb-4">
 
 		<div class="row">
-			<th:block th:if="${ocupados > 0}" th:each="puesto : ${proyecto.puestos}">
+			<th:block th:each="puesto : ${proyecto.puestos}">
 				<div th:if="${session.usuario == null or puesto.ocupante?.id != session.usuario?.id}" class="col-xl-6 col-lg-6 col-md-6 col-sm-12 col-12">
 					<div class="card escalar text-center my-3 mx-3">
 						<div class="card-body">

@@ -5,9 +5,9 @@
 			<img th:src="|/img/profile/${session.usuario?.imagen}|" class="card escalar imgPerfil p-0 m-0"></img>
 		</div>
 		<div class="p-4 pl-5">
-			<h1 class="display-2 self-align-center font-weight-light" th:text="${usuario.nick}"></h1>
+			<h1 class="display-2 self-align-center font-weight-light tx-main-darkest" th:text="${usuario.nick}"></h1>
 			<div class="d-inline text-right pb-2 px-2">
-			    <span th:each="habilidad : ${usuario.sabe}" th:text="${habilidad.nombre}" class="badge badge-pill badge-primary mx-1"></span>
+			    <span th:each="habilidad : ${usuario.sabe}" th:text="${habilidad.nombre}" class="badge badge-pill badge-primary bgc-main-dark mx-1"></span>
 			</div>
 		</div>
 	</div>
@@ -48,14 +48,14 @@
 	<div class="container">
 		<ul class="nav nav-pills nav-justified px-3">
 			<li class="nav-item">
-				<a class="nav-link active" id="home-tab" data-toggle="tab" href="#home" role="tab" aria-controls="home"
+				<a class="nav-link tx-main-dark active" id="home-tab" data-toggle="tab" href="#home" role="tab" aria-controls="home"
 					aria-selected="true">Datos personales</a>
 			</li>
-			<li class="nav-item">
+			<li class="nav-item tx-main-dark">
 				<a class="nav-link" id="profile-tab" data-toggle="tab" href="#profile" role="tab" aria-controls="profile"
 					aria-selected="false">Habilidades</a>
 			</li>
-			<li class="nav-item">
+			<li class="nav-item tx-main-dark">
 				<a class="nav-link" id="contact-tab" data-toggle="tab" href="#contact" role="tab" aria-controls="contact"
 					aria-selected="false">Tu cuenta</a>
 			</li>

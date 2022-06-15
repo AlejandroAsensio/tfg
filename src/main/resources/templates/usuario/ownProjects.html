@@ -128,7 +128,8 @@
 						<hr class="mb-4">
 						<label class="d-block" th:text="${proyectoPertenece.nombre}"></label>
 						<p class="" th:text="${proyectoPertenece.descripcion}" />
-						<div class="d-flex justify-content-end">
+						<div class="d-flex justify-content-between">
+							<h6 th:if="${proyectoPertenece.isEnded}" class="d-inline tx-bad">Proyecto finalizado</h6>
 							<form action="/project/view" class="d-inline">
 								<input type="hidden" name="idProyecto" th:value="${proyectoPertenece.proyecto.id}" />
 								<button type="submit" class="btn btn-outline-info btn-sm mr-2">

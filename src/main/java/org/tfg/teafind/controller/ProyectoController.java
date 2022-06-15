@@ -85,7 +85,11 @@ public class ProyectoController {
 		} catch (Exception e) {
 			PRG.error("El proyecto " + nombre + " ya existe.", "/project/new");
 		}
-		
+		try {
+			Thread.sleep(3 * 1000);
+		} catch (InterruptedException ie) {
+			Thread.currentThread().interrupt();
+		}
 		return "redirect:/user/projects";
 	}
 	

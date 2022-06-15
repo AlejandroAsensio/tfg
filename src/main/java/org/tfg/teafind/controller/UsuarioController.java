@@ -106,6 +106,7 @@ public class UsuarioController {
 					usuario.addSabe(habilidadRepository.getById(idHabilidadSabe));
 				}
 			}
+			usuario.setDescripcion("Acerda de " + nick);
 
 			usuarioRepository.save(usuario);
 			mailService.enviarEmailBienvenida(email, nick, nombre);
@@ -288,19 +289,24 @@ public class UsuarioController {
 				if (newPassword.equals(passwordConfirm)) {
 					usuario.setPassword(newPassword);
 				} else {
-					PRG.error("Las contraseñas no coinciden", "/user/profile/" + nick);
+					PRG.error("Las contraseñas no coinciden.", "/user/profile/" + nick);
 				}
 			} else {
-				PRG.error("Contraseña incorrecta", "/user/profile/" + nick);
+				PRG.error("Tu contraseña anterior no es correcta.", "/user/profile/" + nick);
 			}
 		}
 
 		if (!email.isBlank() && !email.equals(usuario.getEmail())) {
 			usuario.setEmail(email);
 			usuario.setVerified(false);
-			s.invalidate();
 		}
-		usuarioRepository.save(usuario);
+
+		try {
+			usuarioRepository.save(usuario);
+		} catch (Exception e) {
+			PRG.error("El nick/correo electrónico ya están registrados en Teafind.", "/user/profile");
+		}
+		
 		s.setAttribute("usuario", usuario);
 		return "redirect:/user/profile";
 	}
